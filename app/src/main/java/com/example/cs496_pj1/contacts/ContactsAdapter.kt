@@ -23,7 +23,7 @@ import com.example.cs496_pj1.R
 import com.example.cs496_pj1.models.Contacts
 import java.util.jar.Manifest
 
-class ContactsAdapter(private val mActivity: FragmentActivity, val contactsList: ArrayList<Contacts>) : RecyclerView.Adapter<ContactsAdapter.CustomViewHolder>() {
+class ContactsAdapter(val contactsList: ArrayList<Contacts>) : RecyclerView.Adapter<ContactsAdapter.CustomViewHolder>() {
 
     lateinit var context: Context
 
