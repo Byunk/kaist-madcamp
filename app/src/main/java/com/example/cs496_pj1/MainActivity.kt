@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this, arrayOf<String>("android.permission.READ_CONTACTS"), 100)
             Log.d("test","Needed Permission")
         }
+
         setUpTap()
 
     }

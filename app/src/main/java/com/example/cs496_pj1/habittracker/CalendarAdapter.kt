@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.annotation.Dimension
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_pj1.R
+import com.example.cs496_pj1.models.CustomCalendar
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList

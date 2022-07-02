@@ -7,7 +7,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import com.example.cs496_pj1.R
 
-class UserContactEditActivity : AppCompatActivity() {
+class  UserContactEditActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_contact_edit)

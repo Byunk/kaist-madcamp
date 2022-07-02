@@ -65,7 +65,7 @@ class ContactsFragment : Fragment() {
 
         binding.rvContacts.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
         binding.rvContacts.setHasFixedSize(true)
-        binding.rvContacts.adapter = ContactsAdapter(contactsList)
-        ContactsAdapter(contactsList).notifyDataSetChanged()
+        binding.rvContacts.adapter = ContactsAdapter(requireActivity(), contactsList)
+        //ContactsAdapter(contactsList).notifyDataSetChanged()
     }
 }
