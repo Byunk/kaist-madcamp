@@ -7,6 +7,10 @@
     </style>
 
     <style name="CustomTabStyle" parent="TextAppearance.Design.CollapsingToolbar.Expanded">
-        <item name="android:textSize">11sp</item>
+        <item name="android:textSize">8sp</item>
+    </style>
+
+    <style name="CalendarTodayTextStyle" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">30sp</item>
     </style>
 </resources>

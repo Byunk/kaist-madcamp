@@ -1,14 +1,10 @@
 package com.example.cs496_pj1.contacts
 
-import android.database.Cursor
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.Loader
 import com.example.cs496_pj1.databinding.FragmentContactsBinding
 import com.example.cs496_pj1.models.Contacts
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +13,7 @@ import java.io.BufferedReader
 import java.io.FileReader
 
 class ContactsFragment : Fragment() {
-    private var binding: FragmentContactsBinding? = null
+    private lateinit var binding: FragmentContactsBinding
     private var contactsList: ArrayList<Contacts> = arrayListOf()
 
     override fun onCreateView(
@@ -25,17 +21,7 @@ class ContactsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentContactsBinding.inflate(inflater, container, false)
-        val root: View = binding!!.root
-
-        //TODO: Binding RecycleView and connect adaptor
-
-        //Q: Why return root?
-        return root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
+        return binding.root
     }
 
     override fun onResume() {
@@ -50,7 +36,7 @@ class ContactsFragment : Fragment() {
         // Parsing
         val jObject = JSONObject(jsonString)
         val jArray = jObject.getJSONArray("contacts")
-
+        /*
         val userFile = requireContext().getFileStreamPath("user.txt")
         if(userFile.exists()) {
             val fileReader = FileReader(userFile)
@@ -67,7 +53,7 @@ class ContactsFragment : Fragment() {
             }
         } else {
             contactsList.add(Contacts("김예은", "010-8765-4321"))
-        }
+        }*/
 
         for(i in 0 until jArray.length()) {
             val obj = jArray.getJSONObject(i)
@@ -76,9 +62,9 @@ class ContactsFragment : Fragment() {
             contactsList.add(Contacts(name, number))
         }
 
-        binding!!.rvContacts.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-        binding!!.rvContacts.setHasFixedSize(true)
-        binding!!.rvContacts.adapter = ContactsAdapter(contactsList)
-        ContactsAdapter(contactsList).notifyDataSetChanged()
+        binding.rvContacts.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+        binding.rvContacts.setHasFixedSize(true)
+        binding.rvContacts.adapter = ContactsAdapter(contactsList)
+        //ContactsAdapter(contactsList).notifyDataSetChanged()
     }
 }
