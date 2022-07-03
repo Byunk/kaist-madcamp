@@ -3,6 +3,7 @@ package com.example.cs496_pj1.habittracker
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -73,8 +74,7 @@ class CalendarAdapter(
             val dateString: String = SimpleDateFormat("dd", Locale.KOREA).format(date)
             val dateInt = dateString.toInt()
 
-
-            if ((dataList[position] == dateInt)) {// && isMatchYearMonth() ){
+            if ((dataList[position] == dateInt) && isMatchYearMonth() ){
                 itemCalendarDateText.setTypeface(itemCalendarDateText.typeface, Typeface.BOLD)
                 itemCalendarDateText.setTextSize(Dimension.SP, 25F)
             }
@@ -85,17 +85,17 @@ class CalendarAdapter(
                 //itemCalendarDotView.background = null
             }
         }
-/*
+
         private fun isMatchYearMonth(): Boolean {
-            val monthInt = SimpleDateFormat("MM", Locale.KOREA).format(date).toInt()
-            val yearInt = SimpleDateFormat("yyyy", Locale.KOREA).format(date).toInt()
+            //val monthInt = SimpleDateFormat("MM", Locale.KOREA).format(date).toInt()
+            val actualMonth = SimpleDateFormat("MM", Locale.KOREA).format(Date()).toInt()
+            val actualYear = SimpleDateFormat("yyyy", Locale.KOREA).format(Date()).toInt()
+            val calendarMonth = SimpleDateFormat("MM", Locale.KOREA).format(date).toInt()
+            val calendarYear = SimpleDateFormat("yyyy", Locale.KOREA).format(date).toInt()
 
-            val calendarMonth = customCalendar.month
-            val calendarYear = customCalendar.year
+            return calendarMonth == actualMonth && calendarYear == actualYear
 
-            return calendarMonth == monthInt && calendarYear == yearInt
-
-        }*/
+        }
 
     }
 }

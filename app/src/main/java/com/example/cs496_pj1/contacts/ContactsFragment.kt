@@ -38,6 +38,7 @@ class ContactsFragment : Fragment() {
         val jObject = JSONObject(jsonString)
         val jArray = jObject.getJSONArray("contacts")
 
+        /*
         val userFile = requireContext().getFileStreamPath("user.txt")
         if(userFile.exists()) {
             val fileReader = FileReader(userFile)
@@ -54,7 +55,7 @@ class ContactsFragment : Fragment() {
             }
         } else {
             contactsList.add(Contacts("김예은", "010-8765-4321"))
-        }
+        }*/
 
         for(i in 0 until jArray.length()) {
             val obj = jArray.getJSONObject(i)
