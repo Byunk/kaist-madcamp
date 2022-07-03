@@ -25,8 +25,8 @@ class CalendarDetailFragment : Fragment() {
     }
 
     private fun initView() {
-        //val year = intent.getStringExtra("year")
-        //val month = intent.getStringExtra("month")
-        //val date = intent.getStringExtra("date")
+        val year = intent.getStringExtra("year")
+        val month = intent.getStringExtra("month")
+        val date = intent.getStringExtra("date")
     }
 }
