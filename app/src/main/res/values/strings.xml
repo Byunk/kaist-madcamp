@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">CS496_PJ1</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name">홍길동</string>
+    <string name="number">010-0000-0000</string>
+    <string name="user_profile">User Profile</string>
+    <string name="nameField_name">name</string>
+    <string name="tab_title1">Contacts</string>
+    <string name="tab_title2">Gallery</string>
+    <string name="tab_title3">Temp</string>
+</resources>
