@@ -1,6 +1,6 @@
 package com.example.cs496_pj1
 
-import    android.content.pm.PackageManager
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +17,6 @@ import com.example.cs496_pj1.gallery.GalleryFragment
 import com.example.cs496_pj1.habittracker.CalendarViewPagerFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-
 private const val NUM_PAGES = 3
 
 class MainActivity : AppCompatActivity() {
@@ -30,43 +29,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         val navView: BottomNavigationView = binding.navView
 
-//        //fragments
-//        val contactsFragment = ContactsFragment()
-//        val galleryFragment = GalleryFragment()
-//        //  val calendarFragment = CalendarFragment()
-//
-//        makeCurrentFragment(contactsFragment)
-//        navView.setOnItemSelectedListener {
-//            when(it.itemId){
-//                R.id.ic_contacts -> makeCurrentFragment(contactsFragment)
-//                R.id.ic_gallery -> makeCurrentFragment(galleryFragment)
-//                //R.id.ic_habittracker -> makeCurrentFragment(calendarFragment)
-//            }
-//            true
-//
-//        }
-
-//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-//
-//        // navigation Controller
-//        navController = navHostFragment.navController
-//        setupWithNavController(navView, navController)
-//
-//        val appBarConfiguration = AppBarConfiguration(
-//            setOf(
-//                R.id.navigation_tap1, R.id.navigation_tap2, R.id.navigation_tap3
-//            )
-//        )
-//        setupActionBarWithNavController(navController, appBarConfiguration)
-//        navView.setupWithNavController(navController)
-
         // Connects Adapter To Pager
-        viewPager = findViewById(R.id.pager)
-        val pagerAdapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
-        viewPager.adapter = pagerAdapter
+        viewPager = binding.pager
+        viewPager.adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
 
         // slide 시 nav 탭 함께 변경
-        binding.pager.registerOnPageChangeCallback(
+        viewPager.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback(){
 
                 override fun onPageSelected(position: Int){
@@ -76,7 +44,19 @@ class MainActivity : AppCompatActivity() {
             }
         )
         // 리스너 연결
-        navView.setOnItemSelectedListener(){
+        navView.setOnItemSelectedListener() { item ->
+            //true
+            when(item.itemId) {
+                R.id.ic_contacts -> {
+                    viewPager.setCurrentItem(0)
+                }
+                R.id.ic_gallery -> {
+                    viewPager.setCurrentItem(1)
+                }
+                R.id.ic_habittracker -> {
+                    viewPager.setCurrentItem(2)
+                }
+            }
             true
         }
 
@@ -91,34 +71,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
-//    private fun makeCurrentFragment(fragment: Fragment) =
-//        supportFragmentManager.beginTransaction().apply {
-//            replace(R.id.frag_layout, fragment)
-//            commit()
-//        }
-
-//
-//
-//    public fun onNavigationItemSelected(item: MenuItem): Boolean{
-//        when(item.itemId){
-//            R.id.ic_contacts -> {
-//                // 페이저 현재 item에 n-th 화면 대입
-//                binding.pager.currentItem = 0
-//                return true
-//            }
-//            R.id.ic_gallery -> {
-//                binding.pager.currentItem = 1
-//                return true
-//            }
-//            androidx.core.R.id.icon -> {
-//                binding.pager.currentItem = 2
-//                return true
-//            }else -> return false
-//        }
-//    }
-//
-//
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -138,9 +90,6 @@ class MainActivity : AppCompatActivity() {
     {
 
         override fun getItemCount(): Int = NUM_PAGES
-
-//        private val mFragmentList = ArrayList<Fragment>()
-//        private val mFragmentTitleList = ArrayList<String>()
 
         override fun createFragment(position: Int): Fragment {
             when (position) {
