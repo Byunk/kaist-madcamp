@@ -31,6 +31,7 @@ class ContactsAdapter(val contactsList: ArrayList<Contacts>) : RecyclerView.Adap
         parent: ViewGroup,
         viewType: Int
     ): ContactsAdapter.CustomViewHolder {
+
         context = parent.context
         val view = LayoutInflater.from(context).inflate(R.layout.contacts_row, parent, false)
         return CustomViewHolder(view)
@@ -49,6 +50,7 @@ class ContactsAdapter(val contactsList: ArrayList<Contacts>) : RecyclerView.Adap
         val name = itemView.findViewById<TextView>(R.id.personName)
         val number = itemView.findViewById<TextView>(R.id.personNumber)
         val btnPhoneCall = itemView.findViewById<ImageButton>(R.id.phone_call_button)
+
         //val btn_add = itemView.findViewById<ImageButton>(R.id.btn_add)
 
         fun bind(item: Contacts) {

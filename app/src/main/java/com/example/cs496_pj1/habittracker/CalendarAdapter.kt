@@ -1,6 +1,7 @@
 package com.example.cs496_pj1.habittracker
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.util.Log
@@ -12,6 +13,7 @@ import android.widget.TextView
 import androidx.annotation.Dimension
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_pj1.R
+import com.example.cs496_pj1.contacts.UserContactEditActivity
 import com.example.cs496_pj1.models.CustomCalendar
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,13 +26,27 @@ class CalendarAdapter(
     var dataList: ArrayList<Int> = arrayListOf()
     var customCalendar: CustomCalendar = CustomCalendar(date)
 
+    val calendarMonth = SimpleDateFormat("MM", Locale.KOREA).format(date).toInt()
+    val calendarYear = SimpleDateFormat("yyyy", Locale.KOREA).format(date).toInt()
     init {
         customCalendar.initBaseCalendar()
         dataList = customCalendar.dateList
     }
 
     interface ItemClick {
-        fun onClick(view: View, position: Int)
+        fun onClick(context: Context, view: View, position: Int, date: Date) {
+            val intent = Intent(context, CalendarDetailFragment::class.java).apply {
+
+                val calendarMonth = SimpleDateFormat("MM", Locale.KOREA).format(date).toInt()
+                val calendarYear = SimpleDateFormat("yyyy", Locale.KOREA).format(date).toInt()
+                val calendarDate = SimpleDateFormat("dd", Locale.KOREA).format(date).toInt()
+
+                putExtra("year", calendarYear)
+                putExtra("month", calendarMonth)
+                putExtra("date", calendarDate)
+
+            }.run { context.startActivity(this) }
+        }
     }
 
     var itemClick: ItemClick? = null
@@ -43,8 +59,7 @@ class CalendarAdapter(
         holder.bind(dataList[position], position, context)
         if (itemClick != null) {
             holder.itemView.setOnClickListener { v ->
-                itemClick?.onClick(v, position)
-
+                itemClick?.onClick(context, v, position, date)
             }
         }
     }
@@ -90,8 +105,6 @@ class CalendarAdapter(
             //val monthInt = SimpleDateFormat("MM", Locale.KOREA).format(date).toInt()
             val actualMonth = SimpleDateFormat("MM", Locale.KOREA).format(Date()).toInt()
             val actualYear = SimpleDateFormat("yyyy", Locale.KOREA).format(Date()).toInt()
-            val calendarMonth = SimpleDateFormat("MM", Locale.KOREA).format(date).toInt()
-            val calendarYear = SimpleDateFormat("yyyy", Locale.KOREA).format(date).toInt()
 
             return calendarMonth == actualMonth && calendarYear == actualYear
 
