@@ -1,5 +1,6 @@
 package com.example.cs496_pj1.habittracker
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,13 +21,13 @@ class CalendarDetailFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentCalendarDetailBinding.inflate(inflater, container, false)
-        initView()
+        //initView()
         return binding.root
     }
 
-    private fun initView() {
-        val year = intent.getStringExtra("year")
-        val month = intent.getStringExtra("month")
-        val date = intent.getStringExtra("date")
-    }
+//    private fun initView() {
+//        val year = intent.getStringExtra("year")
+//        val month = intent.getStringExtra("month")
+//        val date = intent.getStringExtra("date")
+//    }
 }
