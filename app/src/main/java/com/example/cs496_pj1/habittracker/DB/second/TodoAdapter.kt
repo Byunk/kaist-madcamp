@@ -1,7 +1,6 @@
-package com.example.cs496_pj1.habittracker
+package com.example.cs496_pj1.habittracker.DB.second
 
 import android.content.Context
-import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

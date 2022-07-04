@@ -14,9 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CS496_PJ1"
+        android:screenOrientation="portrait"
         tools:targetApi="31">
         <activity
-            android:name=".habittracker.CalendarDetailActivity"
+            android:name=".habittracker.HabitTrackerDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".habittracker.calendar.CalendarDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".gallery.ImageActivity"
             android:exported="false" />
         <activity
             android:name=".contacts.UserContactEditActivity"

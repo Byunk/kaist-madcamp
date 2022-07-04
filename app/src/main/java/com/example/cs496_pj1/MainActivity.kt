@@ -14,7 +14,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.cs496_pj1.contacts.ContactsFragment
 import com.example.cs496_pj1.databinding.ActivityMainBinding
 import com.example.cs496_pj1.gallery.GalleryFragment
-import com.example.cs496_pj1.habittracker.CalendarViewPagerFragment
+import com.example.cs496_pj1.habittracker.HabitTrackerMainFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 private const val NUM_PAGES = 3
@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
             when (position) {
                 0 -> return ContactsFragment()
                 1 -> return GalleryFragment()
-                2 -> return CalendarViewPagerFragment()
+                2 -> return HabitTrackerMainFragment()
             }
             return ContactsFragment()
         }

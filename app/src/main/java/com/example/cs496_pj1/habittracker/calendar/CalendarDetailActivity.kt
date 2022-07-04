@@ -1,4 +1,4 @@
-package com.example.cs496_pj1.habittracker
+package com.example.cs496_pj1.habittracker.calendar
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

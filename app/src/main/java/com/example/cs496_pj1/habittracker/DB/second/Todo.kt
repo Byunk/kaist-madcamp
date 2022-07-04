@@ -1,4 +1,4 @@
-package com.example.cs496_pj1.habittracker
+package com.example.cs496_pj1.habittracker.DB.second
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
