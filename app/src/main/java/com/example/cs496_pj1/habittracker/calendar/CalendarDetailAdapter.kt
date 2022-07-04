@@ -1,4 +1,4 @@
-package com.example.cs496_pj1.habittracker
+package com.example.cs496_pj1.habittracker.calendar
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -17,7 +17,7 @@ class CalendarDetailAdapter(val habitList: ArrayList<Habit>) : RecyclerView.Adap
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): CalendarDetailAdapter.CustomViewHolder {
+    ): CustomViewHolder {
         context = parent.context
         binding = CalendarDetailRowBinding.inflate(LayoutInflater.from(context))
 
@@ -29,7 +29,7 @@ class CalendarDetailAdapter(val habitList: ArrayList<Habit>) : RecyclerView.Adap
         return habitList.size
     }
 
-    override fun onBindViewHolder(holder: CalendarDetailAdapter.CustomViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.bind(habitList[position])
     }
 
@@ -42,7 +42,7 @@ class CalendarDetailAdapter(val habitList: ArrayList<Habit>) : RecyclerView.Adap
             //Temp
             todoImage.setImageResource(R.drawable.dodam)
 
-            todoText.text = item.obj
+            todoText.text = item.habit
             //TODO: todoSeekbar config according to whether the user finish todo or not
 
 

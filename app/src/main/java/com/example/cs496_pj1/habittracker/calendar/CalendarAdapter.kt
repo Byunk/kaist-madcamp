@@ -1,10 +1,9 @@
-package com.example.cs496_pj1.habittracker
+package com.example.cs496_pj1.habittracker.calendar
 
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +13,7 @@ import androidx.annotation.Dimension
 import androidx.core.content.ContextCompat.getColor
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_pj1.R
-import com.example.cs496_pj1.contacts.UserContactEditActivity
 import com.example.cs496_pj1.models.CustomCalendar
-import java.lang.reflect.Array.set
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList

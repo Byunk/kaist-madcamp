@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_tap3"
-        android:name="com.example.cs496_pj1.habittracker.CalendarFragment"
+        android:name="com.example.cs496_pj1.habittracker.calendar.CalendarFragment"
         android:label="Habit Tracker"
         tools:layout="@layout/fragment_calendar" />
 </navigation>
