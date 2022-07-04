@@ -7,22 +7,23 @@
     android:layout_margin="8dp">
 
     <TextView
-        android:id="@+id/tv_habit_item"
+        android:id="@+id/tvTodoItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="habit_name"
+        android:text="todo"
         android:textSize="24sp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/tv_timeStamp"
+        app:layout_constraintBottom_toTopOf="@+id/tvTimeStamp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cbCheck"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/tv_timeStamp"
+        android:id="@+id/tvTimeStamp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TimeStamp"
-        app:layout_constraintTop_toBottomOf="@id/tv_habit_item"
+        app:layout_constraintTop_toBottomOf="@id/tvTodoItem"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/cbCheck"/>

@@ -94,6 +94,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun getItemCount(): Int = NUM_PAGES
 
+        // tab
         override fun createFragment(position: Int): Fragment {
             when (position) {
                 0 -> return ContactsFragment()

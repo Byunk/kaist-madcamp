@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:listitem="@layout/habit_item"
-    tools:context=".habittracker.HabitActivity">
+    tools:listitem="@layout/item_todo_list"
+    tools:context=".habittracker.TodoFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_habitList"
