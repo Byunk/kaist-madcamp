@@ -2,9 +2,10 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 
-    //new ??
+    // room database
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -64,6 +65,8 @@ dependencies {
     //Gallery
     implementation 'com.github.bumptech.glide:glide:4.13.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
 
     //Room
     implementation 'androidx.room:room-runtime:2.3.0'
