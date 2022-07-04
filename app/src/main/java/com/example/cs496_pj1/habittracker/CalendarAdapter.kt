@@ -33,35 +33,12 @@ class CalendarAdapter(
         dataList = customCalendar.dateList
     }
 
-    interface ItemClick {
-        fun onClick(context: Context, view: View, position: Int, date: Date) {
-            val intent = Intent(context, CalendarDetailFragment::class.java).apply {
-
-                val calendarMonth = SimpleDateFormat("MM", Locale.KOREA).format(date).toInt()
-                val calendarYear = SimpleDateFormat("yyyy", Locale.KOREA).format(date).toInt()
-                val calendarDate = SimpleDateFormat("dd", Locale.KOREA).format(date).toInt()
-
-                putExtra("year", calendarYear)
-                putExtra("month", calendarMonth)
-                putExtra("date", calendarDate)
-
-            }.run { context.startActivity(this) }
-        }
-    }
-
-    var itemClick: ItemClick? = null
-
     override fun onBindViewHolder(holder: CalendarItemHolder, position: Int) {
         // Configure Layout
         val h = calendarLayout.height / 6
         holder.itemView.layoutParams.height = h
 
         holder.bind(dataList[position], position, context)
-        if (itemClick != null) {
-            holder.itemView.setOnClickListener { v ->
-                itemClick?.onClick(context, v, position, date)
-            }
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarItemHolder {
@@ -98,6 +75,19 @@ class CalendarAdapter(
             if (position < firstDateIndex || position > lastDateIndex) {
                 itemCalendarDateText.setTextColor(Color.parseColor("#FFFFFF")) //("#676d6e"))
                 //itemCalendarDotView.background = null
+            }
+
+            itemView.setOnClickListener {
+                val intent = Intent(context, CalendarDetailActivity::class.java).apply {
+                    val year = SimpleDateFormat("yyyy", Locale.KOREA).format(date).toString()
+                    val month = SimpleDateFormat("MM", Locale.KOREA).format(date).toString()
+                    val day = dataList[position]
+                    val dateString = year + "년 " + month + "월 " + day + "일"
+
+                    putExtra("date", dateString)
+                    //putExtra("number", item.number)
+                    //addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }.run { context.startActivity(this) }
             }
         }
 
