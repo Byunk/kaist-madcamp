@@ -13,4 +13,8 @@
     <style name="CalendarTodayTextStyle" parent="TextAppearance.AppCompat.Small">
         <item name="android:textSize">30sp</item>
     </style>
+
+    <style name="SlideToActTextStyle" parent="TextAppearance.AppCompat.Small">
+        <item name="android:gravity">right</item>
+    </style>
 </resources>

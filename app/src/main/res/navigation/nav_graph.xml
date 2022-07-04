@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_contacts" />
     <fragment
         android:id="@+id/calendarFragment"
-        android:name="com.example.cs496_pj1.habittracker.CalendarFragment"
+        android:name="com.example.cs496_pj1.habittracker.calendar.CalendarFragment"
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_calendar" />
     <fragment

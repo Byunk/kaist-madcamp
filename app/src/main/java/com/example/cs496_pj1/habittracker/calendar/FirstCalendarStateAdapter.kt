@@ -1,4 +1,4 @@
-package com.example.cs496_pj1.habittracker
+package com.example.cs496_pj1.habittracker.calendar
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
