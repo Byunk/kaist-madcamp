@@ -11,16 +11,18 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.Dimension
+import androidx.core.content.ContextCompat.getColor
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_pj1.R
 import com.example.cs496_pj1.contacts.UserContactEditActivity
 import com.example.cs496_pj1.models.CustomCalendar
+import java.lang.reflect.Array.set
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 class CalendarAdapter(
-    val context: Context, val calendarLayout: LinearLayout, val date: Date
+    val context: Context, val calendarLayout: LinearLayout, val date: Date, var start: Date? = null, var end: Date? = null
     ) : RecyclerView.Adapter<CalendarAdapter.CalendarItemHolder>() {
 
     var dataList: ArrayList<Int> = arrayListOf()
@@ -73,21 +75,48 @@ class CalendarAdapter(
 
             // 현재 월의 1일 이전, 현재 월의 마지막일 이후 값의 텍스트를 회색처리
             if (position < firstDateIndex || position > lastDateIndex) {
-                itemCalendarDateText.setTextColor(Color.parseColor("#FFFFFF")) //("#676d6e"))
+                //itemCalendarDateText.setTextColor(Color.parseColor("#FFFFFF")) //("#676d6e"))
+                itemCalendarDateText.setTextColor(getColor(context, R.color.whiteBlue))
                 //itemCalendarDotView.background = null
             }
 
-            itemView.setOnClickListener {
-                val intent = Intent(context, CalendarDetailActivity::class.java).apply {
-                    val year = SimpleDateFormat("yyyy", Locale.KOREA).format(date).toString()
-                    val month = SimpleDateFormat("MM", Locale.KOREA).format(date).toString()
-                    val day = dataList[position]
-                    val dateString = year + "년 " + month + "월 " + day + "일"
+            // Testing
+            start = Calendar.getInstance().run {
+                set(2022, 6, 30)
+                time
+            }
+            end = Calendar.getInstance().run {
+                set(2022, 7, 18)
+                time
+            }
 
-                    putExtra("date", dateString)
-                    //putExtra("number", item.number)
-                    //addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }.run { context.startActivity(this) }
+            // Specify if date is in between from and end Date
+            if (start != null && end != null) {
+                val todayDate = Calendar.getInstance().run {
+                    set(calendarYear, calendarMonth, dataList[position])
+                    time
+                }
+
+                if (!(position < firstDateIndex || position > lastDateIndex) && todayDate.compareTo(start!!) >= 0 && todayDate.compareTo(end!!) <= 0) {
+                    itemCalendarDateText.setTextSize(Dimension.SP, 25F)
+                    itemCalendarDateText.setTypeface(itemCalendarDateText.typeface, Typeface.BOLD)
+                    itemCalendarDateText.setTextColor(Color.parseColor("#87CEEB"))
+                }
+            }
+
+            itemView.setOnClickListener {
+                if (!(position < firstDateIndex || position > lastDateIndex)) {
+                    val intent = Intent(context, CalendarDetailActivity::class.java).apply {
+                        val year = SimpleDateFormat("yyyy", Locale.KOREA).format(date).toString()
+                        val month = SimpleDateFormat("MM", Locale.KOREA).format(date).toString()
+                        val day = dataList[position]
+                        val dateString = year + "년 " + month + "월 " + day + "일"
+
+                        putExtra("date", dateString)
+                        //putExtra("number", item.number)
+                        //addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }.run { context.startActivity(this) }
+                }
             }
         }
 
