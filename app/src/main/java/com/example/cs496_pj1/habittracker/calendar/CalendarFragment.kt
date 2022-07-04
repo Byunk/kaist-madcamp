@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_pj1.MainActivity
 import com.example.cs496_pj1.databinding.FragmentCalendarBinding
+import com.example.cs496_pj1.habittracker.HabitTrackerDetailActivity
 import com.example.cs496_pj1.models.CustomCalendar
 import java.text.SimpleDateFormat
 import java.util.*
@@ -34,9 +35,8 @@ class CalendarFragment(position: Int) : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MainActivity) {
-            mContext = context
-        }
+
+        mContext = context as HabitTrackerDetailActivity
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +47,7 @@ class CalendarFragment(position: Int) : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCalendarBinding.inflate(inflater, container, false)
         initView()
         return binding.root

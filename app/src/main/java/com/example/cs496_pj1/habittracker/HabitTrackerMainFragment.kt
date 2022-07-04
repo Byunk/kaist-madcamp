@@ -1,31 +1,18 @@
 package com.example.cs496_pj1.habittracker
 
-import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.setFragmentResultListener
-import androidx.lifecycle.Lifecycle
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
-import com.example.cs496_pj1.contacts.ContactsFragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cs496_pj1.databinding.FragmentHabitTrackerMainBinding
-import com.example.cs496_pj1.gallery.GalleryFragment
-import com.example.cs496_pj1.habittracker.calendar.CalendarViewPagerFragment
-import java.text.DateFormat
+import com.example.cs496_pj1.models.createSampleHabit
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
-import java.util.logging.Level.parse
 
 class HabitTrackerMainFragment : Fragment() {
 
@@ -39,6 +26,8 @@ class HabitTrackerMainFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHabitTrackerMainBinding.inflate(inflater, container, false)
+        binding.rvHabitList.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+        binding.rvHabitList.adapter = HabitTrackerMainAdapter(createSampleHabit())
 
         binding.mainCalendarButton.setText(SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA).format(Date()).toString())
 
