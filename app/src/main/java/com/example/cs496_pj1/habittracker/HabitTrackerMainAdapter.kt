@@ -5,16 +5,14 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_pj1.databinding.HabitRowBinding
-import com.example.cs496_pj1.habittracker.database.Habit
+import com.example.cs496_pj1.models.Habit
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class HabitTrackerMainAdapter(val habitList: List<Habit>) : RecyclerView.Adapter<HabitTrackerMainAdapter.CustomViewHolder>() {
+class HabitTrackerMainAdapter(val habitList: ArrayList<Habit>) : RecyclerView.Adapter<HabitTrackerMainAdapter.CustomViewHolder>() {
 
     lateinit var context: Context
     private lateinit var binding: HabitRowBinding
@@ -46,10 +44,10 @@ class HabitTrackerMainAdapter(val habitList: List<Habit>) : RecyclerView.Adapter
 
         fun bind(item: Habit) {
             habit.text = item.todo
-            start.text = long2str(item.start)
+            start.text = date2str(item.start)
 
             if (item.end != null) {
-                end.text = long2str(item.end!!)
+                end.text = date2str(item.end!!)
             } else {
                 end.text = ""
             }

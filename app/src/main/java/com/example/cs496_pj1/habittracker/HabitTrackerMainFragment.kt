@@ -15,7 +15,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cs496_pj1.contacts.UserContactEditActivity
 import com.example.cs496_pj1.databinding.FragmentHabitTrackerMainBinding
-import com.example.cs496_pj1.habittracker.database.Habit
+import com.example.cs496_pj1.models.Habit
+import com.example.cs496_pj1.models.createSampleHabit
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -23,28 +24,22 @@ class HabitTrackerMainFragment : Fragment() {
 
     private lateinit var binding: FragmentHabitTrackerMainBinding
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
-    private var habitList: List<Habit> = listOf()
-    private val viewModel: HabitTrackerViewModel by activityViewModels()
+    private var habitArray = createSampleHabit()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        // Observe Live Data
-        viewModel.allWords.observe(viewLifecycleOwner) { habits ->
-            habitList = habits
-            var newAdapter = HabitTrackerMainAdapter(habitList)
-            binding.rvHabitList.adapter = newAdapter
-        }
-
         // Binding
         binding = FragmentHabitTrackerMainBinding.inflate(inflater, container, false)
         binding.rvHabitList.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-        //binding.rvHabitList.adapter = HabitTrackerMainAdapter(viewModel.allWords)
+        binding.rvHabitList.adapter = HabitTrackerMainAdapter(habitArray)
 
         binding.mainCalendarButton.setText(SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA).format(Date()).toString())
 
+
+        // Mini Calendar Config
         childFragmentManager.setFragmentResultListener("dateRequestKey", viewLifecycleOwner) { requestKey, bundle ->
             // We use a String here, but any type that can be put in a Bundle is supported
             val dateString = bundle.getString("date")!!
@@ -57,29 +52,25 @@ class HabitTrackerMainFragment : Fragment() {
             dialog.show(childFragmentManager, "DateDialog")
         }
 
-        // Edit
+        // Add Logic
         activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
-                //val habit = result.data?.getStringExtra("habit") ?: ""
-                //viewModel.insert(habit)
                 val todo = result.data?.getStringExtra("todo") ?: ""
                 val start = result.data?.getStringExtra("start") ?: ""
                 val end = result.data?.getStringExtra("end") ?: ""
 
-                val r = Runnable {
-                    if (todo != "" && start != "") {
-                        if (end != "") {
-                            val startLong = dateString2Date(start).time
-                            val endLong = dateString2Date(end).time
-                            viewModel.insert(Habit(todo, startLong, endLong, listOf()))
-                        } else {
-                            val startLong = dateString2Date(start).time
-                            viewModel.insert(Habit(todo, startLong, null, listOf()))
-                        }
+                if (todo != "" && start != "") {
+                    if (end != "") {
+                        val startDate = dateString2Date(start)
+                        val endDate = dateString2Date(end)
+                        habitArray.add(Habit(todo, startDate, endDate))
+                    } else {
+                        val startDate = dateString2Date(start)
+                        habitArray.add(Habit(todo, startDate, null))
                     }
+                    val newAdapter = HabitTrackerMainAdapter(habitArray)
+                    binding.rvHabitList.adapter = newAdapter
                 }
-                val thread = Thread(r)
-                thread.start()
             }
         }
 
