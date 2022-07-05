@@ -40,7 +40,7 @@ class HabitTrackerEditActivity : AppCompatActivity() {
         btnSave.setOnClickListener {
             val start = tvStart.text as String
             val end = tvEnd.text as String
-            val todo = habitText.toString()
+            val todo = habitText.text.toString()
 
             val intent = Intent(this, HabitTrackerMainFragment::class.java).apply {
                 putExtra("todo", todo)
