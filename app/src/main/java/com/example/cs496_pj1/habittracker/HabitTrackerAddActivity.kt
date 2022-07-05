@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import com.example.cs496_pj1.databinding.ActivityHabitTrackerAddBinding
-import com.example.cs496_pj1.databinding.ActivityHabitTrackerEditBinding
 import java.text.SimpleDateFormat
 import java.util.*
 

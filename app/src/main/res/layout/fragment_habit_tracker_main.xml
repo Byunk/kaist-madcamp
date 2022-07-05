@@ -29,20 +29,24 @@
 
     <ImageButton
         android:id="@+id/edit_button"
-        android:layout_width="54dp"
-        android:layout_height="48dp"
+        android:layout_width="37dp"
+        android:layout_height="33dp"
+        android:layout_margin="20dp"
+        android:background="@android:color/transparent"
         android:contentDescription="edit button"
         android:scaleType="fitXY"
-        android:src="@drawable/edit"
+        android:src="@drawable/ic_baseline_edit_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/main_calendar_button"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#00FFFFFF"
-        android:text="2022년 7월 11일"
+        android:text="2022년 7월 05일"
+        android:fontFamily="@font/gmsansbold"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/rv_habitList"
         app:layout_constraintEnd_toStartOf="@+id/edit_button"

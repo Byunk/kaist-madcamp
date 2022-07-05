@@ -105,7 +105,6 @@ class CalendarAdapter(
                     itemCalendarDateText.setTextColor(Color.parseColor("#636161"))
                 }
             }
-
         }
 
         private fun isMatchYearMonth(): Boolean {
