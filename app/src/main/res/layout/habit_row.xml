@@ -4,48 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:layout_margin="15dp"
+    android:background="@color/cardview_shadow_end_color">
 
     <TextView
         android:id="@+id/tv_habit_item"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="도담이 쓰다듬기"
-        android:textSize="24sp"
+        android:fontFamily="@font/gmsansmedium"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/startdate_textview"
+        android:id="@+id/enddate_textview"
         android:layout_width="115dp"
         android:layout_height="0dp"
+        android:textSize="11sp"
         android:text="2022년 6월 18일"
+        android:fontFamily="@font/gmsansmedium"
+        android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/enddate_textview"
+        app:layout_constraintStart_toEndOf="@+id/startdate_textview"
         app:layout_constraintTop_toBottomOf="@+id/tv_habit_item" />
 
     <TextView
-        android:id="@+id/enddate_textview"
+        android:id="@+id/startdate_textview"
         android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:text="2022년 7월 11일"
+        android:text="2022년 6월 11일"
+        android:textSize="11sp"
+        android:fontFamily="@font/gmsansmedium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_habit_item" />
 
-    <com.ncorti.slidetoact.SlideToActView
-        android:id="@+id/todoSlider"
-        android:layout_width="92dp"
+    <CheckBox
+        android:id="@+id/habit_checkBox"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:area_margin="0dp"
-        app:complete_icon="@drawable/check"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:slider_height="40dp"
-        app:slider_locked="false"
-        app:text="      완료!"
-        app:text_size="12sp" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

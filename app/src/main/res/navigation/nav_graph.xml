@@ -20,4 +20,9 @@
         android:name="com.example.cs496_pj1.gallery.GalleryFragment"
         android:label="gallery_item"
         tools:layout="@layout/gallery_item" />
+    <fragment
+        android:id="@+id/habitTrackerMainFragment"
+        android:name="com.example.cs496_pj1.habittracker.HabitTrackerMainFragment"
+        android:label="fragment_habit_tracker_main"
+        tools:layout="@layout/fragment_habit_tracker_main" />
 </navigation>

@@ -1,17 +1,17 @@
-package com.example.cs496_pj1
+package com.example.cs496_pj1.gallery
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.example.cs496_pj1.R
 import com.example.cs496_pj1.models.Images
 import com.github.chrisbanes.photoview.PhotoView
-import kotlinx.android.synthetic.main.activity_image.*
+//import kotlinx.android.synthetic.main.activity_image.*
 import kotlinx.coroutines.NonDisposableHandle.parent
 
 lateinit var imgList: ArrayList<Images>

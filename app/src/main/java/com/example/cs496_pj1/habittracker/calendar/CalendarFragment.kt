@@ -14,16 +14,22 @@ import com.example.cs496_pj1.MainActivity
 import com.example.cs496_pj1.databinding.FragmentCalendarBinding
 import com.example.cs496_pj1.habittracker.HabitTrackerDetailActivity
 import com.example.cs496_pj1.models.CustomCalendar
+import com.example.cs496_pj1.models.Habit
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
-class CalendarFragment(position: Int) : Fragment() {
+class CalendarFragment(position: Int, start: Long, end: Long, didArrayList: ArrayList<Date>) : Fragment() {
     lateinit var mContext: Context
 
     lateinit var currentDate: Date
     lateinit var calendar_year_month_text: TextView
     lateinit var calendarLayout: LinearLayout
     lateinit var calendarView: RecyclerView
+    var start = start
+    var end = end
+    var didArrayList = didArrayList
+
 
     private lateinit var binding: FragmentCalendarBinding
 
@@ -74,6 +80,7 @@ class CalendarFragment(position: Int) : Fragment() {
 
         // Init Calendar VIew
         binding.calendarView.layoutManager = GridLayoutManager(mContext, CustomCalendar.DAYS_OF_WEEK)
-        binding.calendarView.adapter = CalendarAdapter(mContext, calendarLayout, currentDate)
+        binding.calendarView.adapter = CalendarAdapter(mContext, calendarLayout, currentDate, start, end,
+            didArrayList)
     }
 }

@@ -10,7 +10,7 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.cs496_pj1.ImageActivity
+import com.example.cs496_pj1.gallery.ImageActivity
 import com.example.cs496_pj1.R
 import com.example.cs496_pj1.contacts.ContactsAdapter
 import com.example.cs496_pj1.models.Images

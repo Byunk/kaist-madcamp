@@ -14,12 +14,14 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_pj1.R
 import com.example.cs496_pj1.models.CustomCalendar
+import com.example.cs496_pj1.models.Habit
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 class CalendarAdapter(
-    val context: Context, val calendarLayout: LinearLayout, val date: Date, var start: Date? = null, var end: Date? = null
+    val context: Context, val calendarLayout: LinearLayout, val date: Date, var start: Long, var end: Long,
+    var didArrayList: ArrayList<Date>
     ) : RecyclerView.Adapter<CalendarAdapter.CalendarItemHolder>() {
 
     var dataList: ArrayList<Int> = arrayListOf()
@@ -52,7 +54,6 @@ class CalendarAdapter(
     inner class CalendarItemHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
 
         var itemCalendarDateText: TextView = itemView!!.findViewById(R.id.calendar_row_text)
-        //var itemCalendarDotView: View = itemView!!.item_calendar_dot_view
 
         fun bind(data: Int, position: Int, context: Context) {
             val firstDateIndex = customCalendar.prevTail
@@ -72,47 +73,36 @@ class CalendarAdapter(
 
             // 현재 월의 1일 이전, 현재 월의 마지막일 이후 값의 텍스트를 회색처리
             if (position < firstDateIndex || position > lastDateIndex) {
-                //itemCalendarDateText.setTextColor(Color.parseColor("#FFFFFF")) //("#676d6e"))
                 itemCalendarDateText.setTextColor(getColor(context, R.color.whiteBlue))
-                //itemCalendarDotView.background = null
             }
 
-            // Testing
-            start = Calendar.getInstance().run {
-                set(2022, 6, 30)
-                time
-            }
-            end = Calendar.getInstance().run {
-                set(2022, 7, 18)
-                time
-            }
-
+            // 목표 기간 내의 데이터를 볼드처리
+            val dateStart = Date(start)
+            val dateEnd = Date(end)
             // Specify if date is in between from and end Date
-            if (start != null && end != null) {
+            if (dateStart != null && dateEnd != null) {
                 val todayDate = Calendar.getInstance().run {
-                    set(calendarYear, calendarMonth, dataList[position])
+                    set(calendarYear, calendarMonth-1, dataList[position])
                     time
                 }
 
-                if (!(position < firstDateIndex || position > lastDateIndex) && todayDate.compareTo(start!!) >= 0 && todayDate.compareTo(end!!) <= 0) {
+                if (!(position < firstDateIndex || position > lastDateIndex) && todayDate.compareTo(dateStart) >= 0 && todayDate.compareTo(dateEnd) <= 0) {
                     itemCalendarDateText.setTextSize(Dimension.SP, 25F)
                     itemCalendarDateText.setTypeface(itemCalendarDateText.typeface, Typeface.BOLD)
                     itemCalendarDateText.setTextColor(Color.parseColor("#87CEEB"))
                 }
             }
 
-            itemView.setOnClickListener {
-                if (!(position < firstDateIndex || position > lastDateIndex)) {
-                    val intent = Intent(context, CalendarDetailActivity::class.java).apply {
-                        val year = SimpleDateFormat("yyyy", Locale.KOREA).format(date).toString()
-                        val month = SimpleDateFormat("MM", Locale.KOREA).format(date).toString()
-                        val day = dataList[position]
-                        val dateString = year + "년 " + month + "월 " + day + "일"
+            // 할일을 한 날짜에 표시
+            for (date in didArrayList) {
+                val year = SimpleDateFormat("yyyy", Locale.KOREA).format(date).toInt()
+                val month = SimpleDateFormat("MM", Locale.KOREA).format(date).toInt()
+                val day = SimpleDateFormat("dd", Locale.KOREA).format(date).toInt()
 
-                        putExtra("date", dateString)
-                        //putExtra("number", item.number)
-                        //addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    }.run { context.startActivity(this) }
+                if (calendarYear == year && calendarMonth == month && dataList[position] == day && !(position < firstDateIndex || position > lastDateIndex)) {
+                    itemCalendarDateText.setTextSize(Dimension.SP, 25F)
+                    itemCalendarDateText.setTypeface(itemCalendarDateText.typeface, Typeface.BOLD)
+                    itemCalendarDateText.setTextColor(Color.parseColor("#ff0000"))
                 }
             }
         }
