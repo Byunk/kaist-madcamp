@@ -73,6 +73,11 @@ class HabitTrackerMainAdapter(val habitArray: ArrayList<Habit>) : RecyclerView.A
 
             return SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA).format(result).toString()
         }
+
+        private fun dateString2Date(dateString: String): Date {
+            val formatter = SimpleDateFormat("yyyy년 MM월 dd일")
+            return formatter.parse(dateString)
+        }
     }
 
 }
