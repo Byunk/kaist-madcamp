@@ -66,16 +66,20 @@ class HabitTrackerMainFragment : Fragment() {
                 val start = result.data?.getStringExtra("start") ?: ""
                 val end = result.data?.getStringExtra("end") ?: ""
 
-                if (todo != "" && start != "") {
-                    if (end != "") {
-                        val startLong = dateString2Date(start).time
-                        val endLong = dateString2Date(end).time
-                        viewModel.insert(Habit(todo, startLong, endLong, listOf()))
-                    } else {
-                        val startLong = dateString2Date(start).time
-                        viewModel.insert(Habit(todo, startLong, null, listOf()))
+                val r = Runnable {
+                    if (todo != "" && start != "") {
+                        if (end != "") {
+                            val startLong = dateString2Date(start).time
+                            val endLong = dateString2Date(end).time
+                            viewModel.insert(Habit(todo, startLong, endLong, listOf()))
+                        } else {
+                            val startLong = dateString2Date(start).time
+                            viewModel.insert(Habit(todo, startLong, null, listOf()))
+                        }
                     }
                 }
+                val thread = Thread(r)
+                thread.start()
             }
         }
 
