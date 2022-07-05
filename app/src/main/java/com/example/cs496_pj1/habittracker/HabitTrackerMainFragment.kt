@@ -21,6 +21,7 @@ class HabitTrackerMainFragment : Fragment() {
     private lateinit var binding: FragmentHabitTrackerMainBinding
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private var habitArray = createSampleHabit()
+    private var date: String = SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA).format(Date()).toString()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,10 +31,10 @@ class HabitTrackerMainFragment : Fragment() {
         // Binding
         binding = FragmentHabitTrackerMainBinding.inflate(inflater, container, false)
         binding.rvHabitList.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-        binding.rvHabitList.adapter = HabitTrackerMainAdapter(habitArray)
+        binding.rvHabitList.adapter = HabitTrackerMainAdapter(habitArray, date)
 
         // Set initial Value to Today
-        binding.mainCalendarButton.setText(SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA).format(Date()).toString())
+        binding.mainCalendarButton.setText(date)
 
         // Mini Calendar Config
         childFragmentManager.setFragmentResultListener("dateRequestKey", viewLifecycleOwner) { requestKey, bundle ->
@@ -41,6 +42,9 @@ class HabitTrackerMainFragment : Fragment() {
             val dateString = bundle.getString("date")!!
             // Do something with the result
             binding.mainCalendarButton.text = dateString
+            date = dateString
+            val newAdapter = HabitTrackerMainAdapter(habitArray, date)
+            binding.rvHabitList.adapter = newAdapter
         }
 
         binding.mainCalendarButton.setOnClickListener {
@@ -67,7 +71,7 @@ class HabitTrackerMainFragment : Fragment() {
                         val startDate = dateString2Date(start)
                         habitArray.add(Habit(todo, startDate, null))
                     }
-                    val newAdapter = HabitTrackerMainAdapter(habitArray)
+                    val newAdapter = HabitTrackerMainAdapter(habitArray, date)
                     binding.rvHabitList.adapter = newAdapter
                 }
             }

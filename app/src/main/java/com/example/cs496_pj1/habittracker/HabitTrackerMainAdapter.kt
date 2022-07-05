@@ -2,6 +2,7 @@ package com.example.cs496_pj1.habittracker
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class HabitTrackerMainAdapter(val habitArray: ArrayList<Habit>) : RecyclerView.Adapter<HabitTrackerMainAdapter.CustomViewHolder>() {
+class HabitTrackerMainAdapter(val habitArray: ArrayList<Habit>, val date: String) : RecyclerView.Adapter<HabitTrackerMainAdapter.CustomViewHolder>() {
 
     lateinit var context: Context
     private lateinit var binding: HabitRowBinding
@@ -39,7 +40,7 @@ class HabitTrackerMainAdapter(val habitArray: ArrayList<Habit>) : RecyclerView.A
         val habit = binding.tvHabitItem
         val start = binding.startdateTextview
         val end = binding.enddateTextview
-        val slider = binding.todoSlider
+        val checkBox = binding.habitCheckBox
 
 
         fun bind(item: Habit) {
@@ -58,6 +59,22 @@ class HabitTrackerMainAdapter(val habitArray: ArrayList<Habit>) : RecyclerView.A
                     putExtra("end", item.end?.time)
                     putExtra("didArray", item.didArray)
                 }.run { context.startActivity(this) }
+            }
+
+            // CheckBox Initializer
+            /*
+            val thisday = dateString2Date(date)
+            if (item.didArray.contains(thisday)) {
+                checkBox.isChecked
+            }*/
+
+            checkBox.setOnClickListener {
+                if (checkBox.isChecked) {
+                    item.didArray.add(dateString2Date(date))
+                    Log.i("Main", date)
+                } else {
+                    item.didArray.remove(dateString2Date(date))
+                }
             }
         }
 

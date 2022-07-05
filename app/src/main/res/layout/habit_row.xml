@@ -41,19 +41,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_habit_item" />
 
-    <com.ncorti.slidetoact.SlideToActView
-        android:id="@+id/todoSlider"
-        android:layout_width="92dp"
+    <CheckBox
+        android:id="@+id/habit_checkBox"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:area_margin="0dp"
-        app:complete_icon="@drawable/check"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:slider_height="40dp"
-        app:slider_locked="false"
-        app:text="          Check!"
-        android:fontFamily="@font/gmsansmedium"
-        app:text_size="12sp" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

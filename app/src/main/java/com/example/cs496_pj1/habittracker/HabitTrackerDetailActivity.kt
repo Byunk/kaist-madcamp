@@ -68,11 +68,8 @@ class HabitTrackerDetailActivity : AppCompatActivity() {
                 R.id.ic_calendar -> {
                     viewPager.setCurrentItem(0)
                 }
-                R.id.ic_statistic1 -> {
+                R.id.ic_statistic -> {
                     viewPager.setCurrentItem(1)
-                }
-                R.id.ic_statistic2 -> {
-                    viewPager.setCurrentItem(2)
                 }
             }
             true
@@ -83,13 +80,12 @@ class HabitTrackerDetailActivity : AppCompatActivity() {
         FragmentStateAdapter(fm, lifecycle)
     {
 
-        override fun getItemCount(): Int = 3
+        override fun getItemCount(): Int = 2
 
         override fun createFragment(position: Int): Fragment {
             when (position) {
                 0 -> return CalendarMainFragment(start, end, didArray)
-                1 -> return PieChartFragment(didArray)
-                //2 -> return HabitTrackerMainFragment()
+                1 -> return PieChartFragment(start, end, didArray)
             }
             return CalendarMainFragment(start, end, didArray)
         }

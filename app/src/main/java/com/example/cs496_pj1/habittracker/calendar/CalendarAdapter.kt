@@ -96,13 +96,13 @@ class CalendarAdapter(
             // 할일을 한 날짜에 표시
             for (date in didArrayList) {
                 val year = SimpleDateFormat("yyyy", Locale.KOREA).format(date).toInt()
-                val month = SimpleDateFormat("MM", Locale.KOREA).format(date).toInt()-1
+                val month = SimpleDateFormat("MM", Locale.KOREA).format(date).toInt()
                 val day = SimpleDateFormat("dd", Locale.KOREA).format(date).toInt()
 
-                if (calendarYear == year && calendarMonth == month && dataList[position] == day) {
+                if (calendarYear == year && calendarMonth == month && dataList[position] == day && !(position < firstDateIndex || position > lastDateIndex)) {
                     itemCalendarDateText.setTextSize(Dimension.SP, 25F)
                     itemCalendarDateText.setTypeface(itemCalendarDateText.typeface, Typeface.BOLD)
-                    itemCalendarDateText.setTextColor(Color.parseColor("#636161"))
+                    itemCalendarDateText.setTextColor(Color.parseColor("#ff0000"))
                 }
             }
         }
