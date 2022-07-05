@@ -8,8 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cs496_pj1.databinding.FragmentHabitTrackerMainBinding
+import com.example.cs496_pj1.habittracker.database.HabitApplication
 import com.example.cs496_pj1.models.createSampleHabit
 import java.text.SimpleDateFormat
 import java.util.*
@@ -19,11 +22,13 @@ class HabitTrackerMainFragment : Fragment() {
     private lateinit var binding: FragmentHabitTrackerMainBinding
     private lateinit var mContext: Context
 
+    private val viewModel: HabitTrackerViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         binding = FragmentHabitTrackerMainBinding.inflate(inflater, container, false)
         binding.rvHabitList.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)

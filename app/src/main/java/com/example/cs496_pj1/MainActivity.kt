@@ -3,18 +3,23 @@ package com.example.cs496_pj1
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cs496_pj1.contacts.ContactsFragment
 import com.example.cs496_pj1.databinding.ActivityMainBinding
 import com.example.cs496_pj1.gallery.GalleryFragment
 import com.example.cs496_pj1.habittracker.HabitTrackerMainFragment
+import com.example.cs496_pj1.habittracker.HabitTrackerViewModel
+import com.example.cs496_pj1.habittracker.HabitViewModelFactory
+import com.example.cs496_pj1.habittracker.database.HabitApplication
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 private const val NUM_PAGES = 3
@@ -23,12 +28,24 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewPager: ViewPager2
     private lateinit var binding: ActivityMainBinding
 
+    //ViewModel
+    private val habitTrackerViewModel: HabitTrackerViewModel by viewModels {
+        HabitViewModelFactory((application as HabitApplication).repository)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val navView: BottomNavigationView = binding.navView
 
+        // View Model Observer
+        habitTrackerViewModel.allWords.observe(this, Observer { habits ->
+            // Update the cached copy of the words in the adapter.
+            //habits?.let { adapter.submitList(it) }
+        })
+
+
+        val navView: BottomNavigationView = binding.navView
         // Connects Adapter To Pager
         viewPager = binding.pager
         viewPager.adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
