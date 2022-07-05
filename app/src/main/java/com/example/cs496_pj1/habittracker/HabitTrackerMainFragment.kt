@@ -1,9 +1,7 @@
 package com.example.cs496_pj1.habittracker
 
 import android.app.Activity.RESULT_OK
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,9 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.cs496_pj1.contacts.UserContactEditActivity
 import com.example.cs496_pj1.databinding.FragmentHabitTrackerMainBinding
 import com.example.cs496_pj1.models.Habit
 import com.example.cs496_pj1.models.createSampleHabit
@@ -36,8 +32,8 @@ class HabitTrackerMainFragment : Fragment() {
         binding.rvHabitList.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
         binding.rvHabitList.adapter = HabitTrackerMainAdapter(habitArray)
 
+        // Set initial Value to Today
         binding.mainCalendarButton.setText(SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA).format(Date()).toString())
-
 
         // Mini Calendar Config
         childFragmentManager.setFragmentResultListener("dateRequestKey", viewLifecycleOwner) { requestKey, bundle ->
@@ -59,11 +55,14 @@ class HabitTrackerMainFragment : Fragment() {
                 val start = result.data?.getStringExtra("start") ?: ""
                 val end = result.data?.getStringExtra("end") ?: ""
 
+                // Valid Check
                 if (todo != "" && start != "") {
                     if (end != "") {
                         val startDate = dateString2Date(start)
                         val endDate = dateString2Date(end)
-                        habitArray.add(Habit(todo, startDate, endDate))
+                        if (!endDate.before(startDate)) {
+                            habitArray.add(Habit(todo, startDate, endDate))
+                        }
                     } else {
                         val startDate = dateString2Date(start)
                         habitArray.add(Habit(todo, startDate, null))
@@ -75,7 +74,7 @@ class HabitTrackerMainFragment : Fragment() {
         }
 
         binding.fabAdd.setOnClickListener {
-            val intent = Intent(context, HabitTrackerEditActivity::class.java)
+            val intent = Intent(context, HabitTrackerAddActivity::class.java)
             activityResultLauncher.launch(intent)
         }
 

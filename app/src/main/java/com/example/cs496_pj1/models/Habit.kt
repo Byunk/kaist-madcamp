@@ -3,10 +3,12 @@ package com.example.cs496_pj1.models
 import java.util.*
 import kotlin.collections.ArrayList
 
-class Habit(var todo: String, var start: Date, var end: Date?, var didArray: ArrayList<Date> = arrayListOf()) {
-}
-
-public val sampleHabit = arrayListOf<Habit>()
+data class Habit(
+    var todo: String,
+    var start: Date,
+    var end: Date?,
+    var didArray: ArrayList<Date> = arrayListOf()
+)
 
 public fun createSampleHabit(): ArrayList<Habit> {
     val cal = Calendar.getInstance()

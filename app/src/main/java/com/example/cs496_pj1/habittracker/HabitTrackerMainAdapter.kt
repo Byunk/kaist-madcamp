@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class HabitTrackerMainAdapter(val habitList: ArrayList<Habit>) : RecyclerView.Adapter<HabitTrackerMainAdapter.CustomViewHolder>() {
+class HabitTrackerMainAdapter(val habitArray: ArrayList<Habit>) : RecyclerView.Adapter<HabitTrackerMainAdapter.CustomViewHolder>() {
 
     lateinit var context: Context
     private lateinit var binding: HabitRowBinding
@@ -28,11 +28,11 @@ class HabitTrackerMainAdapter(val habitList: ArrayList<Habit>) : RecyclerView.Ad
     }
 
     override fun getItemCount(): Int {
-        return habitList.size
+        return habitArray.size
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        holder.bind(habitList[position])
+        holder.bind(habitArray[position])
     }
 
     inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -54,22 +54,24 @@ class HabitTrackerMainAdapter(val habitList: ArrayList<Habit>) : RecyclerView.Ad
 
             itemView.setOnClickListener {
                 val intent = Intent(context, HabitTrackerDetailActivity::class.java).apply {
-                    putExtra("start", item.start)
-
-                    if (item.end != null) {
-                        putExtra("end", item.end)
-                    }
+                    putExtra("start", item.start.time)
+                    putExtra("end", item.end?.time)
+                    putExtra("didArray", item.didArray)
                 }.run { context.startActivity(this) }
             }
         }
 
         private fun date2str(date: Date): String {
-            return SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA).format(date).toString()
-        }
+            val year = SimpleDateFormat("yyyy", Locale.KOREA).format(date).toInt()
+            val month = SimpleDateFormat("MM", Locale.KOREA).format(date).toInt()-1
+            val day = SimpleDateFormat("dd", Locale.KOREA).format(date).toInt()
 
-        private fun long2str(date: Long): String {
-            val date = Date(date)
-            return date2str(date)
+            val result = Calendar.getInstance().run {
+                set(year, month, day)
+                time
+            }
+
+            return SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA).format(result).toString()
         }
     }
 

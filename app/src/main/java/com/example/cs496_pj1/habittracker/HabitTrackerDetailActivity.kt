@@ -1,9 +1,12 @@
 package com.example.cs496_pj1.habittracker
 
 import android.content.pm.PackageManager
+import android.icu.util.Calendar
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -16,13 +19,21 @@ import com.example.cs496_pj1.contacts.ContactsFragment
 import com.example.cs496_pj1.databinding.ActivityHabitTrackerDetailBinding
 import com.example.cs496_pj1.gallery.GalleryFragment
 import com.example.cs496_pj1.habittracker.calendar.CalendarMainFragment
+import com.example.cs496_pj1.habittracker.charts.PieChartFragment
+import com.example.cs496_pj1.models.Habit
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HabitTrackerDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHabitTrackerDetailBinding
     private lateinit var viewPager: ViewPager2
+    var start: Long = 0
+    var end: Long = 0
+    var didArray: ArrayList<Date> = arrayListOf()
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -30,6 +41,11 @@ class HabitTrackerDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.habitTrackerNavView
+
+        val default = Calendar.getInstance().time.time
+        start = intent.getLongExtra("start", default)
+        end = intent.getLongExtra("end", default)
+        didArray = intent.getSerializableExtra("didArray") as ArrayList<Date>
 
         // Connects Adapter To Pager
         viewPager = binding.habitTrackerPager
@@ -71,11 +87,11 @@ class HabitTrackerDetailActivity : AppCompatActivity() {
 
         override fun createFragment(position: Int): Fragment {
             when (position) {
-                0 -> return CalendarMainFragment()
-                //1 -> return GalleryFragment()
+                0 -> return CalendarMainFragment(start, end, didArray)
+                1 -> return PieChartFragment(didArray)
                 //2 -> return HabitTrackerMainFragment()
             }
-            return CalendarMainFragment()
+            return CalendarMainFragment(start, end, didArray)
         }
     }
 }
