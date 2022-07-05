@@ -1,5 +1,5 @@
 package com.example.cs496_pj1.habittracker.calendar
-
+/*
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -51,4 +51,4 @@ class CalendarDetailAdapter(val habitList: ArrayList<Habit>) : RecyclerView.Adap
 
     }
 
-}
+}*/

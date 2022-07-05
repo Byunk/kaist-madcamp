@@ -2,7 +2,7 @@ package com.example.cs496_pj1.models
 
 import java.util.*
 import kotlin.collections.ArrayList
-
+/*
 class Habit(val habit: String, val start: Date, val end: Date?) {
 }
 
@@ -35,4 +35,4 @@ public fun createSampleHabit(): ArrayList<Habit> {
     val temp2 = Habit("술마시기", start2, end2)
 
     return arrayListOf(temp1, temp2)
-}
+}*/
