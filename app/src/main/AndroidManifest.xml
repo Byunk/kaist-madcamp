@@ -20,6 +20,9 @@
             android:name=".habittracker.HabitTrackerAddActivity"
             android:exported="false" />
         <activity
+            android:name=".habittracker.HabitTrackerEditActivity"
+            android:exported="false" />
+        <activity
             android:name=".habittracker.HabitTrackerDetailActivity"
             android:exported="false" />
 
