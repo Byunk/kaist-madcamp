@@ -36,6 +36,15 @@ class HabitTrackerMainFragment : Fragment() {
         // Set initial Value to Today
         binding.mainCalendarButton.setText(date)
 
+        // Edit Button
+        binding.editButton.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.rvHabitList.adapter = HabitTrackerMainAdapterForEdit(habitArray, date)
+            } else {
+                binding.rvHabitList.adapter = HabitTrackerMainAdapter(habitArray, date)
+            }
+        }
+
         // Mini Calendar Config
         childFragmentManager.setFragmentResultListener("dateRequestKey", viewLifecycleOwner) { requestKey, bundle ->
             // We use a String here, but any type that can be put in a Bundle is supported

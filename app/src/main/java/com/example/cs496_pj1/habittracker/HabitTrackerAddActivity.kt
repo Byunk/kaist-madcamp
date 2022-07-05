@@ -34,6 +34,8 @@ class HabitTrackerAddActivity : AppCompatActivity() {
         val todayString = SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA).format(
             Date()).toString()
         tvStart.text = todayString
+        val todo = intent.getStringExtra("todo")
+        habitText.setText(todo)
 
         //save
         btnSave.setOnClickListener {

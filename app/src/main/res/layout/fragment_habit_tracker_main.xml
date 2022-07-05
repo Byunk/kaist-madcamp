@@ -13,8 +13,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_button" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_button"
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAdd"
@@ -27,26 +29,24 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageButton
+
+    <ToggleButton
         android:id="@+id/edit_button"
-        android:layout_width="37dp"
-        android:layout_height="33dp"
-        android:layout_margin="20dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="edit button"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_baseline_edit_24"
+        android:layout_width="60dp"
+        android:layout_height="46dp"
+        android:text="ToggleButton"
+        android:textOff="Edit"
+        android:textOn="Done"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <Button
         android:id="@+id/main_calendar_button"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#00FFFFFF"
-        android:text="2022년 7월 05일"
         android:fontFamily="@font/gmsansbold"
+        android:text="2022년 7월 05일"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/rv_habitList"
         app:layout_constraintEnd_toStartOf="@+id/edit_button"
