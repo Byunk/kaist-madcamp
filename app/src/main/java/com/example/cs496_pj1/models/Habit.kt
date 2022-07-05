@@ -3,7 +3,7 @@ package com.example.cs496_pj1.models
 import java.util.*
 import kotlin.collections.ArrayList
 
-class Habit(val habit: String, val start: Date, val end: Date?) {
+class Habit(var todo: String, var start: Date, var end: Date?, var didArray: ArrayList<Date> = arrayListOf()) {
 }
 
 public val sampleHabit = arrayListOf<Habit>()

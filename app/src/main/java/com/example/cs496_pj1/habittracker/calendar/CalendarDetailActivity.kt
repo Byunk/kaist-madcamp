@@ -5,10 +5,9 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cs496_pj1.R
 import com.example.cs496_pj1.databinding.ActivityCalendarDetailBinding
-import com.example.cs496_pj1.models.Habit
 import java.text.SimpleDateFormat
 import java.util.*
-
+/*
 class CalendarDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCalendarDetailBinding
@@ -32,10 +31,10 @@ class CalendarDetailActivity : AppCompatActivity() {
         // Fetch HabitList
 
         // Temp Data
-        val habitList = arrayListOf<Habit>(Habit("Feeding Dodam", Date(), Date()))
+        //val habitList = arrayListOf<Habit>(Habit("Feeding Dodam", Date(), Date()))
 
         binding.rvHabitList.layoutManager = LinearLayoutManager(baseContext, LinearLayoutManager.VERTICAL, false)
         //binding.rvHabitList.setHasFixedSize(true)
         binding.rvHabitList.adapter = CalendarDetailAdapter(habitList)
     }
-}
+}*/

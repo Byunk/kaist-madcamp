@@ -1,15 +1,23 @@
 package com.example.cs496_pj1.habittracker
 
+import android.app.Activity.RESULT_OK
 import android.content.Context
-import android.os.Build
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cs496_pj1.R
+import com.example.cs496_pj1.contacts.UserContactEditActivity
 import com.example.cs496_pj1.databinding.FragmentHabitTrackerMainBinding
+import com.example.cs496_pj1.models.Habit
 import com.example.cs496_pj1.models.createSampleHabit
 import java.text.SimpleDateFormat
 import java.util.*
@@ -17,20 +25,23 @@ import java.util.*
 class HabitTrackerMainFragment : Fragment() {
 
     private lateinit var binding: FragmentHabitTrackerMainBinding
-    private lateinit var mContext: Context
-
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+    private var habitArray = createSampleHabit()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
+        // Binding
         binding = FragmentHabitTrackerMainBinding.inflate(inflater, container, false)
         binding.rvHabitList.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-        binding.rvHabitList.adapter = HabitTrackerMainAdapter(createSampleHabit())
+        binding.rvHabitList.adapter = HabitTrackerMainAdapter(habitArray)
 
         binding.mainCalendarButton.setText(SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA).format(Date()).toString())
 
+
+        // Mini Calendar Config
         childFragmentManager.setFragmentResultListener("dateRequestKey", viewLifecycleOwner) { requestKey, bundle ->
             // We use a String here, but any type that can be put in a Bundle is supported
             val dateString = bundle.getString("date")!!
@@ -38,29 +49,52 @@ class HabitTrackerMainFragment : Fragment() {
             binding.mainCalendarButton.text = dateString
         }
 
-        return binding.root
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        mContext = context
-    }
-
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onResume() {
-        super.onResume()
-
         binding.mainCalendarButton.setOnClickListener {
             val dialog = HabitTrackerMainCalendarFragment()
             dialog.show(childFragmentManager, "DateDialog")
         }
 
-        // View pager for dates / Edit button
+        // Add Logic
+        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val todo = result.data?.getStringExtra("todo") ?: ""
+                val start = result.data?.getStringExtra("start") ?: ""
+                val end = result.data?.getStringExtra("end") ?: ""
+
+                if (todo != "" && start != "") {
+                    if (end != "") {
+                        val startDate = dateString2Date(start)
+                        val endDate = dateString2Date(end)
+                        habitArray.add(Habit(todo, startDate, endDate))
+                    } else {
+                        val startDate = dateString2Date(start)
+                        habitArray.add(Habit(todo, startDate, null))
+                    }
+                    val newAdapter = HabitTrackerMainAdapter(habitArray)
+                    binding.rvHabitList.adapter = newAdapter
+                }
+            }
+        }
+
+        binding.fabAdd.setOnClickListener {
+            val intent = Intent(context, HabitTrackerEditActivity::class.java)
+            activityResultLauncher.launch(intent)
+        }
+
+//        binding.editButton.setOnClickListener{
+//            val intent
+//        }
 
 
+        return binding.root
     }
 
+    private fun dateString2Date(dateString: String): Date {
+        val formatter = SimpleDateFormat("yyyy년 MM월 dd일")
+        return formatter.parse(dateString)
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
 }

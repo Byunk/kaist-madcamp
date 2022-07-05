@@ -9,6 +9,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cs496_pj1.contacts.ContactsFragment
@@ -27,8 +30,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val navView: BottomNavigationView = binding.navView
 
+        val navView: BottomNavigationView = binding.navView
         // Connects Adapter To Pager
         viewPager = binding.pager
         viewPager.adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
@@ -94,6 +97,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun getItemCount(): Int = NUM_PAGES
 
+        // tab
         override fun createFragment(position: Int): Fragment {
             when (position) {
                 0 -> return ContactsFragment()

@@ -100,7 +100,7 @@ class CalendarAdapter(
                     itemCalendarDateText.setTextColor(Color.parseColor("#87CEEB"))
                 }
             }
-
+/*
             itemView.setOnClickListener {
                 if (!(position < firstDateIndex || position > lastDateIndex)) {
                     val intent = Intent(context, CalendarDetailActivity::class.java).apply {
@@ -114,7 +114,7 @@ class CalendarAdapter(
                         //addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     }.run { context.startActivity(this) }
                 }
-            }
+            }*/
         }
 
         private fun isMatchYearMonth(): Boolean {
