@@ -1,6 +1,7 @@
 package com.example.cs496_pj1.models
 
 import java.util.*
+<<<<<<< HEAD
 import kotlin.collections.ArrayList
 
 class Habit(var todo: String, var start: Date, var end: Date?, var didArray: ArrayList<Date> = arrayListOf()) {
@@ -36,3 +37,8 @@ public fun createSampleHabit(): ArrayList<Habit> {
 
     return arrayListOf(temp1, temp2)
 }
+=======
+
+class Habit(val obj: String, val start: Date, val end: Date) {
+}
+>>>>>>> 78861fe (DB package)

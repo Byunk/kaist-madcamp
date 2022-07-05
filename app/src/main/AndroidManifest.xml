@@ -17,6 +17,7 @@
         android:theme="@style/Theme.CS496_PJ1"
         tools:targetApi="31">
         <activity
+<<<<<<< HEAD
             android:name=".habittracker.HabitTrackerEditActivity"
             android:exported="false" />
         <activity
@@ -25,6 +26,9 @@
 
         <activity
             android:name=".gallery.ImageActivity"
+=======
+            android:name=".habittracker.CalendarDetailActivity"
+>>>>>>> 78861fe (DB package)
             android:exported="false" />
         <activity
             android:name=".contacts.UserContactEditActivity"

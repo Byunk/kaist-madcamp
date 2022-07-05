@@ -5,7 +5,13 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     tools:context=".habittracker.calendar.CalendarDetailActivity">
+=======
+    tools:context=".habittracker.CalendarDetailFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+>>>>>>> 78861fe (DB package)
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_habitList"
@@ -34,7 +40,11 @@
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
+<<<<<<< HEAD
         android:contentDescription="exit from habit"
+=======
+        android:contentDescription="exitfromhabit"
+>>>>>>> 78861fe (DB package)
         android:scaleType="fitXY"
         android:src="@drawable/x"
         app:layout_constraintEnd_toEndOf="parent"

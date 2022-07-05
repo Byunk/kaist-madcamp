@@ -77,6 +77,7 @@ class CalendarAdapter(
                 //itemCalendarDotView.background = null
             }
 
+<<<<<<< HEAD:app/src/main/java/com/example/cs496_pj1/habittracker/calendar/CalendarAdapter.kt
             // Testing
             start = Calendar.getInstance().run {
                 set(2022, 6, 30)
@@ -115,6 +116,20 @@ class CalendarAdapter(
                     }.run { context.startActivity(this) }
                 }
             }*/
+=======
+            itemView.setOnClickListener {
+                val intent = Intent(context, CalendarDetailActivity::class.java).apply {
+                    val year = SimpleDateFormat("yyyy", Locale.KOREA).format(date).toString()
+                    val month = SimpleDateFormat("MM", Locale.KOREA).format(date).toString()
+                    val day = dataList[position]
+                    val dateString = year + "년 " + month + "월 " + day + "일"
+
+                    putExtra("date", dateString)
+                    //putExtra("number", item.number)
+                    //addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }.run { context.startActivity(this) }
+            }
+>>>>>>> 78861fe (DB package):app/src/main/java/com/example/cs496_pj1/habittracker/CalendarAdapter.kt
         }
 
         private fun isMatchYearMonth(): Boolean {
