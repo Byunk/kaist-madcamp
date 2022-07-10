@@ -1,7 +1,8 @@
-package com.example.cs496_pj2_ui.retrofitService
+package com.example.cs496_pj2_ui.service
 
-import com.example.cs496_pj2_ui.retrofitService.model.ResponseCode
-import com.example.cs496_pj2_ui.retrofitService.model.UserData
+import com.example.cs496_pj2_ui.service.model.ResponseCode
+import com.example.cs496_pj2_ui.service.model.ScheduleData
+import com.example.cs496_pj2_ui.service.model.UserData
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -19,8 +20,8 @@ interface RetrofitInterface {
     @GET("/user/friends/{id}")
     fun getUserFriends(@Path("id") id: String): Call<ArrayList<String>>
 
-    //@GET("/user/schedule/{id}/{year}/{month}")
-    //fun getUserMonthlySchedule(@Path("id") id: String, @Path("year") year: Int, @Path("month") month: Int): Call<ArrayList<Schedule>>
+    @GET("/user/schedule/{id}/{year}/{month}")
+    fun getUserMonthlySchedule(@Path("id") id: String, @Path("year") year: Int, @Path("month") month: Int): Call<ArrayList<ScheduleData>>
 
     //@GET("/user/schedule/date/{id}/{year}/{month}/{date}")
     //fun getUserDailySchedule(@Path("id") id: String, @Path("year") year: Int, @Path("month") month: Int, @Path("date") date: Int): Call<ArrayList<Schedule>>

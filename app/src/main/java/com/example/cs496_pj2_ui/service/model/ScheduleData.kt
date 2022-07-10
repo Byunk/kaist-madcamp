@@ -1,4 +1,4 @@
-package com.example.cs496_pj2_ui.retrofitService.model
+package com.example.cs496_pj2_ui.service.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

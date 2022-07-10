@@ -1,4 +1,4 @@
-package com.example.cs496_pj2_ui.retrofitService
+package com.example.cs496_pj2_ui.service
 
 import com.google.gson.annotations.SerializedName
 

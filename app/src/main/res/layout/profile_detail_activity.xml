@@ -130,14 +130,15 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/img_call_profile"
+                android:id="@+id/img_schedule_profile"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="80dp"
                 android:layout_marginEnd="40dp"
                 android:layout_weight="1"
+                android:background="@color/white"
                 android:scaleType="centerInside"
-                app:srcCompat="@drawable/telephone"
+                app:srcCompat="@drawable/schedule"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <ImageButton
@@ -147,6 +148,7 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="80dp"
                 android:layout_weight="1"
+                android:background="@color/white"
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/comment"
                 tools:ignore="SpeakableTextPresentCheck" />

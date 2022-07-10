@@ -6,7 +6,8 @@ import android.os.Bundle
 import com.bumptech.glide.Glide
 import com.example.cs496_pj2_ui.R
 import com.example.cs496_pj2_ui.databinding.ProfileDetailActivityBinding
-import com.example.cs496_pj2_ui.retrofitService.model.UserData
+import com.example.cs496_pj2_ui.databinding.ProfileMonthlyScheduleActivityBinding
+import com.example.cs496_pj2_ui.service.model.UserData
 
 class ProfileDetailActivity : AppCompatActivity() {
 
@@ -47,8 +48,10 @@ class ProfileDetailActivity : AppCompatActivity() {
 
         }
 
-        binding.imgCallProfile.setOnClickListener {
-
+        binding.imgScheduleProfile.setOnClickListener {
+            val intent = Intent(this, ProfileMonthlyScheduleActivity::class.java)
+            intent.putExtra("id", data.id)
+            startActivity(intent)
         }
 
         binding.imgDmProfile.setOnClickListener {
@@ -56,7 +59,7 @@ class ProfileDetailActivity : AppCompatActivity() {
         }
 
         binding.btnEdit.setOnClickListener {
-            val intent = Intent(this, ProfileEditActivity::class.java)
+            val intent = Intent(baseContext, ProfileEditActivity::class.java)
             intent.putExtra("status", data.status)
             intent.putExtra("food", data.food)
             intent.putExtra("hobby", data.hobby)

@@ -13,9 +13,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.cs496_pj2_ui.R
 import com.example.cs496_pj2_ui.databinding.ProfileRowBinding
-import com.example.cs496_pj2_ui.retrofitService.RetrofitService
-import com.example.cs496_pj2_ui.retrofitService.model.UserData
-import org.w3c.dom.Text
+import com.example.cs496_pj2_ui.service.RetrofitService
+import com.example.cs496_pj2_ui.service.model.UserData
 
 class ProfileMainAdapter(val context: Context): RecyclerView.Adapter<ProfileMainAdapter.CustomViewHolder>() {
 
@@ -60,8 +59,6 @@ class ProfileMainAdapter(val context: Context): RecyclerView.Adapter<ProfileMain
         val status = itemView.findViewById<TextView>(R.id.tv_status_profile)!!
 
         fun bind(data: UserData) {
-            Log.e(RetrofitService.TAG, "bind Event")
-            Log.e(RetrofitService.TAG, itemView.toString())
             itemView.setOnClickListener {
                 Log.e(RetrofitService.TAG, "Click Item Event")
                 val intent = Intent(context, ProfileDetailActivity::class.java)

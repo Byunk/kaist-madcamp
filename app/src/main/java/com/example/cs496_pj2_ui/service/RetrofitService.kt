@@ -1,4 +1,4 @@
-package com.example.cs496_pj2_ui.retrofitService
+package com.example.cs496_pj2_ui.service
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

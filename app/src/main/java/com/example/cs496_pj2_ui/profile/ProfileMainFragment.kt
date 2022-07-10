@@ -13,9 +13,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.cs496_pj2_ui.R
 import com.example.cs496_pj2_ui.databinding.ProfileMainFragmentBinding
-import com.example.cs496_pj2_ui.databinding.ProfileRowBinding
-import com.example.cs496_pj2_ui.retrofitService.RetrofitService
-import com.example.cs496_pj2_ui.retrofitService.model.UserData
+import com.example.cs496_pj2_ui.service.RetrofitService
+import com.example.cs496_pj2_ui.service.model.UserData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
