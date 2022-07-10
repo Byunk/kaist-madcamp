@@ -45,7 +45,7 @@ class ProfileMonthlyScheduleFragment : Fragment() {
         binding = ProfileMonthlyScheduleFragmentBinding.inflate(inflater, container, false)
         binding.calendarDate.text = SimpleDateFormat("yyyy년 MM월", Locale.KOREA).format(date.time).toString()
 
-        adapter = ProfileMonthlyScheduleFragmentAdapter(mContext, binding.calendarLayout, date)
+        adapter = ProfileMonthlyScheduleFragmentAdapter(mContext, binding.calendarLayout, date, id)
         binding.rvMonthlyCalendar.layoutManager = GridLayoutManager(mContext, CustomCalendar.DAYS_OF_WEEK)
         binding.rvMonthlyCalendar.adapter = adapter
         return binding.root

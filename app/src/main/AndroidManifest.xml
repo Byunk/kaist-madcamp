@@ -16,6 +16,9 @@
         android:theme="@style/Theme.CS496_PJ2_UI"
         tools:targetApi="31">
         <activity
+            android:name=".profile.ProfileDailyScheduleActivity"
+            android:exported="false" />
+        <activity
             android:name=".profile.ProfileMonthlyScheduleActivity"
             android:exported="false" />
         <activity

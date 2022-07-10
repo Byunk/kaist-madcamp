@@ -23,8 +23,8 @@ interface RetrofitInterface {
     @GET("/user/schedule/{id}/{year}/{month}")
     fun getUserMonthlySchedule(@Path("id") id: String, @Path("year") year: Int, @Path("month") month: Int): Call<ArrayList<ScheduleData>>
 
-    //@GET("/user/schedule/date/{id}/{year}/{month}/{date}")
-    //fun getUserDailySchedule(@Path("id") id: String, @Path("year") year: Int, @Path("month") month: Int, @Path("date") date: Int): Call<ArrayList<Schedule>>
+    @GET("/user/schedule/date/{id}/{year}/{month}/{date}")
+    fun getUserDailySchedule(@Path("id") id: String, @Path("year") year: Int, @Path("month") month: Int, @Path("date") date: Int): Call<ArrayList<ScheduleData>>
 
     //@GET("/")
     //fun getChatsById(@Path("id") id: String): Call<ArrayList<Chat>>

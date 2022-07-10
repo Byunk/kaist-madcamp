@@ -1,6 +1,7 @@
 package com.example.cs496_pj2_ui.profile
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Typeface
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,7 +21,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ProfileMonthlyScheduleFragmentAdapter(val context: Context, val calendarLayout: LinearLayout, val date: Date)
+class ProfileMonthlyScheduleFragmentAdapter(val context: Context, val calendarLayout: LinearLayout, val date: Date, val id: String)
     : RecyclerView.Adapter<ProfileMonthlyScheduleFragmentAdapter.CalendarItemHolder>() {
 
     var dates: ArrayList<Int> = arrayListOf()
@@ -106,15 +107,14 @@ class ProfileMonthlyScheduleFragmentAdapter(val context: Context, val calendarLa
                 itemCalendarDateText.setTextColor(ContextCompat.getColor(context, R.color.white))
             }
 
-            /*
             itemView.setOnClickListener {
-                val intent = Intent(context, CalendarDetailActivity::class.java)
+                val intent = Intent(context, ProfileDailyScheduleActivity::class.java)
                 intent.putExtra("id", id)
-                intent.putExtra("year", calendarYear)
-                intent.putExtra("month", calendarMonth)
-                intent.putExtra("day", datelist[position])
+                intent.putExtra("year", year)
+                intent.putExtra("month", month)
+                intent.putExtra("date", date)
                 context.startActivity(intent)
-            }*/
+            }
         }
 
         private fun isMatchYearMonth(): Boolean {
