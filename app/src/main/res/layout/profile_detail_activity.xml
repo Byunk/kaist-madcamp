@@ -73,13 +73,30 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/img_profile_detail"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            tools:srcCompat="@tools:sample/avatars" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/img_profile_detail"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/btn_edit"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right|top"
+                android:layout_weight="0"
+                android:background="@color/white"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/edit"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/tv_name_profile_detail"

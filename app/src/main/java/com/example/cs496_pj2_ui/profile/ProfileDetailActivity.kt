@@ -1,5 +1,6 @@
 package com.example.cs496_pj2_ui.profile
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
@@ -19,7 +20,7 @@ class ProfileDetailActivity : AppCompatActivity() {
         data = intent.getParcelableExtra("data")!!
 
         binding.tvNameProfileDetail.text = data.name
-        binding.tvStatusProfileDetail.text = data.status
+        binding.tvStatusProfileDetail.text = data.status ?: ""
 
         if (data.imgUrl == null) {
             binding.imgProfileDetail.setImageResource(R.drawable.account)
@@ -52,6 +53,16 @@ class ProfileDetailActivity : AppCompatActivity() {
 
         binding.imgDmProfile.setOnClickListener {
 
+        }
+
+        binding.btnEdit.setOnClickListener {
+            val intent = Intent(this, ProfileEditActivity::class.java)
+            intent.putExtra("status", data.status)
+            intent.putExtra("food", data.food)
+            intent.putExtra("hobby", data.hobby)
+            intent.putExtra("favorites", data.favorites)
+            intent.putExtra("weekend", data.weekend)
+            startActivity(intent)
         }
     }
 }
