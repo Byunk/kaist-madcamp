@@ -1,15 +1,21 @@
 package com.example.cs496_pj2_ui.profile
 
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.cs496_pj2_ui.R
 import com.example.cs496_pj2_ui.databinding.ProfileRowBinding
+import com.example.cs496_pj2_ui.retrofitService.RetrofitService
 import com.example.cs496_pj2_ui.retrofitService.model.UserData
+import org.w3c.dom.Text
 
 class ProfileMainAdapter(val context: Context): RecyclerView.Adapter<ProfileMainAdapter.CustomViewHolder>() {
 
@@ -24,8 +30,9 @@ class ProfileMainAdapter(val context: Context): RecyclerView.Adapter<ProfileMain
         parent: ViewGroup,
         viewType: Int
     ): ProfileMainAdapter.CustomViewHolder {
-        binding = ProfileRowBinding.inflate(LayoutInflater.from(context))
-        return CustomViewHolder(binding.root)
+        //binding = ProfileRowBinding.inflate(LayoutInflater.from(context))
+        val view = LayoutInflater.from(context).inflate(R.layout.profile_row, parent, false)
+        return CustomViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ProfileMainAdapter.CustomViewHolder, position: Int) {
@@ -39,6 +46,7 @@ class ProfileMainAdapter(val context: Context): RecyclerView.Adapter<ProfileMain
                 .apply(RequestOptions().centerCrop())
                 .into(holder.imgProfile)
         }
+        holder.bind(friendsData[position])
     }
 
     fun addFriendItem(friendData: UserData) {
@@ -47,8 +55,19 @@ class ProfileMainAdapter(val context: Context): RecyclerView.Adapter<ProfileMain
     }
 
     inner class CustomViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val imgProfile = binding.imgProfile
-        val name = binding.tvNameProfile
-        val status = binding.tvStatusProfile
+        val imgProfile = itemView.findViewById<ImageView>(R.id.img_profile)!!
+        val name = itemView.findViewById<TextView>(R.id.tv_name_profile)!!
+        val status = itemView.findViewById<TextView>(R.id.tv_status_profile)!!
+
+        fun bind(data: UserData) {
+            Log.e(RetrofitService.TAG, "bind Event")
+            Log.e(RetrofitService.TAG, itemView.toString())
+            itemView.setOnClickListener {
+                Log.e(RetrofitService.TAG, "Click Item Event")
+                val intent = Intent(context, ProfileDetailActivity::class.java)
+                intent.putExtra("data", data)
+                context.startActivity(intent)
+            }
+        }
     }
 }

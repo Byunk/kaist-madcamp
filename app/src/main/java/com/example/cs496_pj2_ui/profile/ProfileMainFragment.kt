@@ -1,5 +1,6 @@
 package com.example.cs496_pj2_ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -68,11 +69,15 @@ class ProfileMainFragment : Fragment() {
                             .apply(RequestOptions().centerCrop())
                             .into(binding.imgMyProfile)
                     }
+
+                    binding.cvMyProfile.setOnClickListener {
+                        val intent = Intent(context, ProfileDetailActivity::class.java)
+                        intent.putExtra("data", myInfo)
+                        startActivity(intent)
+                    }
                 }
             }
         })
-        //binding.imgMyProfile
-        //binding.tvMyNameProfile.text
 
         // Fetch friends List
         val call = RetrofitService.retrofitInterface.getUserFriends(id)
