@@ -1,5 +1,6 @@
 package com.example.cs496_pj2_ui.profile
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -34,6 +35,12 @@ class ProfileDailyScheduleActivity : AppCompatActivity() {
         date = intent.getIntExtra("date", -1)
 
         binding = ProfileDailyScheduleActivityBinding.inflate(layoutInflater)
+
+        binding.fabAddDailySchedule.setOnClickListener {
+            val intent = Intent(this, ProfileDailyScheduleAddActivity::class.java)
+            intent.putExtra("id", id)
+            startActivity(intent)
+        }
 
         adapter = ProfileDailyScheduleActivityAdapter(this)
         binding.rvDailySchedule.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
