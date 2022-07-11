@@ -8,6 +8,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.cs496_pj2_ui.databinding.MainActivityBinding
 import com.example.cs496_pj2_ui.profile.ProfileMainFragment
+import com.example.cs496_pj2_ui.service.SocketService
 
 private const val NUM_PAGES = 2
 
@@ -22,6 +23,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         id = intent.getStringExtra("id")!!
+
+        // Connects Socket to Server
+        SocketService.setSocket()
+        SocketService.establishConnection()
 
         // Pager Config
         binding.pagerMain.adapter = PagerAdapter(supportFragmentManager, lifecycle)
