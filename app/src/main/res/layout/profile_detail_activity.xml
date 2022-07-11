@@ -142,6 +142,16 @@
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <ImageButton
+                android:id="@+id/img_promis_profile"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/pinky_promise"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <ImageButton
                 android:id="@+id/img_dm_profile"
                 android:layout_width="60dp"
                 android:layout_height="60dp"

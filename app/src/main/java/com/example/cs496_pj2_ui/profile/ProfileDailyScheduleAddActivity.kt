@@ -8,6 +8,8 @@ import android.widget.DatePicker
 import android.widget.TimePicker
 import com.example.cs496_pj2_ui.R
 import com.example.cs496_pj2_ui.databinding.ProfileDailyScheduleAddActivityBinding
+import com.example.cs496_pj2_ui.service.SocketService
+import com.example.cs496_pj2_ui.service.model.PromiseRequest
 import java.util.*
 
 class ProfileDailyScheduleAddActivity : AppCompatActivity() {
@@ -19,6 +21,7 @@ class ProfileDailyScheduleAddActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         id = intent.getStringExtra("id")!!
+        val receiver = intent.getStringExtra("receiver")!!
 
         binding = ProfileDailyScheduleAddActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -42,7 +45,13 @@ class ProfileDailyScheduleAddActivity : AppCompatActivity() {
         }
 
         binding.btnSaveAdd.setOnClickListener {
-
+            // Validity Check
+            if (binding.etDuration.text.isNotEmpty()) {
+                val mSocket = SocketService.getSocket()
+                val promiseRequest = PromiseRequest(id, receiver, 2022, 7, 11, 9, 30, "Hi!")
+                mSocket.emit("hi", promiseRequest)
+                finish()
+            }
         }
 
         binding.btnCancleAdd.setOnClickListener {

@@ -1,7 +1,10 @@
 package com.example.cs496_pj2_ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -21,6 +24,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Toolbar Config
+        setSupportActionBar(findViewById(R.id.main_toolbar))
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        binding.mainToolbar.title = "Instagram"
 
         id = intent.getStringExtra("id")!!
 
@@ -44,6 +52,28 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             false
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.profile_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_promise -> {
+                val intent = Intent(this, PromiseActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            R.id.action_make_promise -> {
+                // TODO: Add Promise without receiver 
+                //val intent = Intent(this, PromiseActivity::class.java)
+                //startActivity(intent)
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
         }
     }
 

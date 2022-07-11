@@ -3,6 +3,7 @@ package com.example.cs496_pj2_ui.profile
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.bumptech.glide.Glide
 import com.example.cs496_pj2_ui.R
 import com.example.cs496_pj2_ui.databinding.ProfileDetailActivityBinding
@@ -12,6 +13,7 @@ import com.example.cs496_pj2_ui.service.model.UserData
 class ProfileDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ProfileDetailActivityBinding
+    private lateinit var id: String
     private lateinit var data: UserData
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +21,9 @@ class ProfileDetailActivity : AppCompatActivity() {
         binding = ProfileDetailActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         data = intent.getParcelableExtra("data")!!
+
+        //if intent does not have id, it is myinfo
+        id = intent.getStringExtra("id") ?: data.id
 
         binding.tvNameProfileDetail.text = data.name
         binding.tvStatusProfileDetail.text = data.status ?: ""
@@ -48,9 +53,22 @@ class ProfileDetailActivity : AppCompatActivity() {
 
         }
 
+        // Disable Send button if Detail view is showing my Info
+        if (id == data.id) {
+            binding.imgPromisProfile.visibility = View.INVISIBLE
+            binding.imgPromisProfile.isEnabled = false
+        }
+
         binding.imgScheduleProfile.setOnClickListener {
             val intent = Intent(this, ProfileMonthlyScheduleActivity::class.java)
             intent.putExtra("id", data.id)
+            startActivity(intent)
+        }
+
+        binding.imgPromisProfile.setOnClickListener {
+            val intent = Intent(this, ProfileDailyScheduleAddActivity::class.java)
+            intent.putExtra("receiver", data.id)
+            intent.putExtra("id", id)
             startActivity(intent)
         }
 

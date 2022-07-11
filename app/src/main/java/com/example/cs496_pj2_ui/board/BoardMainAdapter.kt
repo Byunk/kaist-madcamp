@@ -1,4 +1,4 @@
-package com.example.cs496_pj2_ui.profile
+package com.example.cs496_pj2_ui.board
 
 import android.content.Context
 import android.content.Intent
@@ -13,10 +13,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.cs496_pj2_ui.R
 import com.example.cs496_pj2_ui.databinding.ProfileRowBinding
+import com.example.cs496_pj2_ui.profile.ProfileDetailActivity
+import com.example.cs496_pj2_ui.profile.ProfileMainAdapter
 import com.example.cs496_pj2_ui.service.RetrofitService
 import com.example.cs496_pj2_ui.service.model.UserData
-
-class ProfileMainAdapter(val context: Context, val id: String): RecyclerView.Adapter<ProfileMainAdapter.CustomViewHolder>() {
+/*
+class BoardMainAdapter(val context: Context, val id: String): RecyclerView.Adapter<BoardMainAdapter.CustomViewHolder>() {
 
     private lateinit var binding: ProfileRowBinding
     var friendsData: ArrayList<UserData> = arrayListOf()
@@ -68,4 +70,5 @@ class ProfileMainAdapter(val context: Context, val id: String): RecyclerView.Ada
             }
         }
     }
-}
+
+}*/

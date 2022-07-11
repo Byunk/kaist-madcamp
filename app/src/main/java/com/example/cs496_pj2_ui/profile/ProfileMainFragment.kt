@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,11 +33,16 @@ class ProfileMainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         id = arguments?.getString("id") as String
         binding = ProfileMainFragmentBinding.inflate(inflater, container, false)
 
+        binding.fabAddFriends.setOnClickListener {
+
+        }
+
         recyclerView = binding.rvProfile
-        recyclerAdapter = ProfileMainAdapter(requireContext())
+        recyclerAdapter = ProfileMainAdapter(requireContext(), id)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = recyclerAdapter
         return binding.root
@@ -143,5 +149,6 @@ class ProfileMainFragment : Fragment() {
             }
         })
     }
+
 }
 

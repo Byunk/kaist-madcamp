@@ -1,19 +1,20 @@
 package com.example.cs496_pj2_ui.service
 
-import com.example.cs496_pj2_ui.service.model.ResponseCode
-import com.example.cs496_pj2_ui.service.model.ScheduleData
-import com.example.cs496_pj2_ui.service.model.UserData
+import com.example.cs496_pj2_ui.service.model.*
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 interface RetrofitInterface {
 
+    //Login
     @POST("/user/login")
     fun executeLogin(@Body loginRequest: LoginRequest): Call<LoginResponse>
 
     @POST("/user/signup")
     fun executeSignup(@Body signupRequest: SignupRequest): Call<ResponseCode>
 
+    //User Data
     @GET("/user/{id}")
     fun getUserById(@Path("id") id: String): Call<UserData>
 
@@ -29,6 +30,24 @@ interface RetrofitInterface {
     //@GET("/")
     //fun getChatsById(@Path("id") id: String): Call<ArrayList<Chat>>
 
-    //@GET("/")
-    //fun getBoards(): Call<ArrayList<Board>>
+    //Promise
+
+    //Board
+    @GET("/board")
+    fun getBoards(): Call<ArrayList<Board>>
+
+    @POST("/board/write")
+    fun writeBoard(@Body writeBoardRequest: WriteBoardRequest): Call<ResponseCode>
+
+    @GET("/board/{id}")
+    fun findBoardById(@Path("id") id: String): Call<Board>
+
+    @POST("/board/delete")
+    fun deleteBoard(@Body deleteBoardRequest: DeleteBoardRequest): Call<ResponseCode>
+
+    @POST("/board/comment")
+    fun writeComment(@Body writeCommentRequest: WriteCommentRequest): Call<ResponseCode>
+
+    @POST("/board/comment/delete")
+    fun deleteComment(@Body deleteCommentRequest: DeleteCommentRequest): Call<ResponseCode>
 }
