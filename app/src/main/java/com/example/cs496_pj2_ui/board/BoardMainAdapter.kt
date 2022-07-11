@@ -6,69 +6,65 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.cs496_pj2_ui.R
-import com.example.cs496_pj2_ui.databinding.ProfileRowBinding
 import com.example.cs496_pj2_ui.profile.ProfileDetailActivity
 import com.example.cs496_pj2_ui.profile.ProfileMainAdapter
 import com.example.cs496_pj2_ui.service.RetrofitService
+import com.example.cs496_pj2_ui.service.model.Board
 import com.example.cs496_pj2_ui.service.model.UserData
-/*
+
 class BoardMainAdapter(val context: Context, val id: String): RecyclerView.Adapter<BoardMainAdapter.CustomViewHolder>() {
 
-    private lateinit var binding: ProfileRowBinding
-    var friendsData: ArrayList<UserData> = arrayListOf()
+    var boards: ArrayList<Board> = arrayListOf()
 
     override fun getItemCount(): Int {
-        return friendsData.size
+        return boards.size
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ProfileMainAdapter.CustomViewHolder {
-        //binding = ProfileRowBinding.inflate(LayoutInflater.from(context))
-        val view = LayoutInflater.from(context).inflate(R.layout.profile_row, parent, false)
+    ): BoardMainAdapter.CustomViewHolder {
+        val view = LayoutInflater.from(context).inflate(R.layout.board_row, parent, false)
         return CustomViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ProfileMainAdapter.CustomViewHolder, position: Int) {
-        holder.name.text = friendsData[position].name
-        holder.status.text = friendsData[position].status
+    override fun onBindViewHolder(holder: BoardMainAdapter.CustomViewHolder, position: Int) {
+        holder.username.text = boards[position].username
+        holder.title.text = boards[position].title
+        holder.votes.text = boards[position].votes.toString() + "votes"
+        holder.views.text = boards[position].views.toString() + "views"
+        holder.comments.text = boards[position].comments?.let {
+            it.size.toString() + "comment"
+        } ?: "0 comment"
 
-        if (friendsData[position].imgUrl == null) {
-            holder.imgProfile.setImageResource(R.drawable.account)
-        } else {
-            Glide.with(context).load(friendsData[position].imgUrl)
-                .apply(RequestOptions().centerCrop())
-                .into(holder.imgProfile)
-        }
-        holder.bind(friendsData[position])
+        holder.bind(boards[position])
     }
 
-    fun addFriendItem(friendData: UserData) {
-        this.friendsData.add(friendData)
+    fun updateBoards(boards: ArrayList<Board>) {
+        this.boards = boards
         notifyDataSetChanged()
     }
 
     inner class CustomViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val imgProfile = itemView.findViewById<ImageView>(R.id.img_profile)!!
-        val name = itemView.findViewById<TextView>(R.id.tv_name_profile)!!
-        val status = itemView.findViewById<TextView>(R.id.tv_status_profile)!!
+        val username = itemView.findViewById<TextView>(R.id.tv_user_board)!!
+        val title = itemView.findViewById<TextView>(R.id.tv_title_board)!!
+        val votes = itemView.findViewById<TextView>(R.id.num_votes_board)!!
+        val views = itemView.findViewById<TextView>(R.id.num_view_board)!!
+        val comments = itemView.findViewById<TextView>(R.id.num_comment_board)!!
 
-        fun bind(data: UserData) {
+        fun bind(board: Board) {
             itemView.setOnClickListener {
-                Log.e(RetrofitService.TAG, "Click Item Event")
-                val intent = Intent(context, ProfileDetailActivity::class.java)
-                intent.putExtra("id", id)
-                intent.putExtra("data", data)
-                context.startActivity(intent)
+                //val intent = Intent(context, ProfileDetailActivity::class.java)
+                //intent.putExtra("id", id)
+                //intent.putExtra("data", data)
+                //context.startActivity(intent)
             }
         }
     }
 
-}*/
+}

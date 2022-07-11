@@ -3,12 +3,18 @@ package com.example.cs496_pj2_ui.profile
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.cs496_pj2_ui.R
 import com.example.cs496_pj2_ui.databinding.ProfileDetailActivityBinding
 import com.example.cs496_pj2_ui.databinding.ProfileMonthlyScheduleActivityBinding
+import com.example.cs496_pj2_ui.service.RetrofitService
 import com.example.cs496_pj2_ui.service.model.UserData
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProfileDetailActivity : AppCompatActivity() {
 
@@ -67,7 +73,7 @@ class ProfileDetailActivity : AppCompatActivity() {
 
         binding.imgPromisProfile.setOnClickListener {
             val intent = Intent(this, ProfileDailyScheduleAddActivity::class.java)
-            intent.putExtra("receiver", data.id)
+            intent.putExtra("data", data)
             intent.putExtra("id", id)
             startActivity(intent)
         }

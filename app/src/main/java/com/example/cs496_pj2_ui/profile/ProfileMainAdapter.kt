@@ -60,7 +60,6 @@ class ProfileMainAdapter(val context: Context, val id: String): RecyclerView.Ada
 
         fun bind(data: UserData) {
             itemView.setOnClickListener {
-                Log.e(RetrofitService.TAG, "Click Item Event")
                 val intent = Intent(context, ProfileDetailActivity::class.java)
                 intent.putExtra("id", id)
                 intent.putExtra("data", data)

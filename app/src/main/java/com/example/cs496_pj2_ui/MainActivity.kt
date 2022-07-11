@@ -3,15 +3,23 @@ package com.example.cs496_pj2_ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.cs496_pj2_ui.board.BoardMainFragment
 import com.example.cs496_pj2_ui.databinding.MainActivityBinding
 import com.example.cs496_pj2_ui.profile.ProfileMainFragment
+import com.example.cs496_pj2_ui.promise.PromiseActivity
+import com.example.cs496_pj2_ui.service.RetrofitService
 import com.example.cs496_pj2_ui.service.SocketService
+import com.example.cs496_pj2_ui.service.model.PromiseRequest
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 private const val NUM_PAGES = 2
 
@@ -46,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                     binding.pagerMain.setCurrentItem(0)
                     true
                 }
-                R.id.page_chat -> {
+                R.id.page_board -> {
                     binding.pagerMain.setCurrentItem(1)
                     true
                 }
@@ -64,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         when(item.itemId) {
             R.id.action_promise -> {
                 val intent = Intent(this, PromiseActivity::class.java)
+                intent.putExtra("id", id)
                 startActivity(intent)
                 return true
             }
@@ -87,6 +96,12 @@ class MainActivity : AppCompatActivity() {
                     val profileMainFragment = ProfileMainFragment()
                     profileMainFragment.arguments = bundle
                     return profileMainFragment
+                }
+
+                1 -> {
+                    val boardMainFragment = BoardMainFragment()
+                    boardMainFragment.arguments = bundle
+                    return boardMainFragment
                 }
 
                 else -> {

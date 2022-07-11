@@ -21,6 +21,9 @@ interface RetrofitInterface {
     @GET("/user/friends/{id}")
     fun getUserFriends(@Path("id") id: String): Call<ArrayList<String>>
 
+    @GET("/user/friends/profile/{id}")
+    fun getUserFriendsProfile(@Path("id") id: String): Call<ArrayList<Profile>>
+
     @GET("/user/schedule/{id}/{year}/{month}")
     fun getUserMonthlySchedule(@Path("id") id: String, @Path("year") year: Int, @Path("month") month: Int): Call<ArrayList<ScheduleData>>
 
@@ -31,6 +34,17 @@ interface RetrofitInterface {
     //fun getChatsById(@Path("id") id: String): Call<ArrayList<Chat>>
 
     //Promise
+    @POST("/request")
+    fun sendRequest(@Body promiseRequest: PromiseRequest): Call<ResponseCode>
+
+    @GET("/request/receive/{id}")
+    fun getReceivedRequestById(@Path("id") id: String): Call<ArrayList<PromiseRequestResponse>>
+
+    @GET("/request/accept/{id}")
+    fun getAcceptedRequestById(@Path("id") id: String): Call<ArrayList<PromiseRequestResponse>>
+
+    @GET("/request/sent/{id}")
+    fun getSentRequestById(@Path("id") id: String): Call<ArrayList<PromiseRequestResponse>>
 
     //Board
     @GET("/board")
