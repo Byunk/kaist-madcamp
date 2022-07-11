@@ -10,7 +10,7 @@ data class PromiseRequest (
     @SerializedName("_id")
     val senderId: String,
     @SerializedName("receiver")
-    val friend: String,
+    val receiverId: String,
 
     @SerializedName("year")
     val year: Int,
@@ -33,6 +33,8 @@ data class PromiseRequest (
 ): Parcelable
 
 data class PromiseRequestResponse(
+    @SerializedName("_id")
+    val requestId: String,
     @SerializedName("sender_id")
     val senderId: String,
     @SerializedName("image_url")

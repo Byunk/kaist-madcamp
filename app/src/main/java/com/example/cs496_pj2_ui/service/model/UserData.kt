@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class UserData(
-    @SerializedName("id")
+    @SerializedName("_id")
     val id: String,
 
     @SerializedName("username")

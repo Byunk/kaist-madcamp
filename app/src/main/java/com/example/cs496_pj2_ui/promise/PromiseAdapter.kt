@@ -1,6 +1,7 @@
 package com.example.cs496_pj2_ui.promise
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +12,15 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.cs496_pj2_ui.R
 import com.example.cs496_pj2_ui.databinding.ProfileRowBinding
+import com.example.cs496_pj2_ui.service.RetrofitService
 import com.example.cs496_pj2_ui.service.SocketService
 import com.example.cs496_pj2_ui.service.model.PromiseRequest
 import com.example.cs496_pj2_ui.service.model.PromiseRequestResponse
+import com.example.cs496_pj2_ui.service.model.ResponseCode
 import com.example.cs496_pj2_ui.service.model.UserData
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class PromiseAdapter(val context: Context): RecyclerView.Adapter<PromiseAdapter.CustomViewHolder>() {
 
@@ -54,22 +60,7 @@ class PromiseAdapter(val context: Context): RecyclerView.Adapter<PromiseAdapter.
         // Date Time
         val dateString = "${responses[position].date}일 ${responses[position].time}"
         holder.dateTime.text = dateString
-
-        // Click Listeners
-        /*
-        val mSocket = SocketService.getSocket()
-        holder.accept.setOnClickListener {
-            mSocket.emit("response", true)
-            promises.removeAt(position)
-            notifyDataSetChanged()
-        }
-
-        holder.reject.setOnClickListener {
-            mSocket.emit("response", false)
-            promises.removeAt(position)
-            notifyDataSetChanged()
-        }
-         */
+        holder.bind(responses[position])
     }
 
     fun updatePromises(response: ArrayList<PromiseRequestResponse>, isAccepted: Boolean = false) {
@@ -87,5 +78,43 @@ class PromiseAdapter(val context: Context): RecyclerView.Adapter<PromiseAdapter.
         val dateTime = itemView.findViewById<TextView>(R.id.tv_date_time)!!
         val accept = itemView.findViewById<TextView>(R.id.tv_date_time)!!
         val reject = itemView.findViewById<TextView>(R.id.tv_date_time)!!
+
+        fun bind(promise: PromiseRequestResponse) {
+            accept.setOnClickListener {
+                val call = RetrofitService.retrofitInterface.sendResponse(promise.requestId, true)
+                call.enqueue(object: Callback<ResponseCode> {
+                    override fun onFailure(call: Call<ResponseCode>, t: Throwable) {
+                        Log.e(RetrofitService.TAG, t.message!!)
+                    }
+
+                    override fun onResponse(
+                        call: Call<ResponseCode>,
+                        response: Response<ResponseCode>
+                    ) {
+                        if (response.isSuccessful) {
+                            notifyDataSetChanged()
+                        }
+                    }
+                })
+            }
+
+            reject.setOnClickListener {
+                val call = RetrofitService.retrofitInterface.sendResponse(promise.requestId, false)
+                call.enqueue(object: Callback<ResponseCode> {
+                    override fun onFailure(call: Call<ResponseCode>, t: Throwable) {
+                        Log.e(RetrofitService.TAG, t.message!!)
+                    }
+
+                    override fun onResponse(
+                        call: Call<ResponseCode>,
+                        response: Response<ResponseCode>
+                    ) {
+                        if (response.isSuccessful) {
+                            notifyDataSetChanged()
+                        }
+                    }
+                })
+            }
+        }
     }
 }

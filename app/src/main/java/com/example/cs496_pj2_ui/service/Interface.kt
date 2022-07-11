@@ -46,6 +46,9 @@ interface RetrofitInterface {
     @GET("/request/sent/{id}")
     fun getSentRequestById(@Path("id") id: String): Call<ArrayList<PromiseRequestResponse>>
 
+    @GET("/request/{id}/{accept}")
+    fun sendResponse(@Path("id") id: String, @Path("accept") accept: Boolean): Call<ResponseCode>
+
     //Board
     @GET("/board")
     fun getBoards(): Call<ArrayList<Board>>
