@@ -30,7 +30,7 @@ import java.util.*
 class ProfileDailyScheduleAddActivity : AppCompatActivity() {
 
     private lateinit var binding: ProfileDailyScheduleAddActivityBinding
-    private lateinit var id: String
+    //private lateinit var id: String
     private lateinit var sender: UserData
     private lateinit var receiver: UserData
 
@@ -46,12 +46,13 @@ class ProfileDailyScheduleAddActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val today = Calendar.getInstance()
-        year = today.get(Calendar.YEAR)
-        month = today.get(Calendar.MONTH)
-        date = today.get(Calendar.DATE)
+
+        year = intent.getIntExtra("year", today.get(Calendar.YEAR))
+        month = intent.getIntExtra("month", today.get(Calendar.MONTH))
+        date = intent.getIntExtra("date", today.get(Calendar.DATE))
         time = today.get(Calendar.HOUR)*100 + today.get(Calendar.MINUTE)
 
-        id = intent.getStringExtra("id")!!
+        sender = intent.getParcelableExtra("sender")!!
         receiver = intent.getParcelableExtra("receiver")!!
 
         binding.tvReceiverName.text = receiver.name
@@ -98,7 +99,7 @@ class ProfileDailyScheduleAddActivity : AppCompatActivity() {
             val message = binding.etMessageAdd.text.toString()
 
             val promiseRequest = PromiseRequest(
-                id, "sender name", "sender Image", receiver.id, year, month+1, date, time, duration, todo, location, message
+                sender.id, sender.name, sender.imgUrl, receiver.id, year, month+1, date, time, duration, todo, location, message
             )
 
             val call = RetrofitService.retrofitInterface.sendRequest(promiseRequest)
@@ -111,7 +112,8 @@ class ProfileDailyScheduleAddActivity : AppCompatActivity() {
                     call: Call<ResponseCode>,
                     response: Response<ResponseCode>
                 ) {
-                    if (response.isSuccessful) {
+                    Log.e(RetrofitService.TAG, response.body().toString())
+                    if (response.body() == ResponseCode(0)) {
                         finish()
                     } else {
                         Toast.makeText(this@ProfileDailyScheduleAddActivity, "Request Failed", Toast.LENGTH_SHORT).show()

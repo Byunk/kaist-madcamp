@@ -56,6 +56,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/notosanskr_regular"
             android:text="좋아하는 음식" />
 
         <EditText
@@ -80,6 +81,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/notosanskr_regular"
             android:text="취미는?" />
 
         <EditText
@@ -104,6 +106,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/notosanskr_regular"
             android:text="관심사는?" />
 
         <EditText
@@ -128,6 +131,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/notosanskr_regular"
             android:text="나는 주말에?" />
 
         <EditText
@@ -154,6 +158,7 @@
             android:layout_marginStart="50dp"
             android:layout_marginEnd="30dp"
             android:layout_weight="1"
+            android:fontFamily="@font/roboto_bold"
             android:text="Sign Up" />
 
         <Button
@@ -163,6 +168,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginEnd="50dp"
             android:layout_weight="1"
+            android:fontFamily="@font/roboto_bold"
             android:text="Cancel" />
     </LinearLayout>
 

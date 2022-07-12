@@ -26,6 +26,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
+                    android:fontFamily="@font/notosanskr_bold"
                     android:text="몽고 디비를 모르겠어요.."
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="24sp" />
@@ -35,6 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/notosanskr_regular"
                     android:text="허회준"
                     android:textAlignment="textEnd" />
             </LinearLayout>
@@ -64,6 +66,7 @@
                 android:id="@+id/tv_content_board_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/notosanskr_regular"
                 android:minHeight="150dp"
                 android:text="@string/board_content" />
 

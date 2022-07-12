@@ -4,22 +4,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cs496_pj2_ui.databinding.ProfileMonthlyScheduleActivityBinding
+import com.example.cs496_pj2_ui.service.model.UserData
 
 class ProfileMonthlyScheduleActivity : AppCompatActivity() {
 
     private lateinit var binding: ProfileMonthlyScheduleActivityBinding
-    private lateinit var id: String
+    private lateinit var sender: UserData
+    private lateinit var receiver: UserData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ProfileMonthlyScheduleActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        id = intent.getStringExtra("id")!!
+        sender = intent.getParcelableExtra("sender")!!
+        receiver = intent.getParcelableExtra("receiver")!!
 
         val pager = binding.pagerCalendar
         val adapter = ProfileMonthlyScheduleAdapter(this)
@@ -36,7 +38,8 @@ class ProfileMonthlyScheduleActivity : AppCompatActivity() {
         override fun createFragment(position: Int): Fragment {
             var bundle = Bundle()
             bundle.putInt("position", position)
-            bundle.putString("id", id)
+            bundle.putParcelable("sender", sender)
+            bundle.putParcelable("receiver", receiver)
             val profileMonthlyScheduleFragment = ProfileMonthlyScheduleFragment()
             profileMonthlyScheduleFragment.arguments = bundle
             return profileMonthlyScheduleFragment

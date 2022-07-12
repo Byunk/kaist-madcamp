@@ -23,6 +23,7 @@ import retrofit2.Response
 class ProfileMainFragment : Fragment() {
 
     private lateinit var binding: ProfileMainFragmentBinding
+
     private lateinit var id: String
     private var friends: ArrayList<String> = arrayListOf()
 
@@ -35,11 +36,8 @@ class ProfileMainFragment : Fragment() {
     ): View? {
 
         id = arguments?.getString("id") as String
+
         binding = ProfileMainFragmentBinding.inflate(inflater, container, false)
-
-        binding.fabAddFriends.setOnClickListener {
-
-        }
 
         recyclerView = binding.rvProfile
         recyclerAdapter = ProfileMainAdapter(requireContext(), id)
@@ -63,21 +61,15 @@ class ProfileMainFragment : Fragment() {
                 response: Response<UserData>
             ) {
                 if (response.body() != null) {
-                    val myInfo = response.body()!!
-                    binding.tvMyNameProfile.text = myInfo.name
-                    binding.tvMyStatusProfile.text = myInfo.status
+                    val myData = response.body()!!
+                    binding.tvMyNameProfile.text = myData.name
+                    binding.tvMyStatusProfile.text = myData.status
 
-                    if (myInfo.imgUrl == null) {
-                        binding.imgMyProfile.setImageResource(R.drawable.account)
-                    } else {
-                        Glide.with(this@ProfileMainFragment).load(myInfo.imgUrl)
-                            .apply(RequestOptions().centerCrop())
-                            .into(binding.imgMyProfile)
-                    }
+                    RetrofitService.fetchImg(requireContext(), myData.imgUrl, binding.imgMyProfile)
 
                     binding.cvMyProfile.setOnClickListener {
                         val intent = Intent(context, ProfileDetailActivity::class.java)
-                        intent.putExtra("data", myInfo)
+                        intent.putExtra("data", myData)
                         startActivity(intent)
                     }
                 }
@@ -91,9 +83,6 @@ class ProfileMainFragment : Fragment() {
                 Log.e(RetrofitService.TAG, t.message + "in get user friends")
             }
 
-            // TODO: Sorting by name
-            // TODO: My Profile Customizing 
-            // TODO: Editing 
             override fun onResponse(call: Call<ArrayList<String>>, response: Response<ArrayList<String>>) {
                 if (response.body() != null) {
                     val prevFriends = arrayListOf<String>()

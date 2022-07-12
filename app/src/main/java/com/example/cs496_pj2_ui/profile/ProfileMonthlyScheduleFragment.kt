@@ -12,6 +12,7 @@ import com.example.cs496_pj2_ui.databinding.ProfileMonthlyScheduleFragmentBindin
 import com.example.cs496_pj2_ui.service.RetrofitService
 import com.example.cs496_pj2_ui.service.model.CustomCalendar
 import com.example.cs496_pj2_ui.service.model.ScheduleData
+import com.example.cs496_pj2_ui.service.model.UserData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,9 +26,11 @@ class ProfileMonthlyScheduleFragment : Fragment() {
     private lateinit var mContext: Context
     private lateinit var adapter: ProfileMonthlyScheduleFragmentAdapter
 
-    private lateinit var id: String
     private lateinit var scheduleData: ArrayList<ScheduleData>
     private var pageIndex = 0
+
+    private lateinit var sender: UserData
+    private lateinit var receiver: UserData
 
     private lateinit var date: Date
 
@@ -35,8 +38,11 @@ class ProfileMonthlyScheduleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        id = arguments?.getString("id") as String
         pageIndex = arguments?.getInt("position") as Int - (Int.MAX_VALUE / 2)
+
+        sender = arguments?.getParcelable("sender")!!
+        receiver = arguments?.getParcelable("receiver")!!
+
         date = Calendar.getInstance().run {
             add(Calendar.MONTH, pageIndex)
             time
@@ -45,7 +51,7 @@ class ProfileMonthlyScheduleFragment : Fragment() {
         binding = ProfileMonthlyScheduleFragmentBinding.inflate(inflater, container, false)
         binding.calendarDate.text = SimpleDateFormat("yyyy년 MM월", Locale.KOREA).format(date.time).toString()
 
-        adapter = ProfileMonthlyScheduleFragmentAdapter(mContext, binding.calendarLayout, date, id)
+        adapter = ProfileMonthlyScheduleFragmentAdapter(mContext, binding.calendarLayout, date, sender, receiver)
         binding.rvMonthlyCalendar.layoutManager = GridLayoutManager(mContext, CustomCalendar.DAYS_OF_WEEK)
         binding.rvMonthlyCalendar.adapter = adapter
         return binding.root
@@ -61,7 +67,7 @@ class ProfileMonthlyScheduleFragment : Fragment() {
 
         val year = SimpleDateFormat("yyyy", Locale.KOREA).format(date.time).toString().toInt()
         val month = SimpleDateFormat("MM", Locale.KOREA).format(date.time).toString().toInt()
-        val call = RetrofitService.retrofitInterface.getUserMonthlySchedule(id, year, month)
+        val call = RetrofitService.retrofitInterface.getUserMonthlySchedule(receiver.id, year, month)
         call.enqueue(object: Callback<ArrayList<ScheduleData>> {
             override fun onFailure(call: Call<ArrayList<ScheduleData>>, t: Throwable) {
                 Log.e(RetrofitService.TAG, t.message+"in monthly schedule")

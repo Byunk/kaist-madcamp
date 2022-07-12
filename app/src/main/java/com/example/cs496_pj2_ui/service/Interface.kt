@@ -29,8 +29,8 @@ interface RetrofitInterface {
     @GET("/user/friends/{id}")
     fun getUserFriends(@Path("id") id: String): Call<ArrayList<String>>
 
-    @GET("/user/friends/profile/{id}")
-    fun getUserFriendsProfile(@Path("id") id: String): Call<ArrayList<Profile>>
+    @POST("/user/update")
+    fun editUser(@Body userData: UserData): Call<ResponseCode>
 
     @GET("/user/schedule/{id}/{year}/{month}")
     fun getUserMonthlySchedule(@Path("id") id: String, @Path("year") year: Int, @Path("month") month: Int): Call<ArrayList<ScheduleData>>

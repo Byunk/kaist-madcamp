@@ -19,6 +19,7 @@ import com.example.cs496_pj2_ui.R
 import com.example.cs496_pj2_ui.databinding.ProfileEditActivityBinding
 import com.example.cs496_pj2_ui.service.RetrofitService
 import com.example.cs496_pj2_ui.service.model.ResponseCode
+import com.example.cs496_pj2_ui.service.model.UserData
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -30,6 +31,10 @@ import java.io.File
 class ProfileEditActivity : AppCompatActivity() {
 
     private lateinit var binding: ProfileEditActivityBinding
+
+    private lateinit var data: UserData
+    private var imgUrl: String? = null
+
     private val requiredPermissions = arrayOf(
         Manifest.permission.CAMERA,
         Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -41,13 +46,10 @@ class ProfileEditActivity : AppCompatActivity() {
         binding = ProfileEditActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (intent.getStringExtra("imgUrl") == null) {
-            binding.imgProfileEdit.setImageResource(R.drawable.account)
-        } else {
-            Glide.with(this).load(intent.getStringExtra("imgUrl")!!)
-                .apply(RequestOptions().centerCrop())
-                .into(binding.imgProfileEdit)
-        }
+        data = intent.getParcelableExtra("data")!!
+
+        imgUrl = data.imgUrl
+        RetrofitService.fetchImg(this, imgUrl, binding.imgProfileEdit)
 
         binding.imgProfileEdit.setOnClickListener {
             val status = ContextCompat.checkSelfPermission(this, "android.permission.CAMERA")
@@ -59,14 +61,36 @@ class ProfileEditActivity : AppCompatActivity() {
             startActivityForResult(intent,code)
         }
 
-        binding.etStatusEdit.setText(intent.getStringExtra("status") ?: "")
-        binding.etFoodEdit.setText(intent.getStringExtra("food") ?: "")
-        binding.etHobbyEdit.setText(intent.getStringExtra("hobby") ?: "")
-        binding.etFavoritesEdit.setText(intent.getStringExtra("favorites") ?: "")
-        binding.etWeekend.setText(intent.getStringExtra("weekend") ?: "")
+        binding.etStatusEdit.setText(data.status ?: "")
+        binding.etFoodEdit.setText(data.food ?: "")
+        binding.etHobbyEdit.setText(data.hobby ?: "")
+        binding.etFavoritesEdit.setText(data.favorites ?: "")
+        binding.etWeekend.setText(data.weekend ?: "")
 
         binding.btnSaveEdit.setOnClickListener {
+            val userData = UserData(
+                data.id, data.name, imgUrl, binding.etStatusEdit.text.toString(),
+                binding.etFoodEdit.text.toString(), binding.etHobbyEdit.text.toString(),
+                binding.etFavoritesEdit.text.toString(), binding.etWeekend.text.toString(),
+            )
+            val call = RetrofitService.retrofitInterface.editUser(userData)
+            call.enqueue(object: Callback<ResponseCode> {
+                override fun onFailure(call: Call<ResponseCode>, t: Throwable) {
+                    Log.e(RetrofitService.TAG, t.message!!)
+                }
 
+                override fun onResponse(
+                    call: Call<ResponseCode>,
+                    response: Response<ResponseCode>
+                ) {
+                    if (response.isSuccessful) {
+                        val intent = Intent()
+                        intent.putExtra("data", userData)
+                        setResult(RESULT_OK, intent)
+                        finish()
+                    }
+                }
+            })
         }
 
         binding.btnCancelEdit.setOnClickListener {
@@ -98,9 +122,8 @@ class ProfileEditActivity : AppCompatActivity() {
                             response: Response<String>
                         ) {
                             if (response.isSuccessful) {
-                                Glide.with(baseContext).load(RetrofitService.BASE_URL + "/" + response.body()!!)
-                                    .apply(RequestOptions().centerCrop())
-                                    .into(binding.imgProfileEdit)
+                                imgUrl = response.body() ?: null
+                                RetrofitService.fetchImg(baseContext, imgUrl, binding.imgProfileEdit)
                             }
                         }
                     })

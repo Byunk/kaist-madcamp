@@ -44,9 +44,9 @@ data class PromiseRequestResponse(
     val senderId: String,
     @SerializedName("receiver")
     val receiverId: String,
-    @SerializedName("image_url")
+    @SerializedName("sender_image")
     val imgUrl: String?,
-    @SerializedName("username")
+    @SerializedName("sender_name")
     val name: String,
 
     @SerializedName("year")

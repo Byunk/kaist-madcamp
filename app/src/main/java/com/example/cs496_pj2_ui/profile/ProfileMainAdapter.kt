@@ -38,17 +38,7 @@ class ProfileMainAdapter(val context: Context, val id: String): RecyclerView.Ada
         holder.name.text = friendsData[position].name
         holder.status.text = friendsData[position].status
 
-        if (friendsData[position].imgUrl == null) {
-            //holder.imgProfile.setImageResource(R.drawable.account)
-            val img = "http://192.249.18.210/images/123"
-            Glide.with(context).load(img)
-                .apply(RequestOptions().centerCrop())
-                .into(holder.imgProfile)
-        } else {
-            Glide.with(context).load(friendsData[position].imgUrl)
-                .apply(RequestOptions().centerCrop())
-                .into(holder.imgProfile)
-        }
+        RetrofitService.fetchImg(context, friendsData[position].imgUrl, holder.imgProfile)
         holder.bind(friendsData[position])
     }
 

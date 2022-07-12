@@ -17,11 +17,12 @@ import com.example.cs496_pj2_ui.databinding.ProfileMonthlyScheduleFragmentBindin
 import com.example.cs496_pj2_ui.service.RetrofitService
 import com.example.cs496_pj2_ui.service.model.CustomCalendar
 import com.example.cs496_pj2_ui.service.model.ScheduleData
+import com.example.cs496_pj2_ui.service.model.UserData
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ProfileMonthlyScheduleFragmentAdapter(val context: Context, val calendarLayout: LinearLayout, val date: Date, val id: String)
+class ProfileMonthlyScheduleFragmentAdapter(val context: Context, val calendarLayout: LinearLayout, val date: Date, val sender: UserData, val receiver: UserData)
     : RecyclerView.Adapter<ProfileMonthlyScheduleFragmentAdapter.CalendarItemHolder>() {
 
     var dates: ArrayList<Int> = arrayListOf()
@@ -109,7 +110,7 @@ class ProfileMonthlyScheduleFragmentAdapter(val context: Context, val calendarLa
 
             itemView.setOnClickListener {
                 val intent = Intent(context, ProfileDailyScheduleActivity::class.java)
-                intent.putExtra("id", id)
+                intent.putExtra("id", receiver.id)
                 intent.putExtra("year", year)
                 intent.putExtra("month", month)
                 intent.putExtra("date", date)

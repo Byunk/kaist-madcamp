@@ -44,13 +44,7 @@ class PromiseAdapter(val context: Context): RecyclerView.Adapter<PromiseAdapter.
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         // Profile
-        if (responses[position].imgUrl == null) {
-            holder.imgProfile.setImageResource(R.drawable.account)
-        } else {
-            Glide.with(context).load(responses[position].imgUrl)
-                .apply(RequestOptions().centerCrop())
-                .into(holder.imgProfile)
-        }
+        RetrofitService.fetchImg(context, responses[position].imgUrl, holder.imgProfile)
 
         // Contents
         if (responses[position].message == null) {

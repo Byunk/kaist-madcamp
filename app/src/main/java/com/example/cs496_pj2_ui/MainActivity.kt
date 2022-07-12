@@ -35,17 +35,12 @@ class MainActivity : AppCompatActivity() {
 
         // Toolbar Config
         setSupportActionBar(findViewById(R.id.main_toolbar))
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        //supportActionBar?.setDisplayShowTitleEnabled(false)
 
         id = intent.getStringExtra("id")!!
 
-        // Connects Socket to Server
-        SocketService.setSocket()
-        SocketService.establishConnection()
-
         // Pager Config
         binding.pagerMain.adapter = PagerAdapter(supportFragmentManager, lifecycle)
-
 
         // Navigation Bar Config
         binding.navMain.setOnItemSelectedListener { item ->
