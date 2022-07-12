@@ -56,7 +56,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="@font/notosanskr_regular"
+            android:fontFamily="@font/godomaum"
             android:text="좋아하는 음식" />
 
         <EditText
@@ -81,7 +81,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="@font/notosanskr_regular"
+            android:fontFamily="@font/godomaum"
             android:text="취미는?" />
 
         <EditText
@@ -106,7 +106,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="@font/notosanskr_regular"
+            android:fontFamily="@font/godomaum"
             android:text="관심사는?" />
 
         <EditText
@@ -131,7 +131,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="@font/notosanskr_regular"
+            android:fontFamily="@font/godomaum"
             android:text="나는 주말에?" />
 
         <EditText

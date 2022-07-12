@@ -39,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:ems="10"
+                android:fontFamily="@font/godomaum"
                 android:inputType="textPersonName"
                 tools:ignore="SpeakableTextPresentCheck" />
         </LinearLayout>

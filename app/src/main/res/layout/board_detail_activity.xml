@@ -26,7 +26,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
-                    android:fontFamily="@font/notosanskr_bold"
+                    android:fontFamily="@font/godomaum"
                     android:text="몽고 디비를 모르겠어요.."
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="24sp" />
@@ -53,7 +53,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/notosanskr_regular"
+                        android:fontFamily="@font/godomaum"
                         android:text="허회준"
                         android:textAlignment="textEnd" />
                 </LinearLayout>
@@ -101,6 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:fontFamily="@font/godomaum"
                     android:hint="Add your Comment!"
                     android:inputType="textPersonName"
                     tools:ignore="TouchTargetSizeCheck" />

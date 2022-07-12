@@ -24,7 +24,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PromiseAdapter(val context: Context): RecyclerView.Adapter<PromiseAdapter.CustomViewHolder>() {
+class PromiseAdapter(val context: Context, val pos: Int): RecyclerView.Adapter<PromiseAdapter.CustomViewHolder>() {
 
     private lateinit var binding: ProfileRowBinding
     var responses: ArrayList<PromiseRequestResponse> = arrayListOf()
@@ -54,7 +54,8 @@ class PromiseAdapter(val context: Context): RecyclerView.Adapter<PromiseAdapter.
         }
 
         // Date Time
-        val dateString = "${responses[position].date}일 ${responses[position].time}"
+        val timeString = (responses[position].time/100).toString() + ":" + (responses[position].time%100).toString()
+        val dateString = "${responses[position].year}년${responses[position].month}월${responses[position].date}일 " + timeString
         holder.dateTime.text = dateString
         holder.bind(position, responses[position])
     }
@@ -76,43 +77,51 @@ class PromiseAdapter(val context: Context): RecyclerView.Adapter<PromiseAdapter.
         val reject = itemView.findViewById<ImageButton>(R.id.btn_reject)!!
 
         fun bind(index: Int, promise: PromiseRequestResponse) {
-            accept.setOnClickListener {
-                val call = RetrofitService.retrofitInterface.sendResponse(promise.requestId, true)
-                call.enqueue(object: Callback<ResponseCode> {
-                    override fun onFailure(call: Call<ResponseCode>, t: Throwable) {
-                        Log.e(RetrofitService.TAG, t.message!!)
-                    }
-
-                    override fun onResponse(
-                        call: Call<ResponseCode>,
-                        response: Response<ResponseCode>
-                    ) {
-                        if (response.isSuccessful) {
-                            responses.removeAt(index)
-                            notifyDataSetChanged()
+            if (pos == 0) {
+                accept.setOnClickListener {
+                    val call = RetrofitService.retrofitInterface.sendResponse(promise.requestId, true)
+                    call.enqueue(object: Callback<ResponseCode> {
+                        override fun onFailure(call: Call<ResponseCode>, t: Throwable) {
+                            Log.e(RetrofitService.TAG, t.message!!)
                         }
-                    }
-                })
+
+                        override fun onResponse(
+                            call: Call<ResponseCode>,
+                            response: Response<ResponseCode>
+                        ) {
+                            if (response.isSuccessful) {
+                                responses.removeAt(index)
+                                notifyDataSetChanged()
+                            }
+                        }
+                    })
+                }
+
+                reject.setOnClickListener {
+                    val call = RetrofitService.retrofitInterface.sendResponse(promise.requestId, false)
+                    call.enqueue(object: Callback<ResponseCode> {
+                        override fun onFailure(call: Call<ResponseCode>, t: Throwable) {
+                            Log.e(RetrofitService.TAG, t.message!!)
+                        }
+
+                        override fun onResponse(
+                            call: Call<ResponseCode>,
+                            response: Response<ResponseCode>
+                        ) {
+                            if (response.isSuccessful) {
+                                responses.removeAt(index)
+                                notifyDataSetChanged()
+                            }
+                        }
+                    })
+                }
+            } else {
+                accept.visibility = View.INVISIBLE
+                reject.visibility = View.INVISIBLE
+                accept.isEnabled = false
+                reject.isEnabled = false
             }
 
-            reject.setOnClickListener {
-                val call = RetrofitService.retrofitInterface.sendResponse(promise.requestId, false)
-                call.enqueue(object: Callback<ResponseCode> {
-                    override fun onFailure(call: Call<ResponseCode>, t: Throwable) {
-                        Log.e(RetrofitService.TAG, t.message!!)
-                    }
-
-                    override fun onResponse(
-                        call: Call<ResponseCode>,
-                        response: Response<ResponseCode>
-                    ) {
-                        if (response.isSuccessful) {
-                            responses.removeAt(index)
-                            notifyDataSetChanged()
-                        }
-                    }
-                })
-            }
         }
     }
 }

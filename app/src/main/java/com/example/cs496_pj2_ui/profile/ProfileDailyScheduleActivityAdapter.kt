@@ -38,7 +38,7 @@ class ProfileDailyScheduleActivityAdapter(val context: Context)
         holder: ProfileDailyScheduleActivityAdapter.CustomViewHolder,
         position: Int
     ) {
-        holder.time.text = schedules[position].time.toString()
+        holder.time.text = (schedules[position].time/100).toString() +":" + (schedules[position].time%100).toString()
         holder.todo.text = schedules[position].todo ?: ""
         holder.friends.text = schedules[position].friends?.let {
             it.toString()

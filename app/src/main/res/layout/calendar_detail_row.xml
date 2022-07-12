@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/notosanskr_regular"
+                android:fontFamily="@font/godomaum"
                 android:text="아침먹고 밤새기"
                 android:textSize="20sp" />
 
@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/notosanskr_regular"
+                android:fontFamily="@font/godomaum"
                 android:text="김성애, 정윤성, 변경호" />
         </LinearLayout>
 
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_weight="1"
-            android:fontFamily="@font/notosanskr_regular"
+            android:fontFamily="@font/godomaum"
             android:text="쌈의 대가"
             android:textAlignment="textEnd" />
     </LinearLayout>

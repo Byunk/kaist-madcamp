@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:fontFamily="@font/edusa_bold"
+            android:fontFamily="@font/godomaum"
             android:text="Received Requests"
             android:textSize="26sp" />
     </LinearLayout>

@@ -13,10 +13,12 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.cs496_pj2_ui.board.BoardMainFragment
 import com.example.cs496_pj2_ui.databinding.MainActivityBinding
 import com.example.cs496_pj2_ui.profile.ProfileMainFragment
+import com.example.cs496_pj2_ui.profile.ProfileMonthlyScheduleActivity
 import com.example.cs496_pj2_ui.promise.PromiseActivity
 import com.example.cs496_pj2_ui.service.RetrofitService
 import com.example.cs496_pj2_ui.service.SocketService
 import com.example.cs496_pj2_ui.service.model.PromiseRequest
+import com.example.cs496_pj2_ui.service.model.UserData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -72,9 +74,22 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_make_promise -> {
-                // TODO: Add Promise without receiver 
-                //val intent = Intent(this, PromiseActivity::class.java)
-                //startActivity(intent)
+                val call = RetrofitService.retrofitInterface.getUserById(id)
+                call.enqueue(object: Callback<UserData> {
+                    override fun onFailure(call: Call<UserData>, t: Throwable) {
+                        Log.e(RetrofitService.TAG, t.message!!)
+                    }
+
+                    override fun onResponse(call: Call<UserData>, response: Response<UserData>) {
+                        if (response.isSuccessful) {
+                            val data = response.body()!!
+                            val intent = Intent(baseContext, ProfileMonthlyScheduleActivity::class.java)
+                            intent.putExtra("sender", data)
+                            intent.putExtra("receiver", data)
+                            startActivity(intent)
+                        }
+                    }
+                })
                 return true
             }
             else -> return super.onOptionsItemSelected(item)

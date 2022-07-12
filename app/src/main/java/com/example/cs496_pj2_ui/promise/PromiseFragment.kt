@@ -42,7 +42,7 @@ class PromiseFragment : Fragment() {
             1 -> binding.tvPromiseTitle.text = "보낸 요청"
         }
 
-        adapter = PromiseAdapter(this.requireContext())
+        adapter = PromiseAdapter(this.requireContext(), position)
         recyclerView = binding.rvPromise
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

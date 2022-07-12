@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="@font/notosanskr_bold"
+                    android:fontFamily="@font/godomaum"
                     android:gravity="bottom"
                     android:text="허회준"
                     android:textSize="20sp" />
@@ -45,7 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="@font/notosanskr_regular"
+                    android:fontFamily="@font/godomaum"
                     android:text="몽고 디비로 고통받는중..." />
             </LinearLayout>
         </LinearLayout>

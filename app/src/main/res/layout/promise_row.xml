@@ -18,22 +18,23 @@
             android:id="@+id/img_profile_promise"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_margin="5dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/account" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="5"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_promise_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="start"
                 android:layout_weight="1"
-                android:fontFamily="@font/roboto_medium"
+                android:fontFamily="@font/godomaum"
                 android:text="허회준님이 변경호님에게 요청을 보냈습니다." />
 
             <TextView
