@@ -17,6 +17,7 @@
 - 데이터베이스: mongo DB
 ## 모든 친구 확인 가능
  (첫 페이지)
+ 
 ![Screen Shot 2022-07-12 at 9 58 46 PM](https://user-images.githubusercontent.com/60650372/178495626-2f428371-14df-40d6-a093-29c5b2d0e771.png)
 
 ![Screen Shot 2022-07-12 at 9 59 27 PM](https://user-images.githubusercontent.com/60650372/178496236-27ed42e1-d607-45e1-907c-a722892f905b.png)
