@@ -9,7 +9,7 @@
     tools:context=".profile.ProfileEditActivity">
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/img_profile_edit"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"

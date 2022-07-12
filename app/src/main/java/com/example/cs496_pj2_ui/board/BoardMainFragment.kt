@@ -1,5 +1,6 @@
 package com.example.cs496_pj2_ui.board
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import com.example.cs496_pj2_ui.databinding.BoardMainFragmentBinding
 import com.example.cs496_pj2_ui.profile.ProfileMainAdapter
 import com.example.cs496_pj2_ui.service.RetrofitService
 import com.example.cs496_pj2_ui.service.model.Board
+import com.example.cs496_pj2_ui.service.model.UserData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,7 +38,23 @@ class BoardMainFragment : Fragment() {
         binding = BoardMainFragmentBinding.inflate(inflater, container, false)
 
         binding.fabBoardAdd.setOnClickListener {
-            //TODO: Add board
+            val call = RetrofitService.retrofitInterface.getUserById(id)
+            call.enqueue(object: Callback<UserData> {
+                override fun onFailure(call: Call<UserData>, t: Throwable) {
+                    Log.e(RetrofitService.TAG, t.message!!)
+                }
+
+                override fun onResponse(call: Call<UserData>, response: Response<UserData>) {
+                    if (response.isSuccessful) {
+                        val myData = response.body()!!
+
+                        val intent = Intent(context, BoardAddActivity::class.java)
+                        intent.putExtra("id", id)
+                        intent.putExtra("name", myData.name)
+                        startActivity(intent)
+                    }
+                }
+            })
         }
 
         recyclerView = binding.rvBoardMain

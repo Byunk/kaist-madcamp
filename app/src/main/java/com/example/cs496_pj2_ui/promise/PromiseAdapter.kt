@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -60,7 +62,7 @@ class PromiseAdapter(val context: Context): RecyclerView.Adapter<PromiseAdapter.
         // Date Time
         val dateString = "${responses[position].date}일 ${responses[position].time}"
         holder.dateTime.text = dateString
-        holder.bind(responses[position])
+        holder.bind(position, responses[position])
     }
 
     fun updatePromises(response: ArrayList<PromiseRequestResponse>, isAccepted: Boolean = false) {
@@ -76,10 +78,10 @@ class PromiseAdapter(val context: Context): RecyclerView.Adapter<PromiseAdapter.
         val imgProfile = itemView.findViewById<ImageView>(R.id.img_profile_promise)!!
         val message = itemView.findViewById<TextView>(R.id.tv_promise_content)!!
         val dateTime = itemView.findViewById<TextView>(R.id.tv_date_time)!!
-        val accept = itemView.findViewById<TextView>(R.id.tv_date_time)!!
-        val reject = itemView.findViewById<TextView>(R.id.tv_date_time)!!
+        val accept = itemView.findViewById<ImageButton>(R.id.btn_accept)!!
+        val reject = itemView.findViewById<ImageButton>(R.id.btn_reject)!!
 
-        fun bind(promise: PromiseRequestResponse) {
+        fun bind(index: Int, promise: PromiseRequestResponse) {
             accept.setOnClickListener {
                 val call = RetrofitService.retrofitInterface.sendResponse(promise.requestId, true)
                 call.enqueue(object: Callback<ResponseCode> {
@@ -92,6 +94,7 @@ class PromiseAdapter(val context: Context): RecyclerView.Adapter<PromiseAdapter.
                         response: Response<ResponseCode>
                     ) {
                         if (response.isSuccessful) {
+                            responses.removeAt(index)
                             notifyDataSetChanged()
                         }
                     }
@@ -110,6 +113,7 @@ class PromiseAdapter(val context: Context): RecyclerView.Adapter<PromiseAdapter.
                         response: Response<ResponseCode>
                     ) {
                         if (response.isSuccessful) {
+                            responses.removeAt(index)
                             notifyDataSetChanged()
                         }
                     }

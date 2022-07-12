@@ -39,7 +39,11 @@ class ProfileMainAdapter(val context: Context, val id: String): RecyclerView.Ada
         holder.status.text = friendsData[position].status
 
         if (friendsData[position].imgUrl == null) {
-            holder.imgProfile.setImageResource(R.drawable.account)
+            //holder.imgProfile.setImageResource(R.drawable.account)
+            val img = "http://192.249.18.210/images/123"
+            Glide.with(context).load(img)
+                .apply(RequestOptions().centerCrop())
+                .into(holder.imgProfile)
         } else {
             Glide.with(context).load(friendsData[position].imgUrl)
                 .apply(RequestOptions().centerCrop())

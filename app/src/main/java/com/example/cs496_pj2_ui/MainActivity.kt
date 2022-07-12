@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
         // Toolbar Config
         setSupportActionBar(findViewById(R.id.main_toolbar))
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        binding.mainToolbar.title = "Instagram"
 
         id = intent.getStringExtra("id")!!
 
@@ -46,6 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         // Pager Config
         binding.pagerMain.adapter = PagerAdapter(supportFragmentManager, lifecycle)
+
 
         // Navigation Bar Config
         binding.navMain.setOnItemSelectedListener { item ->
@@ -93,12 +93,14 @@ class MainActivity : AppCompatActivity() {
 
             when (position) {
                 0 -> {
+                    binding.navMain.selectedItemId = R.id.page_profile
                     val profileMainFragment = ProfileMainFragment()
                     profileMainFragment.arguments = bundle
                     return profileMainFragment
                 }
 
                 1 -> {
+                    binding.navMain.selectedItemId = R.id.page_board
                     val boardMainFragment = BoardMainFragment()
                     boardMainFragment.arguments = bundle
                     return boardMainFragment

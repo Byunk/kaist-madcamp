@@ -1,8 +1,15 @@
 package com.example.cs496_pj2_ui.service.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Board(
+    //todo: Board Id 추가하자고 하기
+    @SerializedName("_id")
+    val boardId: String,
+
     @SerializedName("username")
     val username: String,
 
@@ -15,13 +22,15 @@ data class Board(
     @SerializedName("votes")
     val votes: Int?,
 
+    // TODO: 없애자 제발
     @SerializedName("views")
     val views: Int,
 
     @SerializedName("comments")
     val comments: ArrayList<Comment>?,
-)
+): Parcelable
 
+@Parcelize
 data class Comment(
     @SerializedName("id")
     val id: String,
@@ -31,7 +40,7 @@ data class Comment(
 
     @SerializedName("vote")
     val vote: Int?
-)
+): Parcelable
 
 data class WriteBoardRequest(
     val id: String,

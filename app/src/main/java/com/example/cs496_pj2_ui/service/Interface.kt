@@ -1,20 +1,28 @@
 package com.example.cs496_pj2_ui.service
 
 import com.example.cs496_pj2_ui.service.model.*
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
 interface RetrofitInterface {
 
-    //Login
+    //region Login
     @POST("/user/login")
     fun executeLogin(@Body loginRequest: LoginRequest): Call<LoginResponse>
 
     @POST("/user/signup")
     fun executeSignup(@Body signupRequest: SignupRequest): Call<ResponseCode>
+    //endregion
 
-    //User Data
+    //region Image
+    @Multipart
+    @POST("/upload")
+    fun postImg(@Part photo: MultipartBody.Part): Call<String>
+    //endregion
+
+    //region User Data
     @GET("/user/{id}")
     fun getUserById(@Path("id") id: String): Call<UserData>
 
@@ -29,11 +37,12 @@ interface RetrofitInterface {
 
     @GET("/user/schedule/date/{id}/{year}/{month}/{date}")
     fun getUserDailySchedule(@Path("id") id: String, @Path("year") year: Int, @Path("month") month: Int, @Path("date") date: Int): Call<ArrayList<ScheduleData>>
+    //endregion
 
     //@GET("/")
     //fun getChatsById(@Path("id") id: String): Call<ArrayList<Chat>>
 
-    //Promise
+    //region Promise
     @POST("/request")
     fun sendRequest(@Body promiseRequest: PromiseRequest): Call<ResponseCode>
 
@@ -48,8 +57,9 @@ interface RetrofitInterface {
 
     @GET("/request/{id}/{accept}")
     fun sendResponse(@Path("id") id: String, @Path("accept") accept: Boolean): Call<ResponseCode>
+    //endregion
 
-    //Board
+    //region Board
     @GET("/board")
     fun getBoards(): Call<ArrayList<Board>>
 
@@ -67,4 +77,5 @@ interface RetrofitInterface {
 
     @POST("/board/comment/delete")
     fun deleteComment(@Body deleteCommentRequest: DeleteCommentRequest): Call<ResponseCode>
+    //endregion
 }

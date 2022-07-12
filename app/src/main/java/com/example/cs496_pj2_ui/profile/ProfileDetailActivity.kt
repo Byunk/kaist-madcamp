@@ -32,6 +32,11 @@ class ProfileDetailActivity : AppCompatActivity() {
         id = intent.getStringExtra("id") ?: data.id
 
         binding.tvNameProfileDetail.text = data.name
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         binding.tvStatusProfileDetail.text = data.status ?: ""
 
         if (data.imgUrl == null) {
@@ -73,7 +78,7 @@ class ProfileDetailActivity : AppCompatActivity() {
 
         binding.imgPromisProfile.setOnClickListener {
             val intent = Intent(this, ProfileDailyScheduleAddActivity::class.java)
-            intent.putExtra("data", data)
+            intent.putExtra("receiver", data)
             intent.putExtra("id", id)
             startActivity(intent)
         }
@@ -89,6 +94,7 @@ class ProfileDetailActivity : AppCompatActivity() {
             intent.putExtra("hobby", data.hobby)
             intent.putExtra("favorites", data.favorites)
             intent.putExtra("weekend", data.weekend)
+            intent.putExtra("imgUrl", data.imgUrl)
             startActivity(intent)
         }
     }

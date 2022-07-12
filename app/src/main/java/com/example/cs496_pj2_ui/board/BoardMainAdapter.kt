@@ -16,6 +16,9 @@ import com.example.cs496_pj2_ui.profile.ProfileMainAdapter
 import com.example.cs496_pj2_ui.service.RetrofitService
 import com.example.cs496_pj2_ui.service.model.Board
 import com.example.cs496_pj2_ui.service.model.UserData
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class BoardMainAdapter(val context: Context, val id: String): RecyclerView.Adapter<BoardMainAdapter.CustomViewHolder>() {
 
@@ -59,10 +62,22 @@ class BoardMainAdapter(val context: Context, val id: String): RecyclerView.Adapt
 
         fun bind(board: Board) {
             itemView.setOnClickListener {
-                //val intent = Intent(context, ProfileDetailActivity::class.java)
-                //intent.putExtra("id", id)
-                //intent.putExtra("data", data)
-                //context.startActivity(intent)
+                val call = RetrofitService.retrofitInterface.findBoardById(board.boardId)
+                call.enqueue(object: Callback<Board> {
+                    override fun onFailure(call: Call<Board>, t: Throwable) {
+                        Log.e(RetrofitService.TAG, t.message!!)
+                    }
+
+                    override fun onResponse(call: Call<Board>, response: Response<Board>) {
+                        if (response.isSuccessful) {
+                            val board = response.body()!!
+                            val intent = Intent(context, BoardDetailActivity::class.java)
+                            intent.putExtra("id", id)
+                            intent.putExtra("board", board)
+                            context.startActivity(intent)
+                        }
+                    }
+                })
             }
         }
     }

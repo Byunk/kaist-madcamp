@@ -31,6 +31,7 @@ class ProfileDailyScheduleAddActivity : AppCompatActivity() {
 
     private lateinit var binding: ProfileDailyScheduleAddActivityBinding
     private lateinit var id: String
+    private lateinit var sender: UserData
     private lateinit var receiver: UserData
 
     private var year = -1
@@ -51,7 +52,7 @@ class ProfileDailyScheduleAddActivity : AppCompatActivity() {
         time = today.get(Calendar.HOUR)*100 + today.get(Calendar.MINUTE)
 
         id = intent.getStringExtra("id")!!
-        receiver = intent.getParcelableExtra("data")!!
+        receiver = intent.getParcelableExtra("receiver")!!
 
         binding.tvReceiverName.text = receiver.name
         if (receiver.imgUrl == null) {
@@ -97,7 +98,7 @@ class ProfileDailyScheduleAddActivity : AppCompatActivity() {
             val message = binding.etMessageAdd.text.toString()
 
             val promiseRequest = PromiseRequest(
-                id, receiver.id, year, month, date, time, duration, todo, location, message
+                id, "sender name", "sender Image", receiver.id, year, month+1, date, time, duration, todo, location, message
             )
 
             val call = RetrofitService.retrofitInterface.sendRequest(promiseRequest)

@@ -7,8 +7,13 @@ import java.time.Duration
 
 @Parcelize
 data class PromiseRequest (
+
     @SerializedName("_id")
     val senderId: String,
+    @SerializedName("sender_name")
+    val senderName: String,
+    @SerializedName("sender_image")
+    val senderImg: String?,
     @SerializedName("receiver")
     val receiverId: String,
 
@@ -37,6 +42,8 @@ data class PromiseRequestResponse(
     val requestId: String,
     @SerializedName("sender_id")
     val senderId: String,
+    @SerializedName("receiver")
+    val receiverId: String,
     @SerializedName("image_url")
     val imgUrl: String?,
     @SerializedName("username")
