@@ -114,6 +114,8 @@ class ProfileMonthlyScheduleFragmentAdapter(val context: Context, val calendarLa
                 intent.putExtra("year", year)
                 intent.putExtra("month", month)
                 intent.putExtra("date", date)
+                intent.putExtra("sender", sender)
+                intent.putExtra("receiver", receiver)
                 context.startActivity(intent)
             }
         }

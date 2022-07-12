@@ -1,6 +1,7 @@
 package com.example.cs496_pj2_ui.service
 
 import com.example.cs496_pj2_ui.service.model.*
+import com.google.gson.annotations.SerializedName
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Response
@@ -44,7 +45,7 @@ interface RetrofitInterface {
 
     //region Promise
     @POST("/request")
-    fun sendRequest(@Body promiseRequest: PromiseRequest): Call<ResponseCode>
+    fun sendRequest(@Body promiseRequest: PromiseRequest): Call<DefaultResponse>
 
     @GET("/request/receive/{id}")
     fun getReceivedRequestById(@Path("id") id: String): Call<ArrayList<PromiseRequestResponse>>
@@ -79,3 +80,8 @@ interface RetrofitInterface {
     fun deleteComment(@Body deleteCommentRequest: DeleteCommentRequest): Call<ResponseCode>
     //endregion
 }
+
+data class DefaultResponse (
+    @SerializedName("ResponseCode")
+    val code: Int
+)

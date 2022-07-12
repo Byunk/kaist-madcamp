@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.cs496_pj2_ui.R
 import com.example.cs496_pj2_ui.databinding.ProfileDailyScheduleAddActivityBinding
+import com.example.cs496_pj2_ui.service.DefaultResponse
 import com.example.cs496_pj2_ui.service.RetrofitService
 import com.example.cs496_pj2_ui.service.SocketService
 import com.example.cs496_pj2_ui.service.model.PromiseRequest
@@ -103,17 +104,17 @@ class ProfileDailyScheduleAddActivity : AppCompatActivity() {
             )
 
             val call = RetrofitService.retrofitInterface.sendRequest(promiseRequest)
-            call.enqueue(object: Callback<ResponseCode> {
-                override fun onFailure(call: Call<ResponseCode>, t: Throwable) {
+            call.enqueue(object: Callback<DefaultResponse> {
+                override fun onFailure(call: Call<DefaultResponse>, t: Throwable) {
                     Log.e(RetrofitService.TAG, t.message!!)
                 }
 
                 override fun onResponse(
-                    call: Call<ResponseCode>,
-                    response: Response<ResponseCode>
+                    call: Call<DefaultResponse>,
+                    response: Response<DefaultResponse>
                 ) {
                     Log.e(RetrofitService.TAG, response.body().toString())
-                    if (response.body() == ResponseCode(0)) {
+                    if (response.body() == DefaultResponse(200)) {
                         finish()
                     } else {
                         Toast.makeText(this@ProfileDailyScheduleAddActivity, "Request Failed", Toast.LENGTH_SHORT).show()

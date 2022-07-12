@@ -41,14 +41,21 @@ class ProfileDailyScheduleActivity : AppCompatActivity() {
 
         binding = ProfileDailyScheduleActivityBinding.inflate(layoutInflater)
 
-        binding.fabAddDailySchedule.setOnClickListener {
-            val intent = Intent(this, ProfileDailyScheduleAddActivity::class.java)
-            intent.putExtra("sender", sender)
-            intent.putExtra("receiver", receiver)
-            intent.putExtra("year", year)
-            intent.putExtra("month", month)
-            intent.putExtra("date", date)
-            startActivity(intent)
+        if (sender.id == receiver.id) {
+            binding.fabAddDailySchedule.visibility = View.INVISIBLE
+            binding.fabAddDailySchedule.isEnabled = false
+        } else {
+            binding.fabAddDailySchedule.visibility = View.VISIBLE
+            binding.fabAddDailySchedule.isEnabled = true
+            binding.fabAddDailySchedule.setOnClickListener {
+                val intent = Intent(this, ProfileDailyScheduleAddActivity::class.java)
+                intent.putExtra("sender", sender)
+                intent.putExtra("receiver", receiver)
+                intent.putExtra("year", year)
+                intent.putExtra("month", month)
+                intent.putExtra("date", date)
+                startActivity(intent)
+            }
         }
 
         adapter = ProfileDailyScheduleActivityAdapter(this)

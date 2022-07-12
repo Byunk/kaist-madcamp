@@ -9,8 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cs496_pj2_ui.R
 import com.example.cs496_pj2_ui.service.model.Comment
+import com.example.cs496_pj2_ui.service.model.DeleteCommentRequest
 
-class BoardCommentsAdapter(val context: Context, val comments: ArrayList<Comment>): RecyclerView.Adapter<BoardCommentsAdapter.CustomViewHolder>() {
+class BoardCommentsAdapter(val context: Context, val id: String, val boardId: String, val comments: ArrayList<Comment>): RecyclerView.Adapter<BoardCommentsAdapter.CustomViewHolder>() {
     override fun getItemCount(): Int {
         return comments.size
     }
@@ -24,9 +25,14 @@ class BoardCommentsAdapter(val context: Context, val comments: ArrayList<Comment
     }
 
     override fun onBindViewHolder(holder: BoardCommentsAdapter.CustomViewHolder, position: Int) {
-        // TODO: User name
-        //holder.name.text = comments[position].
+        holder.name.text = "익명"
         holder.content.text = comments[position].content
+        holder.bind(comments[position])
+    }
+
+    fun addComment(comment: Comment) {
+        comments.add(comment)
+        notifyDataSetChanged()
     }
 
     inner class CustomViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -34,10 +40,19 @@ class BoardCommentsAdapter(val context: Context, val comments: ArrayList<Comment
         val content = itemView.findViewById<TextView>(R.id.tv_comment_content)
         val btnDelete = itemView.findViewById<ImageButton>(R.id.btn_delete_comment)
 
-        fun bind() {
-            btnDelete.setOnClickListener {
-                // TODO:  
+        fun bind(comment: Comment) {
+            if(id == comment.id) {
+                btnDelete.visibility = View.VISIBLE
+                btnDelete.isEnabled = true
+
+                btnDelete.setOnClickListener {
+
+                }
+            } else {
+                btnDelete.visibility = View.INVISIBLE
+                btnDelete.isEnabled = false
             }
+
         }
     }
 }

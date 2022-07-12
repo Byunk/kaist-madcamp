@@ -10,6 +10,9 @@ data class Board(
     @SerializedName("_id")
     val boardId: String,
 
+    @SerializedName("id")
+    val userId: String,
+
     @SerializedName("username")
     val username: String,
 
@@ -22,7 +25,6 @@ data class Board(
     @SerializedName("votes")
     val votes: Int?,
 
-    // TODO: 없애자 제발
     @SerializedName("views")
     val views: Int,
 
@@ -38,8 +40,6 @@ data class Comment(
     @SerializedName("content")
     val content: String?,
 
-    @SerializedName("vote")
-    val vote: Int?
 ): Parcelable
 
 data class WriteBoardRequest(
