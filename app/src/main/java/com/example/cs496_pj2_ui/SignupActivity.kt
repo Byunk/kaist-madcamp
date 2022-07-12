@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.cs496_pj2_ui.databinding.SignupActivityBinding
-import com.example.cs496_pj2_ui.retrofitService.RetrofitService
-import com.example.cs496_pj2_ui.retrofitService.SignupRequest
-import com.example.cs496_pj2_ui.retrofitService.model.ResponseCode
+import com.example.cs496_pj2_ui.service.RetrofitService
+import com.example.cs496_pj2_ui.service.SignupRequest
+import com.example.cs496_pj2_ui.service.model.ResponseCode
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

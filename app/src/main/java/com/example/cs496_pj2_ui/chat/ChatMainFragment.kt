@@ -5,9 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.cs496_pj2_ui.R
 import com.example.cs496_pj2_ui.databinding.ChatMainFragmentBinding
-import com.example.cs496_pj2_ui.retrofitService.RetrofitService
 
 class ChatMainFragment : Fragment() {
 

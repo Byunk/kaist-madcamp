@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,9 +14,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.cs496_pj2_ui.R
 import com.example.cs496_pj2_ui.databinding.ProfileMainFragmentBinding
-import com.example.cs496_pj2_ui.databinding.ProfileRowBinding
-import com.example.cs496_pj2_ui.retrofitService.RetrofitService
-import com.example.cs496_pj2_ui.retrofitService.model.UserData
+import com.example.cs496_pj2_ui.service.RetrofitService
+import com.example.cs496_pj2_ui.service.model.UserData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,6 +23,7 @@ import retrofit2.Response
 class ProfileMainFragment : Fragment() {
 
     private lateinit var binding: ProfileMainFragmentBinding
+
     private lateinit var id: String
     private var friends: ArrayList<String> = arrayListOf()
 
@@ -33,11 +34,13 @@ class ProfileMainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         id = arguments?.getString("id") as String
+
         binding = ProfileMainFragmentBinding.inflate(inflater, container, false)
 
         recyclerView = binding.rvProfile
-        recyclerAdapter = ProfileMainAdapter(requireContext())
+        recyclerAdapter = ProfileMainAdapter(requireContext(), id)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = recyclerAdapter
         return binding.root
@@ -58,21 +61,15 @@ class ProfileMainFragment : Fragment() {
                 response: Response<UserData>
             ) {
                 if (response.body() != null) {
-                    val myInfo = response.body()!!
-                    binding.tvMyNameProfile.text = myInfo.name
-                    binding.tvMyStatusProfile.text = myInfo.status
+                    val myData = response.body()!!
+                    binding.tvMyNameProfile.text = myData.name
+                    binding.tvMyStatusProfile.text = myData.status
 
-                    if (myInfo.imgUrl == null) {
-                        binding.imgMyProfile.setImageResource(R.drawable.account)
-                    } else {
-                        Glide.with(this@ProfileMainFragment).load(myInfo.imgUrl)
-                            .apply(RequestOptions().centerCrop())
-                            .into(binding.imgMyProfile)
-                    }
+                    RetrofitService.fetchImg(requireContext(), myData.imgUrl, binding.imgMyProfile)
 
                     binding.cvMyProfile.setOnClickListener {
                         val intent = Intent(context, ProfileDetailActivity::class.java)
-                        intent.putExtra("data", myInfo)
+                        intent.putExtra("data", myData)
                         startActivity(intent)
                     }
                 }
@@ -86,9 +83,6 @@ class ProfileMainFragment : Fragment() {
                 Log.e(RetrofitService.TAG, t.message + "in get user friends")
             }
 
-            // TODO: Sorting by name
-            // TODO: My Profile Customizing 
-            // TODO: Editing 
             override fun onResponse(call: Call<ArrayList<String>>, response: Response<ArrayList<String>>) {
                 if (response.body() != null) {
                     val prevFriends = arrayListOf<String>()
@@ -144,5 +138,6 @@ class ProfileMainFragment : Fragment() {
             }
         })
     }
+
 }
 

@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.cs496_pj2_ui.databinding.LoginActivityBinding
-import com.example.cs496_pj2_ui.retrofitService.LoginRequest
-import com.example.cs496_pj2_ui.retrofitService.LoginResponse
-import com.example.cs496_pj2_ui.retrofitService.RetrofitService
+import com.example.cs496_pj2_ui.service.LoginRequest
+import com.example.cs496_pj2_ui.service.LoginResponse
+import com.example.cs496_pj2_ui.service.RetrofitService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

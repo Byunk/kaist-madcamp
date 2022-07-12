@@ -13,11 +13,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.cs496_pj2_ui.R
 import com.example.cs496_pj2_ui.databinding.ProfileRowBinding
-import com.example.cs496_pj2_ui.retrofitService.RetrofitService
-import com.example.cs496_pj2_ui.retrofitService.model.UserData
-import org.w3c.dom.Text
+import com.example.cs496_pj2_ui.service.RetrofitService
+import com.example.cs496_pj2_ui.service.model.UserData
 
-class ProfileMainAdapter(val context: Context): RecyclerView.Adapter<ProfileMainAdapter.CustomViewHolder>() {
+class ProfileMainAdapter(val context: Context, val id: String): RecyclerView.Adapter<ProfileMainAdapter.CustomViewHolder>() {
 
     private lateinit var binding: ProfileRowBinding
     var friendsData: ArrayList<UserData> = arrayListOf()
@@ -39,13 +38,7 @@ class ProfileMainAdapter(val context: Context): RecyclerView.Adapter<ProfileMain
         holder.name.text = friendsData[position].name
         holder.status.text = friendsData[position].status
 
-        if (friendsData[position].imgUrl == null) {
-            holder.imgProfile.setImageResource(R.drawable.account)
-        } else {
-            Glide.with(context).load(friendsData[position].imgUrl)
-                .apply(RequestOptions().centerCrop())
-                .into(holder.imgProfile)
-        }
+        RetrofitService.fetchImg(context, friendsData[position].imgUrl, holder.imgProfile)
         holder.bind(friendsData[position])
     }
 
@@ -60,11 +53,9 @@ class ProfileMainAdapter(val context: Context): RecyclerView.Adapter<ProfileMain
         val status = itemView.findViewById<TextView>(R.id.tv_status_profile)!!
 
         fun bind(data: UserData) {
-            Log.e(RetrofitService.TAG, "bind Event")
-            Log.e(RetrofitService.TAG, itemView.toString())
             itemView.setOnClickListener {
-                Log.e(RetrofitService.TAG, "Click Item Event")
                 val intent = Intent(context, ProfileDetailActivity::class.java)
+                intent.putExtra("id", id)
                 intent.putExtra("data", data)
                 context.startActivity(intent)
             }
