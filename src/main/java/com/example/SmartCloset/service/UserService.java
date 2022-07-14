@@ -8,8 +8,6 @@ import java.util.Optional;
 
 public interface UserService {
 
-    String getAll();
-
     User getUserById(String id);
 
     User saveOrUpdate(User user);

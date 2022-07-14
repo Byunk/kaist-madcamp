@@ -20,7 +20,8 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/id")
+    @GetMapping("id")
+    @ResponseBody
     public User id(@RequestParam String id) {
         return userService.getUserById(id);
     }
@@ -28,10 +29,10 @@ public class UserController {
     @PostMapping(value="save")
     @ResponseBody
     public User save(@RequestBody User user) {
-        logger.info(user.getId());
-        logger.info(user.getUsername());
         return userService.saveOrUpdate(user);
     }
+
+    // TODO: 2022/07/15 like & isLike Method & login & signup
 
     @GetMapping("")
     @ResponseBody

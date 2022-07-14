@@ -1,5 +1,6 @@
 package com.example.SmartCloset.model;
 
+import com.mongodb.lang.Nullable;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,15 +12,21 @@ public class User {
     //private String id;
     //private String pw;
     @Id
-    private long userId;
+    private String userId;
 
     private String id;
+    private String pw;
     private String username;
-    private Optional<Look[]> look;
-    private Optional<Look[]> liked_look;
-    private Optional<Cloth[]> liked_cloth;
-    private Optional<ObjectId[]> following;
-    private Optional<String[]> inclination;
+    @Nullable
+    private String[] look;
+    @Nullable
+    private String[] liked_look;
+    @Nullable
+    private String[] liked_cloth;
+    @Nullable
+    private String[] following;
+    @Nullable
+    private Inclination inclination;
 
     public String getId() {
         return id;
