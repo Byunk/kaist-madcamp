@@ -17,17 +17,6 @@ public class ClothServiceImpl implements ClothService {
     ClothServiceImpl(ClothRepository clothRepository) { this.clothRepository = clothRepository; }
 
     @Override
-    public HashMap<String, Integer> getColorDistribution() {
-
-        HashMap<String, Integer> distribution = new HashMap<String, Integer>();
-
-        for (ClothesColor color : ClothesColor.values()) {
-            distribution.put(color.getColor(), clothRepository.countClothByColor(color.getColor()));
-        }
-        return distribution;
-    }
-
-    @Override
     public Cloth findClothById(String id) {
         return clothRepository.getClothById(id);
     }
