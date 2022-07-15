@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: "SmartClosetDB"
+      authentication-database: admin
+      username: clearman001
+      password: b3358119
+
+server:
+  port: 80
