@@ -3,9 +3,11 @@ package com.example.SmartCloset.model;
 import com.example.SmartCloset.model.ClosetEnum.*;
 import com.mongodb.lang.Nullable;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.awt.*;
 
+@Document("cloth")
 public class Cloth {
 
     @Id
@@ -17,5 +19,5 @@ public class Cloth {
     @Nullable
     private TPO tpo;
     private Gender gender;
-    private Color color;
+    private ClothesColor color;
 }

@@ -12,7 +12,6 @@ public class Look {
 
     private String tpo;
     private Gender gender;
-    private Style[] styles;
     private String url;
 
 }

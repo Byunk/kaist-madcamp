@@ -6,10 +6,6 @@ import com.example.SmartCloset.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -18,14 +14,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-    }
-
-    @Override
-    public String getAll() {
-        List<User> users = new ArrayList<>();
-        userRepository.findAll().forEach(users::add);
-        return "user";
-        //return users;
     }
 
     @Override

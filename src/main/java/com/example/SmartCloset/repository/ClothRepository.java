@@ -5,8 +5,9 @@ import org.springframework.data.mongodb.repository.CountQuery;
 import org.springframework.data.mongodb.repository.DeleteQuery;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Repository;
 
-public interface ClothRepository extends MongoRepository {
+public interface ClothRepository extends MongoRepository<Cloth, String> {
 
     @CountQuery ("{color: ?0}")
     Integer countClothByColor(String color);

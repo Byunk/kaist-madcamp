@@ -4,7 +4,8 @@ import com.example.SmartCloset.model.Inclination;
 import com.example.SmartCloset.model.Look;
 import com.example.SmartCloset.repository.LookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
+@Service
 public class LookServiceImpl implements LookService{
 
     private LookRepository lookRepository;

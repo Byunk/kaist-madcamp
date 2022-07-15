@@ -15,7 +15,5 @@ public class Request {
     @Nullable
     private ClothesColor color;
     @Nullable
-    private Style style;
-    @Nullable
     private TPO tpo;
 }
