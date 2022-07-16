@@ -1,5 +1,7 @@
 package com.example.SmartCloset.model.ClosetEnum;
 
+import java.util.Random;
+
 public enum TPO {
 
     DATE("데이트"),
@@ -12,5 +14,12 @@ public enum TPO {
     private String tpo;
     TPO(String tpo) { this.tpo = tpo; }
     public String getTpo() { return tpo; }
+
+    public static TPO getRandomTPO() {
+        Integer size = TPO.values().length;
+
+        Random random = new Random();
+        return TPO.values()[random.nextInt(size)];
+    }
 
 }

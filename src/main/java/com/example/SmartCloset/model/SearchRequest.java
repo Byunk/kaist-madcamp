@@ -2,22 +2,20 @@ package com.example.SmartCloset.model;
 
 import com.example.SmartCloset.model.ClosetEnum.*;
 import com.mongodb.lang.Nullable;
+import lombok.Data;
 
-public class Request {
+@Data
+public class SearchRequest {
 
     private String userId;
     private Boolean isSearchTab;
+    private Integer numOutput;
 
     @Nullable
-    private Category1 category1;
-    @Nullable
-    private Category2 category2;
+    private Category category;
     @Nullable
     private ClothesColor color;
     @Nullable
     private TPO tpo;
 
-    public String getUserId() {
-        return this.userId;
-    }
 }
