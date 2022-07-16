@@ -4,6 +4,8 @@ import com.mongodb.lang.Nullable;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Document(collection="user")
@@ -18,13 +20,13 @@ public class User {
     private String pw;
     private String username;
     @Nullable
-    private String[] look;
+    private ArrayList<String> look;
     @Nullable
-    private String[] liked_look;
+    private ArrayList<String> liked_look;
     @Nullable
-    private String[] liked_cloth;
+    private ArrayList<String> liked_cloth;
     @Nullable
-    private String[] following;
+    private ArrayList<String> following;
     @Nullable
     private Inclination inclination;
 
@@ -35,5 +37,7 @@ public class User {
     public String getUsername() {
         return username;
     }
+
+    public ArrayList<String> getLikedCloth() { return liked_cloth; }
 
 }

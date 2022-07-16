@@ -16,12 +16,6 @@ public class LookServiceImpl implements LookService{
     }
 
     @Override
-    public Inclination getInclination(String userId) {
-        Inclination inclination = new Inclination();
-        return inclination;
-    }
-
-    @Override
     public Look getLookById(String id) {
         return lookRepository.findById(id).orElse(null);
     }

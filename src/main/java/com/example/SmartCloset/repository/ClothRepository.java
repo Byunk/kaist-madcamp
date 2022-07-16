@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface ClothRepository extends MongoRepository<Cloth, String> {
 
     @CountQuery ("{color: ?0}")
-    Integer countClothByColor(String color);
+    Integer countClothByColor(String colorName);
 
     @Query("{id: ?0}")
     Cloth getClothById(String id);

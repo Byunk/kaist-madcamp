@@ -6,6 +6,10 @@ import com.example.SmartCloset.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
+import java.util.ArrayList;
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -14,6 +18,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @Override
+    public ArrayList<String> getLikedLooksById(String id) {
+        Optional<User> user = userRepository.findById(id);
+        return user != null ? user.get().getLikedCloth() : new ArrayList<>();
+    }
+
+    @Override
+    public ArrayList<String> getLikedClothesById(String id) {
+        return null;
     }
 
     @Override
