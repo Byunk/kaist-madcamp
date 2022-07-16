@@ -138,7 +138,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveOrUpdate(User user) {
-        return userRepository.save(user); }
+        try {
+            return userRepository.save(user);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     @Override
     public void delete(String id) {

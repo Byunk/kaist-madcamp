@@ -46,7 +46,6 @@ public class LookController {
     @PostMapping("search")
     public SearchResponse search(@RequestBody SearchRequest request) {
         logger.info(request.getUserId());
-        logger.info(request.getIsSearchTab().toString());
 
         // Get User
         User user = userService.getUserById(request.getUserId());

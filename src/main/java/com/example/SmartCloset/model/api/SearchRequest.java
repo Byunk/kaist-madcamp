@@ -8,7 +8,6 @@ import lombok.Data;
 public class SearchRequest {
 
     private String userId;
-    private Boolean isSearchTab;
     private Integer numOutput;
 
     @Nullable
