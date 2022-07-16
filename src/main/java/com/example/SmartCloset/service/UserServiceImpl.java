@@ -1,6 +1,7 @@
 package com.example.SmartCloset.service;
 
 import com.example.SmartCloset.controller.UserController;
+import com.example.SmartCloset.model.LikeRequest;
 import com.example.SmartCloset.model.User;
 import com.example.SmartCloset.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ArrayList<String> getLikedClothesById(String id) {
+        User user = userRepository.findById(id).get();
+        return user.getLikedCloth();
+    }
+
+    @Override
+    public Boolean toggleLike(LikeRequest likeRequest) {
+        User user = userRepository.findById(likeRequest.getId()).get();
+
+        // Liked List에서 id 탐색
+
+        // toggle
+
+        // Save
+        return null;
+    }
+
+    @Override
+    public Boolean isLike(LikeRequest likeRequest) {
         return null;
     }
 

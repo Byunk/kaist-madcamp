@@ -1,5 +1,6 @@
 package com.example.SmartCloset.controller;
 
+import com.example.SmartCloset.model.LikeRequest;
 import com.example.SmartCloset.model.User;
 import com.example.SmartCloset.service.UserService;
 import org.slf4j.Logger;
@@ -32,6 +33,22 @@ public class UserController {
     }
 
     // TODO: 2022/07/15 like & isLike Method & login & signup
+
+    @PostMapping("like")
+    @ResponseBody
+    public Boolean like(@RequestBody LikeRequest likeRequest) {
+        logger.info("id:" + likeRequest.getId());
+        logger.info("cloth id:" + likeRequest.getClothId());
+        logger.info("look id:" + likeRequest.getLookId());
+        logger.info("user id:" + likeRequest.getUserId());
+        return true;
+    }
+
+    @PostMapping("isLiked")
+    @ResponseBody
+    public Boolean isLiked(@RequestBody LikeRequest likeRequest) {
+        return null;
+    }
 
     @GetMapping("")
     @ResponseBody
