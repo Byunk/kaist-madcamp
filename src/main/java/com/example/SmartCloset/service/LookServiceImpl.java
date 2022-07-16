@@ -25,11 +25,15 @@ public class LookServiceImpl implements LookService{
 
     @Override
     public HashMap<TPO, Float> getTPODistribution(ArrayList<Look> likeLooks) {
-        HashMap<TPO, Float> result = new HashMap<TPO, Float>();
-        Long num = lookRepository.count();
+        HashMap<TPO, Float> result = new HashMap();
+        if (likeLooks == null) {
+            return null;
+        }
+        Integer num = likeLooks.size();
 
         for (TPO tpo : TPO.values()) {
-            Float ratio = (float) lookRepository.countLookByTPO(tpo.getTpo()) / num;
+            List<Look> likeLooksOfTpo = likeLooks.stream().filter(look -> look.getTpo().contains(tpo)).toList();
+            Float ratio = (float) likeLooksOfTpo.size() / num;
             result.put(tpo, ratio);
         }
         return result;
@@ -75,6 +79,9 @@ public class LookServiceImpl implements LookService{
     public ArrayList<Look> getLooksById(ArrayList<String> ids) {
         ArrayList<Look> result = new ArrayList<Look>();
 
+        if (ids == null) {
+            return null;
+        }
         for (String id : ids) {
             result.add(lookRepository.getLookById(id));
         }

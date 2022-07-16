@@ -1,14 +1,18 @@
 package com.example.SmartCloset.controller;
 
 import com.example.SmartCloset.model.*;
+import com.example.SmartCloset.model.api.FileDto;
+import com.example.SmartCloset.model.api.SearchRequest;
+import com.example.SmartCloset.model.api.SearchResponse;
+import com.example.SmartCloset.model.api.UploadRequest;
 import com.example.SmartCloset.service.ClothService;
 import com.example.SmartCloset.service.LookService;
 import com.example.SmartCloset.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 
 //for image upload
@@ -18,7 +22,7 @@ import java.io.File;
 import java.io.*;
 import java.util.UUID;
 
-@Controller
+@RestController
 @RequestMapping("look")
 public class LookController {
 
@@ -35,34 +39,72 @@ public class LookController {
     }
 
     @GetMapping("id")
-    @ResponseBody
     public Look id(@RequestParam String id) {
         return lookService.getLookById(id);
     }
 
     @PostMapping("search")
-    @ResponseBody
-    public SearchResponse search(@RequestParam SearchRequest request) {
+    public SearchResponse search(@RequestBody SearchRequest request) {
+        logger.info(request.getUserId());
+        logger.info(request.getIsSearchTab().toString());
+
         // Get User
         User user = userService.getUserById(request.getUserId());
+        if (user == null) {
+            return null;
+        }
 
         // Get Liked Clothes List
-        ArrayList<Cloth> likedClothes = clothService.findClothesById(user.getLikedCloth());
-        //ArrayList<Look> likedLooks = lookService.findLooksById(user.getLikedLooks());
+        ArrayList<String> likedLooksIds = user.getLikedLook();
+        if (likedLooksIds == null) {
+            return null;
+        }
+
+        ArrayList<Look> likedLooks = lookService.getLooksById(likedLooksIds);
 
         // Calculate Inclination
         Inclination inclination = new Inclination();
-        inclination.setColorDistribution(clothService.getColorDistribution(likedClothes));
-        //inclination.setTpoDistribution(lookService.getTPODistribution(likedLooks));
+        inclination.setTpoDistribution(lookService.getTPODistribution(likedLooks));
 
         // Fetch Looks and Clothes
         return new SearchResponse(lookService.getLooksByInclination(inclination, request.getNumOutput()));
     }
 
-    @PostMapping("/upload")
-    @ResponseBody
+    @PostMapping("upload")
+    public void upload(@RequestParam UploadRequest request) {
+        ArrayList<String> clothesIds = new ArrayList<>();
+
+        // Upload Clothes DB
+        for (Cloth cloth: request.getClothes()) {
+            clothService.saveOrUpdate(cloth);
+            clothesIds.add(cloth.getClothId());
+        }
+
+        // Upload Look DB
+        Look look = new Look(request.getTpos(), request.getGender(), clothesIds);
+        lookService.saveOrUpdate(look);
+
+        // Upload User DB
+        User user = userService.getUserById(request.getId());
+        if (user == null) {
+            return;
+        }
+
+        if (user.getLook() == null) {
+            ArrayList<String> userLooks = new ArrayList<>();
+            userLooks.add(look.getLookId());
+            user.setLook(userLooks);
+        } else {
+            ArrayList<String> userLooks = user.getLook();
+            userLooks.add(look.getLookId());
+            user.setLook(userLooks);
+        }
+        userService.saveOrUpdate(user);
+    }
+
+    @PostMapping("uploadImg")
     // 업로드하는 파일들을 MultipartFile 형태의 파라미터로 전달된다.
-    public String upload(@RequestPart(value="file", required = false) MultipartFile file) 
+    public String uploadImg(@RequestPart(value="file", required = false) MultipartFile file)
                                                 throws IllegalStateException, IOException {
         ArrayList<FileDto> list = new ArrayList<>();
         String curWorkingDir = System.getProperty("user.dir");

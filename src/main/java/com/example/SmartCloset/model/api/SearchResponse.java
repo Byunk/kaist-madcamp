@@ -1,4 +1,6 @@
-package com.example.SmartCloset.model;
+package com.example.SmartCloset.model.api;
+
+import com.example.SmartCloset.model.Look;
 
 import java.util.ArrayList;
 

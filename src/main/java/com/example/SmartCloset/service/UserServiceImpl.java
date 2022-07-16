@@ -1,8 +1,6 @@
 package com.example.SmartCloset.service;
 
-import com.example.SmartCloset.controller.UserController;
-import com.example.SmartCloset.model.Cloth;
-import com.example.SmartCloset.model.LikeRequest;
+import com.example.SmartCloset.model.api.LikeRequest;
 import com.example.SmartCloset.model.User;
 import com.example.SmartCloset.repository.ClothRepository;
 import com.example.SmartCloset.repository.UserRepository;
