@@ -2,6 +2,8 @@ package com.example.SmartCloset.service;
 
 import com.example.SmartCloset.model.api.LikeRequest;
 import com.example.SmartCloset.model.User;
+import com.example.SmartCloset.model.api.LoginRequest;
+import com.example.SmartCloset.model.api.SignUpRequest;
 
 import java.util.ArrayList;
 
@@ -16,6 +18,10 @@ public interface UserService {
     Boolean isLike(LikeRequest likeRequest);
 
     Long countUser();
+
+    String login(LoginRequest loginRequest);
+
+    Boolean signUp(SignUpRequest signUpRequest);
 
     User getUserById(String id);
 

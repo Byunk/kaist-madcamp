@@ -2,6 +2,8 @@ package com.example.SmartCloset.service;
 
 import com.example.SmartCloset.model.api.LikeRequest;
 import com.example.SmartCloset.model.User;
+import com.example.SmartCloset.model.api.LoginRequest;
+import com.example.SmartCloset.model.api.SignUpRequest;
 import com.example.SmartCloset.repository.ClothRepository;
 import com.example.SmartCloset.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,6 +131,35 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long countUser() {
         return userRepository.count();
+    }
+
+    @Override
+    public String login(LoginRequest loginRequest) {
+        User user = userRepository.findByLoginId(loginRequest.getId()).orElse(null);
+        if (user == null) {
+            System.out.println("유저 정보 없음");
+            return null;
+        }
+
+        if (user.getPw().equals(loginRequest.getPw())) {
+            System.out.println("로그인 성공");
+            return user.getId();
+        } else {
+            System.out.println("로그인 실패");
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean signUp(SignUpRequest signUpRequest) {
+        User user = userRepository.findByLoginId(signUpRequest.getId()).orElse(null);
+        if (user != null) {
+            return false;
+        } else {
+            // TODO: 2022/07/17 PW Validation
+            saveOrUpdate(new User(signUpRequest.getId(), signUpRequest.getPw(), signUpRequest.getUsername()));
+            return true;
+        }
     }
 
     @Override
