@@ -4,6 +4,9 @@ import com.example.SmartCloset.model.ClosetEnum.Gender;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Document("look")
 public class Look {
 
@@ -13,6 +16,8 @@ public class Look {
     private String tpo;
     private Gender gender;
     private String url;
+
+    private ArrayList<String> clothes;
 
 }
 

@@ -1,9 +1,7 @@
 package com.example.SmartCloset.service;
 
 import com.example.SmartCloset.model.ClosetEnum.ClothesColor;
-import com.example.SmartCloset.model.ClosetEnum.TPO;
 import com.example.SmartCloset.model.Cloth;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
