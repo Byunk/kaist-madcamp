@@ -12,7 +12,7 @@ public interface LookService {
 
     HashMap<TPO, Float> getTPODistribution(ArrayList<Look> likeLooks);
 
-    ArrayList<Look> getLooksByInclination(Inclination inclination, int count);
+    ArrayList<Look> getLooksByInclination(Inclination inclination, Integer count);
 
     ArrayList<Look> getLooksById(ArrayList<String> ids);
 

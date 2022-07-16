@@ -36,7 +36,7 @@ public class LookServiceImpl implements LookService{
     }
 
     @Override
-    public ArrayList<Look> getLooksByInclination(Inclination inclination, int count){
+    public ArrayList<Look> getLooksByInclination(Inclination inclination, Integer count){
         ArrayList<Look> result = new ArrayList<Look>();
 
         double random = Math.random();
@@ -46,7 +46,7 @@ public class LookServiceImpl implements LookService{
             double start = 0;
             String resultTPO = null;
 
-            HashMap<TPO, Float> tpoDistribution = inclination.getTPODistribution();
+            HashMap<TPO, Float> tpoDistribution = inclination.getTpoDistribution();
             for (TPO tpo: TPO.values()) {
                 if (random > start && random < start + tpoDistribution.get(tpo)) {
                     resultTPO = tpo.getTpo();
@@ -84,7 +84,7 @@ public class LookServiceImpl implements LookService{
 
     @Override
     public Look saveOrUpdate(Look look) {
-        return lookRepository.insert(look);
+        return lookRepository.save(look);
     }
 
     @Override

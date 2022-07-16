@@ -1,12 +1,11 @@
 package com.example.SmartCloset.model.ClosetEnum;
 
-import lombok.RequiredArgsConstructor;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
-public enum Category1 {
+public enum Category {
     OUTER("아우터", Arrays.asList("HOOD", "COAT", "JACKET")),
     TOP("상의", Arrays.asList("TSHIRT", "SHIRT", "SWEAT", "NEAT")),
     BOTTOM("하의", Arrays.asList("DENIM", "SHORT", "JOGER")),
@@ -15,11 +14,18 @@ public enum Category1 {
 
     private String category;
     private List<String> subCategory;
-    Category1(String category, List<String> subCategory) {
+    Category(String category, List<String> subCategory) {
         this.category = category;
         this.subCategory = subCategory;
     }
     public String getCategory() { return category; }
-    public List<String> getSubCategory(Category1 category1) { return }
+    public List<String> getSubCategory(Category category) { return category.subCategory; }
+
+    public String getRandomSubCategory() {
+        Integer size = subCategory.size();
+
+        Random random = new Random();
+        return subCategory.get(random.nextInt(size));
+    }
 
 }

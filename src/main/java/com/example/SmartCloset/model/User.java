@@ -1,14 +1,18 @@
 package com.example.SmartCloset.model;
 
 import com.mongodb.lang.Nullable;
-import org.bson.types.ObjectId;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.ArrayList;
-import java.util.Optional;
+
 
 @Document(collection="user")
+@Data
 public class User {
 
     //private String id;
@@ -16,28 +20,21 @@ public class User {
     @Id
     private String userId;
 
+    @NonNull @Indexed(unique = true)
     private String id;
+    @NonNull
     private String pw;
+    @NonNull
     private String username;
     @Nullable
     private ArrayList<String> look;
     @Nullable
-    private ArrayList<String> liked_look;
+    private ArrayList<String> likedLook;
     @Nullable
-    private ArrayList<String> liked_cloth;
+    private ArrayList<String> likedCloth;
     @Nullable
-    private ArrayList<String> following;
+    private ArrayList<String> likedUser;
     @Nullable
     private Inclination inclination;
-
-    public String getId() {
-        return id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public ArrayList<String> getLikedCloth() { return liked_cloth; }
 
 }

@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import javax.validation.Valid;
+
+@RestController
 @RequestMapping("user")
 public class UserController {
 
@@ -21,13 +23,11 @@ public class UserController {
     }
 
     @GetMapping("id")
-    @ResponseBody
     public User id(@RequestParam String id) {
         return userService.getUserById(id);
     }
 
     @PostMapping(value="save")
-    @ResponseBody
     public User save(@RequestBody User user) {
         return userService.saveOrUpdate(user);
     }
@@ -35,24 +35,18 @@ public class UserController {
     // TODO: 2022/07/15 like & isLike Method & login & signup
 
     @PostMapping("like")
-    @ResponseBody
     public Boolean like(@RequestBody LikeRequest likeRequest) {
+
         logger.info("id:" + likeRequest.getId());
         logger.info("cloth id:" + likeRequest.getClothId());
         logger.info("look id:" + likeRequest.getLookId());
         logger.info("user id:" + likeRequest.getUserId());
-        return true;
+        return userService.toggleLike(likeRequest);
     }
 
     @PostMapping("isLiked")
-    @ResponseBody
     public Boolean isLiked(@RequestBody LikeRequest likeRequest) {
-        return null;
+        return userService.isLike(likeRequest);
     }
 
-    @GetMapping("")
-    @ResponseBody
-    public String test() {
-        return "test successful!";
-    }
 }

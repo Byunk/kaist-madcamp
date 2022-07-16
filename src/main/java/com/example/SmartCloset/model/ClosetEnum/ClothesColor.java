@@ -3,6 +3,7 @@ package com.example.SmartCloset.model.ClosetEnum;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.Random;
 
 public enum ClothesColor {
 
@@ -21,5 +22,12 @@ public enum ClothesColor {
     private String color;
     ClothesColor(String color) { this.color = color; }
     public String getColor() { return color; }
+
+    public ClothesColor getRandomColor() {
+        Integer size = ClothesColor.values().length;
+
+        Random random = new Random();
+        return ClothesColor.values()[random.nextInt(size)];
+    }
 
 }

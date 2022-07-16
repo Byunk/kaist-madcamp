@@ -18,6 +18,8 @@ public interface UserService {
 
     Boolean isLike(LikeRequest likeRequest);
 
+    Long countUser();
+
     User getUserById(String id);
 
     User saveOrUpdate(User user);

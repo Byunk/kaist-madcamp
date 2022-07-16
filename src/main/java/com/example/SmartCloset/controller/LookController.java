@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("look")
@@ -38,7 +35,7 @@ public class LookController {
 
     @PostMapping("search")
     @ResponseBody
-    public SearchResponse search(@RequestParam Request request) {
+    public SearchResponse search(@RequestParam SearchRequest request) {
         // Get User
         User user = userService.getUserById(request.getUserId());
 
@@ -52,12 +49,12 @@ public class LookController {
         //inclination.setTpoDistribution(lookService.getTPODistribution(likedLooks));
 
         // Fetch Looks and Clothes
-        return new SearchResponse(lookService.getLooksByInclination(inclination));
+        return new SearchResponse(lookService.getLooksByInclination(inclination, request.getNumOutput()));
     }
 
     @PostMapping(value="upload")
     @ResponseBody
-    public Boolean upload(@RequestParam Request request) {
+    public Boolean upload(@RequestParam SearchRequest request) {
         // Uploading
         return true;
     }
