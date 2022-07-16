@@ -14,6 +14,18 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+//for image upload
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+//import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.StringUtils;
+import java.io.File; 
+import java.io.*;
+import java.util.UUID;
+
+
+
+
 @Controller
 @RequestMapping("look")
 public class LookController {
@@ -52,14 +64,43 @@ public class LookController {
         //inclination.setTpoDistribution(lookService.getTPODistribution(likedLooks));
 
         // Fetch Looks and Clothes
-        return new SearchResponse(lookService.getLooksByInclination(inclination));
+        return new SearchResponse(lookService.getLooksByInclination(inclination, 3));
     }
 
-    @PostMapping(value="upload")
+    @PostMapping("/upload")
     @ResponseBody
-    public Boolean upload(@RequestParam Request request) {
-        // Uploading
-        return true;
+// 업로드하는 파일들을 MultipartFile 형태의 파라미터로 전달된다.
+    public String upload(@RequestPart(value="file", required = false) MultipartFile file) 
+                                                throws IllegalStateException, IOException {
+        List<FileDto> list = new ArrayList<>();
+        System.out.println("1");
+        String curWorkingDir = System.getProperty("user.dir");
+        String path = curWorkingDir + "/save_image";
+        System.out.println(path);
+        File dir = new File(path);
+
+        if(!dir.exists()) {
+            dir.mkdir();
+            System.out.println("생성 완료");
+        } else {
+            System.out.println("같은 이름의 폴더가 이미 존재합니다.");
+        }   
+
+            if (!file.isEmpty()) {
+                // UUID를 이용해 unique한 파일 이름을 만들어준다.
+                FileDto dto = new FileDto(UUID.randomUUID().toString(), 
+                                      file.getOriginalFilename(), 
+                                      file.getContentType());
+                list.add(dto);
+                System.out.println("2");
+
+                File newFileName = new File(path, dto.getUuid() + "_" + dto.getFileName());
+                // 전달된 내용을 실제 물리적인 파일로 저장해준다.
+                file.transferTo(newFileName);
+            }
+        System.out.println("3");
+        //model.addAttribute("files", list);
+        return "result";
     }
 
 }

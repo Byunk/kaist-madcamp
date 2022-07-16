@@ -19,5 +19,46 @@ public class Look {
 
     private ArrayList<String> clothes;
 
+    public String getlookID(){
+        return lookId;
+    }
+
+    public String gettpo(){
+        return tpo;
+    }
+
+    public Gender getgender(){
+        return gender;
+    }
+
+    public String url(){
+        return url;
+    }
+
+    public ArrayList<String> getclothes(){
+        return clothes;
+    }
+
+    public void setlookID(String lookId){
+        this.lookId = lookId;
+    }
+
+    public void settpo(String tpo){
+        this.tpo = tpo;
+    }
+
+    public void setgender(Gender gender){
+        this.gender = gender;
+    }
+
+    public void seturl(String url){
+        this.url = url;
+    }
+
+
+    public void setclothes(ArrayList<String> clothes){
+        this.clothes = clothes;
+    }
+
 }
 
