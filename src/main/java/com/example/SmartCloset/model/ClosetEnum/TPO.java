@@ -15,7 +15,7 @@ public enum TPO {
     TPO(String tpo) { this.tpo = tpo; }
     public String getTpo() { return tpo; }
 
-    public TPO getRandomTPO() {
+    public static TPO getRandomTPO() {
         Integer size = TPO.values().length;
 
         Random random = new Random();

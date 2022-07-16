@@ -23,7 +23,7 @@ public enum ClothesColor {
     ClothesColor(String color) { this.color = color; }
     public String getColor() { return color; }
 
-    public ClothesColor getRandomColor() {
+    public static ClothesColor getRandomColor() {
         Integer size = ClothesColor.values().length;
 
         Random random = new Random();

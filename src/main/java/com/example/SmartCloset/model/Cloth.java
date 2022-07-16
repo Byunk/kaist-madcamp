@@ -20,8 +20,6 @@ public class Cloth {
     private Category category;
     @Nullable
     private String subCategory;
-    @Nullable
-    private TPO tpo;
     @NonNull
     private Gender gender;
     @Nullable

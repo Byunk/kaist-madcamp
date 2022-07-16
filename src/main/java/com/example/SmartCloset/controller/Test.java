@@ -1,6 +1,7 @@
 package com.example.SmartCloset.controller;
 
 import com.example.SmartCloset.model.ClosetEnum.Category;
+import com.example.SmartCloset.model.ClosetEnum.ClothesColor;
 import com.example.SmartCloset.model.ClosetEnum.Gender;
 import com.example.SmartCloset.model.ClosetEnum.TPO;
 import com.example.SmartCloset.model.Cloth;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping("test")
@@ -49,23 +52,22 @@ public class Test {
     public void look(@RequestParam Integer num) {
         for (int i = 0; i<num; i++) {
             ArrayList<Cloth> clothes = new ArrayList();
-            for (int j = 0; j<3; j++) {
-                Cloth cloth = new Cloth(Category.TOP, Gender.MAN);
-                cloth.setSubCategory(Category.TOP.getRandomSubCategory());
-                cloth.set
-                clothes.add(new Cloth(Category.TOP, Gender.MAN));
+            Category[] categories = {Category.TOP, Category.BOTTOM, Category.SHOES};
 
+            for (Category category : categories) {
+                Cloth cloth = new Cloth(category, Gender.MAN);
+                cloth.setSubCategory(category.getRandomSubCategory());
+                cloth.setColor(ClothesColor.getRandomColor());
+                clothes.add(cloth);
             }
 
             Look look = new Look(
-                    null,
-                    TPO.CASUAL,
+                    new ArrayList<>(Arrays.asList(TPO.getRandomTPO())),
                     Gender.MAN,
-
+                    clothes
             );
             lookService.saveOrUpdate(look);
         }
-        logger.info(userService.countUser().toString());
     }
 
     @GetMapping("findByName")
