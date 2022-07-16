@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public interface LookService {
 
-    HashMap<TPO, Float> getTPODistribution(ArrayList<Look> likeLooks);
+    HashMap<TPO, Integer> getTPODistribution(ArrayList<Look> likeLooks);
 
     ArrayList<Look> getLooksByInclination(Inclination inclination);
 

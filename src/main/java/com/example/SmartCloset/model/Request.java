@@ -16,4 +16,8 @@ public class Request {
     private ClothesColor color;
     @Nullable
     private TPO tpo;
+
+    public String getUserId() {
+        return this.userId;
+    }
 }
