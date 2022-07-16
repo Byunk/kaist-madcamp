@@ -17,12 +17,12 @@ public class ClothServiceImpl implements ClothService {
     ClothServiceImpl(ClothRepository clothRepository) { this.clothRepository = clothRepository; }
 
     @Override
-    public HashMap<ClothesColor, Integer> getColorDistribution(ArrayList<Cloth> likedClothes) {
-        HashMap<ClothesColor, Integer> result = new HashMap<ClothesColor, Integer>();
+    public HashMap<ClothesColor, Float> getColorDistribution(ArrayList<Cloth> likedClothes) {
+        HashMap<ClothesColor, Float> result = new HashMap<ClothesColor, Float>();
         Long num = clothRepository.count();
 
         for (ClothesColor color : ClothesColor.values()) {
-            Integer ratio = (int)(clothRepository.countClothByColor(color.getColor()) * 100.0 / num + 0.5);
+            Float ratio = (float) clothRepository.countClothByColor(color.getColor()) / num;
             result.put(color, ratio);
         }
         return result;

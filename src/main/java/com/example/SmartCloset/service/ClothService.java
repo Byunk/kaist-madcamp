@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public interface ClothService {
 
-    HashMap<ClothesColor, Integer> getColorDistribution(ArrayList<Cloth> likedClothes);
+    HashMap<ClothesColor, Float> getColorDistribution(ArrayList<Cloth> likedClothes);
 
     // TODO: 2022/07/15 Category2 에 대한 distribution
 

@@ -1,5 +1,6 @@
 package com.example.SmartCloset.model;
 
+
 public class LikeRequest {
     private String id;
     private String lookId;

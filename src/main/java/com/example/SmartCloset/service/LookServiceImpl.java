@@ -24,26 +24,51 @@ public class LookServiceImpl implements LookService{
     }
 
     @Override
-    public HashMap<TPO, Integer> getTPODistribution(ArrayList<Look> likeLooks) {
-        HashMap<TPO, Integer> result = new HashMap<TPO, Integer>();
+    public HashMap<TPO, Float> getTPODistribution(ArrayList<Look> likeLooks) {
+        HashMap<TPO, Float> result = new HashMap<TPO, Float>();
         Long num = lookRepository.count();
 
         for (TPO tpo : TPO.values()) {
-            Integer ratio = (int)(lookRepository.countLookByTPO(tpo.getTpo()) * 100.0 / num + 0.5);
+            Float ratio = (float) lookRepository.countLookByTPO(tpo.getTpo()) / num;
             result.put(tpo, ratio);
         }
         return result;
     }
 
     @Override
-    public ArrayList<Look> getLooksByInclination(Inclination inclination) {
-        List<Look> result = lookRepository.findAll();
+    public ArrayList<Look> getLooksByInclination(Inclination inclination, int count){
+        ArrayList<Look> result = new ArrayList<Look>();
 
-        //확률 계산
+        double random = Math.random();
 
-        //랜덤으로 뽑기
+        for (int i = 0; i < count; i++) {
+            // Randomly Pick TPO
+            double start = 0;
+            String resultTPO = null;
 
-        return null;
+            HashMap<TPO, Float> tpoDistribution = inclination.getTPODistribution();
+            for (TPO tpo: TPO.values()) {
+                if (random > start && random < start + tpoDistribution.get(tpo)) {
+                    resultTPO = tpo.getTpo();
+                    break;
+                } else {
+                    start += tpoDistribution.get(tpo);
+                }
+            }
+
+            // Pick Look according to Randomly Picked TPO
+            List<Look> looksWithTPO = lookRepository.getLookByTpo(resultTPO);
+            result.add(looksWithTPO.get((int) random * looksWithTPO.size()));
+            // TODO: 2022/07/16 Duplication Check
+
+            // TODO: 2022/07/16 Randomly Pick Color Logic
+        }
+        return result;
+    }
+    
+    @Override
+    public Look getLookById(String id) {
+        return lookRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -55,11 +80,6 @@ public class LookServiceImpl implements LookService{
         }
 
         return result;
-    }
-
-    @Override
-    public Look getLookById(String id) {
-        return lookRepository.findById(id).orElse(null);
     }
 
     @Override

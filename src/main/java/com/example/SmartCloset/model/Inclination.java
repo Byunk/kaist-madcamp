@@ -9,17 +9,25 @@ import java.util.HashMap;
 public class Inclination {
 
     // Color Distribution from Clothes
-    private HashMap<ClothesColor, Integer> colorDistribution;
+    private HashMap<ClothesColor, Float> colorDistribution;
 
     // TPO Distribution from Looks
-    private HashMap<TPO, Integer> tpoDistribution;
+    private HashMap<TPO, Float> tpoDistribution;
 
-    public void setColorDistribution(HashMap<ClothesColor, Integer> colorDistribution) {
+    public void setColorDistribution(HashMap<ClothesColor, Float> colorDistribution) {
         this.colorDistribution = colorDistribution;
     }
 
-    public void setTpoDistribution(HashMap<TPO, Integer> tpoDistribution) {
+    public void setTpoDistribution(HashMap<TPO, Float> tpoDistribution) {
         this.tpoDistribution = tpoDistribution;
+    }
+
+    public HashMap<ClothesColor, Float> getColorDistribution(){
+            return this.colorDistribution;
+    }
+
+    public HashMap<TPO, Float> getTPODistribution(){
+            return this.tpoDistribution;
     }
 }
 
