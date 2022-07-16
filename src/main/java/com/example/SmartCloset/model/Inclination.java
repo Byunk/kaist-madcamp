@@ -14,6 +14,23 @@ public class Inclination {
     // TPO Distribution from Looks
     private HashMap<TPO, Float> tpoDistribution;
 
+
+    HashMap<Tpo, Float> getcolorDistribution(){
+            return colorDistribution;
+    }
+
+    HashMap<Tpo, Float> getTPODistribution(){
+            return tpoDistribution;
+    }
+
+    void setTPODistribution(HashMap<Tpo, Float> tpoDistribution){
+            this.tpoDistribution = tpoDistribution;
+    }
+
+    void setcolorDistribution(HashMap<ClothesColor, Float> colorDistribution){
+            this.colorDistribution = colorDistribution;
+    }
+
 }
 
 
