@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class Inclination {
 
     // Color Distribution from Clothes
-    private HashMap<ClothesColor, Float> colorDistribution;
+    //private HashMap<ClothesColor, Float> colorDistribution;
 
     // TPO Distribution from Looks
     private HashMap<TPO, Float> tpoDistribution;

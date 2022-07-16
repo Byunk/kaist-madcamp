@@ -1,15 +1,14 @@
 package com.example.SmartCloset.controller;
 
-import com.example.SmartCloset.model.LikeRequest;
+import com.example.SmartCloset.model.api.LikeRequest;
 import com.example.SmartCloset.model.User;
+import com.example.SmartCloset.model.api.LoginRequest;
+import com.example.SmartCloset.model.api.SignUpRequest;
 import com.example.SmartCloset.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("user")
@@ -25,6 +24,16 @@ public class UserController {
     @GetMapping("id")
     public User id(@RequestParam String id) {
         return userService.getUserById(id);
+    }
+
+    @PostMapping("login")
+    public String login(@RequestBody LoginRequest loginRequest) {
+        return userService.login(loginRequest);
+    }
+
+    @PostMapping("signup")
+    public Boolean signup(@RequestBody SignUpRequest signUpRequest) {
+        return userService.signUp(signUpRequest);
     }
 
     @PostMapping(value="save")

@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Document("look")
 @Data
@@ -25,7 +26,7 @@ public class Look {
     @NonNull
     private Gender gender;
     @NonNull
-    private ArrayList<Cloth> clothes;
+    private ArrayList<String> clothes;
 
 }
 

@@ -1,8 +1,7 @@
-package com.example.SmartCloset.model;
+package com.example.SmartCloset.model.api;
 
 
 import com.mongodb.lang.Nullable;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;

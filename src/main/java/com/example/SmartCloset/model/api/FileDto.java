@@ -1,4 +1,4 @@
-package com.example.SmartCloset.model;
+package com.example.SmartCloset.model.api;
 
 import lombok.Data;
 

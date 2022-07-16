@@ -46,7 +46,7 @@ public class ClothServiceImpl implements ClothService {
 
     @Override
     public Cloth saveOrUpdate(Cloth cloth) {
-        return clothRepository.insert(cloth);
+        return clothRepository.save(cloth);
     }
 
     public void delete(String id) {

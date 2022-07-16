@@ -1,9 +1,9 @@
 package com.example.SmartCloset.service;
 
-import com.example.SmartCloset.controller.UserController;
-import com.example.SmartCloset.model.Cloth;
-import com.example.SmartCloset.model.LikeRequest;
+import com.example.SmartCloset.model.api.LikeRequest;
 import com.example.SmartCloset.model.User;
+import com.example.SmartCloset.model.api.LoginRequest;
+import com.example.SmartCloset.model.api.SignUpRequest;
 import com.example.SmartCloset.repository.ClothRepository;
 import com.example.SmartCloset.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,13 +134,47 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String login(LoginRequest loginRequest) {
+        User user = userRepository.findByLoginId(loginRequest.getId()).orElse(null);
+        if (user == null) {
+            System.out.println("유저 정보 없음");
+            return null;
+        }
+
+        if (user.getPw().equals(loginRequest.getPw())) {
+            System.out.println("로그인 성공");
+            return user.getId();
+        } else {
+            System.out.println("로그인 실패");
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean signUp(SignUpRequest signUpRequest) {
+        User user = userRepository.findByLoginId(signUpRequest.getId()).orElse(null);
+        if (user != null) {
+            return false;
+        } else {
+            // TODO: 2022/07/17 PW Validation
+            saveOrUpdate(new User(signUpRequest.getId(), signUpRequest.getPw(), signUpRequest.getUsername()));
+            return true;
+        }
+    }
+
+    @Override
     public User getUserById(String id) {
         return userRepository.findById(id).orElse(null);
     }
 
     @Override
     public User saveOrUpdate(User user) {
-        return userRepository.save(user); }
+        try {
+            return userRepository.save(user);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     @Override
     public void delete(String id) {
