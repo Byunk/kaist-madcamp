@@ -3,38 +3,44 @@ package com.example.SmartCloset.controller;
 import com.example.SmartCloset.model.*;
 import com.example.SmartCloset.model.api.FileDto;
 import com.example.SmartCloset.model.api.SearchRequest;
-import com.example.SmartCloset.model.api.SearchResponse;
 import com.example.SmartCloset.model.api.UploadRequest;
+import com.example.SmartCloset.model.api.SearchRequest.SearchClothRequest;
 import com.example.SmartCloset.service.ClothService;
 import com.example.SmartCloset.service.LookService;
 import com.example.SmartCloset.service.UserService;
+import com.example.SmartCloset.model.ClosetEnum.*;
+
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 //for image upload
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.File; 
+import java.io.File;
+import java.lang.reflect.Array;
 import java.io.*;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("look")
 public class LookController {
 
     private final LookService lookService;
-    private final ClothService clothService;
     private final UserService userService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public LookController(LookService lookService, ClothService clothService, UserService userService) {
+    public LookController(LookService lookService, UserService userService) {
         this.lookService = lookService;
-        this.clothService = clothService;
         this.userService = userService;
     }
 
@@ -43,61 +49,22 @@ public class LookController {
         return lookService.getLookById(id);
     }
 
+    // Search
     @PostMapping("search")
-    public SearchResponse search(@RequestBody SearchRequest request) {
-        logger.info(request.getUserId());
-
-        // Get User
-        User user = userService.getUserById(request.getUserId());
-        if (user == null) {
-            return null;
-        }
-
-        // Get Liked Clothes List
-        ArrayList<String> likedLooksIds = user.getLikedLook();
-        if (likedLooksIds == null) {
-            return null;
-        }
-
-        ArrayList<Look> likedLooks = lookService.getLooksById(likedLooksIds);
-
-        // Calculate Inclination
-        Inclination inclination = new Inclination();
-        inclination.setTpoDistribution(lookService.getTPODistribution(likedLooks));
-
-        // Fetch Looks and Clothes
-        return new SearchResponse(lookService.getLooksByInclination(inclination, request.getNumOutput()));
+    public ArrayList<Look> search(@RequestBody SearchRequest request) {
+        return lookService.search(request);
     }
 
+    // Upload
     @PostMapping("upload")
     public void upload(@RequestParam UploadRequest request) {
-        ArrayList<String> clothesIds = new ArrayList<>();
-
-        // Upload Clothes DB
-        for (Cloth cloth: request.getClothes()) {
-            clothService.saveOrUpdate(cloth);
-            clothesIds.add(cloth.getClothId());
-        }
-
-        // Upload Look DB
-        Look look = new Look(request.getTpos(), request.getGender(), clothesIds);
-        lookService.saveOrUpdate(look);
-
-        // Upload User DB
         User user = userService.getUserById(request.getId());
-        if (user == null) {
-            return;
-        }
+        Look newlook = new Look(request.getGender(), request.getTpos(), request.getClothes());
 
-        if (user.getLook() == null) {
-            ArrayList<String> userLooks = new ArrayList<>();
-            userLooks.add(look.getLookId());
-            user.setLook(userLooks);
-        } else {
-            ArrayList<String> userLooks = user.getLook();
-            userLooks.add(look.getLookId());
-            user.setLook(userLooks);
-        }
+        // Upload Look Collection
+        Look look = lookService.saveOrUpdate(newlook);
+
+        user.getUploadLook().add(look.getLookId());
         userService.saveOrUpdate(user);
     }
 
@@ -133,3 +100,4 @@ public class LookController {
     }
 
 }
+

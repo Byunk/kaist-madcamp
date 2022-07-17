@@ -26,15 +26,11 @@ public class User {
     private String pw;
     @NonNull
     private String username;
+
     @Nullable
-    private ArrayList<String> look;
+    private ArrayList<String> uploadLook;
     @Nullable
     private ArrayList<String> likedLook;
     @Nullable
-    private ArrayList<String> likedCloth;
-    @Nullable
     private ArrayList<String> likedUser;
-    @Nullable
-    private Inclination inclination;
-
 }

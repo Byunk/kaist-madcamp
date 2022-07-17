@@ -13,15 +13,11 @@ public class Cloth {
 
     @Id
     private String clothId;
-    //@Nullable
-    //private String imgUrl;
 
     @NonNull
     private Category category;
     @Nullable
     private String subCategory;
-    @NonNull
-    private Gender gender;
     @Nullable
     private ClothesColor color;
 }

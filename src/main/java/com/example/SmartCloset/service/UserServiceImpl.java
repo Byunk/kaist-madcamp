@@ -16,23 +16,10 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
-    private ClothRepository clothRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-    }
-
-    @Override
-    public ArrayList<String> getLikedLooksById(String id) {
-        Optional<User> user = userRepository.findById(id);
-        return user != null ? user.get().getLikedCloth() : new ArrayList<>();
-    }
-
-    @Override
-    public ArrayList<String> getLikedClothesById(String id) {
-        User user = userRepository.findById(id).get();
-        return user.getLikedCloth();
     }
 
     @Override
@@ -44,6 +31,7 @@ public class UserServiceImpl implements UserService {
         String targetId = null;
 
         switch (likeRequest.getRequestType()) {
+            /*
             case CLOTH -> {
                 targetId = likeRequest.getClothId();
                 ArrayList<String> likedClothes = user.getLikedUser() == null ? new ArrayList() : user.getLikedCloth();
@@ -62,7 +50,7 @@ public class UserServiceImpl implements UserService {
                     userRepository.save(user);
                     return true;
                 }
-            }
+            }*/
             case LOOK -> {
                 targetId = likeRequest.getLookId();
                 ArrayList<String> likedLooks = user.getLikedUser() == null ? new ArrayList() : user.getLikedLook();
@@ -110,10 +98,11 @@ public class UserServiceImpl implements UserService {
         String targetId = null;
 
         switch (likeRequest.getRequestType()) {
+            /*
             case CLOTH -> {
                 targetId = likeRequest.getClothId();
                 return user.getLikedCloth().contains(targetId);
-            }
+            }*/
             case LOOK -> {
                 targetId = likeRequest.getLookId();
                 return user.getLikedLook().contains(targetId);
@@ -182,3 +171,4 @@ public class UserServiceImpl implements UserService {
     }
 
 }
+

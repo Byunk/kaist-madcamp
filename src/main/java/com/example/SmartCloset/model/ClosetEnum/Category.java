@@ -22,10 +22,9 @@ public enum Category {
     public List<String> getSubCategory(Category category) { return category.subCategory; }
 
     public String getRandomSubCategory() {
-        Integer size = subCategory.size();
-
+        Integer size = this.subCategory.size();
         Random random = new Random();
-        return subCategory.get(random.nextInt(size));
+        return this.subCategory.get(random.nextInt(size));
     }
 
 }

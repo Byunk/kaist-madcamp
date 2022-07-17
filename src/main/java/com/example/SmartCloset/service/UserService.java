@@ -9,10 +9,6 @@ import java.util.ArrayList;
 
 public interface UserService {
 
-    ArrayList<String> getLikedLooksById(String id);
-
-    ArrayList<String> getLikedClothesById(String id);
-
     Boolean toggleLike(LikeRequest likeRequest);
 
     Boolean isLike(LikeRequest likeRequest);

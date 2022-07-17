@@ -36,20 +36,8 @@ public class UserController {
         return userService.signUp(signUpRequest);
     }
 
-    @PostMapping(value="save")
-    public User save(@RequestBody User user) {
-        return userService.saveOrUpdate(user);
-    }
-
-    // TODO: 2022/07/15 like & isLike Method & login & signup
-
     @PostMapping("like")
     public Boolean like(@RequestBody LikeRequest likeRequest) {
-
-        logger.info("id:" + likeRequest.getId());
-        logger.info("cloth id:" + likeRequest.getClothId());
-        logger.info("look id:" + likeRequest.getLookId());
-        logger.info("user id:" + likeRequest.getUserId());
         return userService.toggleLike(likeRequest);
     }
 
