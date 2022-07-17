@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
 
         if (user.getPw().equals(loginRequest.getPw())) {
             System.out.println("로그인 성공");
-            return user.getId();
+            return user.getUserId();
         } else {
             System.out.println("로그인 실패");
             return null;

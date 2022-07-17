@@ -64,7 +64,13 @@ public class LookController {
         // Upload Look Collection
         Look look = lookService.saveOrUpdate(newlook);
 
-        user.getUploadLook().add(look.getLookId());
+        if (user.getUploadLook() != null) {
+            user.getUploadLook().add(look.getLookId());
+        } else {
+            ArrayList<String> uploadLook = new ArrayList<>();
+            user.setUploadLook(uploadLook);
+        }
+        
         userService.saveOrUpdate(user);
     }
 

@@ -28,5 +28,3 @@ public class SearchRequest {
         private ClothesColor color;
     }
 }
-
-
