@@ -52,16 +52,17 @@ public class Test {
     @GetMapping("create/look")
     public void look(@RequestParam String id, Integer num) {
         for (int i = 0; i<num; i++) {
-            ArrayList<Cloth> clothes = new ArrayList();
+            ArrayList<Cloth> clothes = new ArrayList<>();
             Category[] categories = {Category.TOP, Category.BOTTOM, Category.SHOES};
 
             // Generate Clothes
             for (Category category : categories) {
-                Cloth cloth = new Cloth(category, Gender.MAN);
+                Cloth cloth = new Cloth(category);
                 cloth.setSubCategory(category.getRandomSubCategory());
                 cloth.setColor(ClothesColor.getRandomColor());
                 clothes.add(cloth);
             }
+
             UploadRequest request = new UploadRequest();
             request.setId(id);
             request.setTpos(new ArrayList<>(Arrays.asList(TPO.getRandomTPO())));
@@ -70,8 +71,6 @@ public class Test {
 
             lookController.upload(request);
         }
-
-
     }
 
     @GetMapping("findByName")
@@ -85,3 +84,4 @@ public class Test {
     }
 
 }
+

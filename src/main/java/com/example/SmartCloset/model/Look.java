@@ -22,11 +22,11 @@ public class Look {
 
     //private String tpo;
     @NonNull
-    private ArrayList<TPO> tpo;
-    @NonNull
     private Gender gender;
     @NonNull
-    private ArrayList<String> clothes;
+    private ArrayList<TPO> tpo;
+    @NonNull
+    private ArrayList<Cloth> clothes;
 
 }
 

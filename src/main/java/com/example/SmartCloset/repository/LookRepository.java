@@ -20,6 +20,4 @@ public interface LookRepository extends MongoRepository<Look, String> {
     @CountQuery(value = "{tpo: ?0}")
     Integer countLookByTPO(String Tpo);
 
-
-
 }

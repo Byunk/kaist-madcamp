@@ -1,5 +1,7 @@
 package com.example.SmartCloset.model.api;
 
+import java.util.ArrayList;
+
 import com.example.SmartCloset.model.ClosetEnum.*;
 import com.mongodb.lang.Nullable;
 import lombok.Data;
@@ -7,14 +9,22 @@ import lombok.Data;
 @Data
 public class SearchRequest {
 
-    private String userId;
+    private String id;
+
+    private Gender gender;
     private Integer numOutput;
 
     @Nullable
-    private Category category;
-    @Nullable
-    private ClothesColor color;
-    @Nullable
-    private TPO tpo;
+    private ArrayList<TPO> tpos;
 
+    private ArrayList<SearchClothRequest> clothRequests;
+    
+    @Data
+    public class SearchClothRequest {
+        private Category category;
+        @Nullable
+        private String subCategory;
+        @Nullable
+        private ClothesColor color;
+    }
 }
