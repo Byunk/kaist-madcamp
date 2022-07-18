@@ -6,14 +6,14 @@ import com.example.SmartCloset.model.api.LoginRequest;
 import com.example.SmartCloset.model.api.SignUpRequest;
 import com.example.SmartCloset.model.api.exception.UserNotFoundException;
 import com.example.SmartCloset.model.api.exception.ErrorCode;
-import com.example.SmartCloset.repository.ClothRepository;
+import com.example.SmartCloset.model.api.exception.IdDuplicatedException;
+import com.example.SmartCloset.model.api.exception.PasswordInvalidException;
 import com.example.SmartCloset.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,8 +29,9 @@ public class UserServiceImpl implements UserService {
     public Boolean toggleLike(LikeRequest likeRequest){
         User user = userRepository.findById(likeRequest.getId()).orElse(null);
         if (user == null) {
-            return null;
+            throw new UserNotFoundException("User Not Found", ErrorCode.USER_NOT_FOUND);
         }
+
         String targetId = null;
 
         switch (likeRequest.getRequestType()) {
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService {
                 targetId = likeRequest.getLookId();
                 ArrayList<String> likedLooks = user.getLikedUser() == null ? new ArrayList() : user.getLikedLook();
                 if (likedLooks == null) {
-                    return null;
+                    throw new EmptyResultDataAccessException("Empty Result Data Access",  0);
                 }
 
                 if (likedLooks.contains(targetId)) {
@@ -75,7 +76,8 @@ public class UserServiceImpl implements UserService {
             }
             case USER -> {
                 targetId = likeRequest.getUserId();
-                ArrayList<String> likedUser = user.getLikedUser() == null ? new ArrayList() : user.getLikedUser();
+                ArrayList<String> likedUser = user.getLikedUser() == null ? 
+                    new ArrayList<String>() : user.getLikedUser();
 
                 if (likedUser.contains(targetId)) {
                     likedUser.remove(targetId);
@@ -129,16 +131,14 @@ public class UserServiceImpl implements UserService {
     public String login(LoginRequest loginRequest) {
         User user = userRepository.findByLoginId(loginRequest.getId()).orElse(null);
         if (user == null) {
-            System.out.println("유저 정보 없음");
-            return null;
+            throw new UserNotFoundException("User Not Found", ErrorCode.USER_NOT_FOUND);
         }
 
         if (user.getPw().equals(loginRequest.getPw())) {
             System.out.println("로그인 성공");
             return user.getUserId();
         } else {
-            System.out.println("로그인 실패");
-            return null;
+            throw new PasswordInvalidException("Password Invalid", ErrorCode.PW_INVALID);
         }
     }
 
@@ -151,9 +151,8 @@ public class UserServiceImpl implements UserService {
     public Boolean signUp(SignUpRequest signUpRequest) {
         User user = userRepository.findByLoginId(signUpRequest.getId()).orElse(null);
         if (user != null) {
-            return false;
+            throw new IdDuplicatedException("ID Duplicated", ErrorCode.ID_DUPLICATED);
         } else {
-            // TODO: 2022/07/17 PW Validation
             saveOrUpdate(new User(signUpRequest.getId(), signUpRequest.getPw(), signUpRequest.getUsername()));
             return true;
         }

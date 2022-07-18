@@ -27,7 +27,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("look")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class LookController {
 
     private final LookService lookService;

@@ -27,15 +27,13 @@ public class Test {
     private final LookController lookController;
     private final UserService userService;
     private final LookService lookService;
-    private final ClothService clothService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public Test(LookController lookController, UserService userService, LookService lookService, ClothService clothService) {
+    public Test(LookController lookController, UserService userService, LookService lookService) {
         this.lookController = lookController;
         this.userService = userService;
         this.lookService = lookService;
-        this.clothService = clothService;
     }
 
     @GetMapping("create/user")
