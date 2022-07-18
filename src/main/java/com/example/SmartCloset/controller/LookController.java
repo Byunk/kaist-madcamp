@@ -41,7 +41,7 @@ public class LookController {
     }
 
     @GetMapping("id")
-    public Look id(@RequestParam String id) {
+    public Look findLookById(@RequestParam String id) {
         return lookService.getLookById(id);
     }
 

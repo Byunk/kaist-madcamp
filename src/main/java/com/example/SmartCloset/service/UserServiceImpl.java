@@ -4,6 +4,8 @@ import com.example.SmartCloset.model.api.LikeRequest;
 import com.example.SmartCloset.model.User;
 import com.example.SmartCloset.model.api.LoginRequest;
 import com.example.SmartCloset.model.api.SignUpRequest;
+import com.example.SmartCloset.model.api.exception.UserNotFoundException;
+import com.example.SmartCloset.model.api.exception.ErrorCode;
 import com.example.SmartCloset.repository.ClothRepository;
 import com.example.SmartCloset.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -159,7 +161,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(String id) {
-        return userRepository.findById(id).orElse(null);
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            throw new UserNotFoundException("User Not Found", ErrorCode.USER_NOT_FOUND);
+        }
+        return user;
     }
 
     @Override
