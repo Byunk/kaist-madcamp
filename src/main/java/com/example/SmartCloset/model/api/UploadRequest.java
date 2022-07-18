@@ -4,6 +4,7 @@ import com.example.SmartCloset.model.ClosetEnum.Gender;
 import com.example.SmartCloset.model.ClosetEnum.TPO;
 import com.example.SmartCloset.model.ClosetEnum.Weather;
 import com.mongodb.lang.NonNull;
+import com.mongodb.lang.Nullable;
 import com.example.SmartCloset.model.Cloth;
 import lombok.Data;
 
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 public class UploadRequest {
 
     private String id;
+    @Nullable
+    private String imgUrl;
     @NonNull
     private Gender gender;
     @NonNull
