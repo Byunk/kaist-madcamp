@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("user")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
     private final UserService userService;
@@ -45,5 +46,10 @@ public class UserController {
     public Boolean isLiked(@RequestBody LikeRequest likeRequest) {
         return userService.isLike(likeRequest);
     }
+/*
+    @PostMapping("edit")
+    public void edit(@RequestBody SignUpRequest signUpRequest) {
+        return userService.saveOrUpdate(user)
+    }*/
 
 }

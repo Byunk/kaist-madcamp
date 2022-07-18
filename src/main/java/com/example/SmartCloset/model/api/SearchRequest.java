@@ -12,19 +12,11 @@ public class SearchRequest {
     private String id;
 
     private Gender gender;
+    private Weather weather;
     private Integer numOutput;
 
     @Nullable
     private ArrayList<TPO> tpos;
 
     private ArrayList<SearchClothRequest> clothRequests;
-    
-    @Data
-    public class SearchClothRequest {
-        private Category category;
-        @Nullable
-        private String subCategory;
-        @Nullable
-        private ClothesColor color;
-    }
 }

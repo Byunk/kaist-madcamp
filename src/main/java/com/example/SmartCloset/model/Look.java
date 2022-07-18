@@ -2,6 +2,7 @@ package com.example.SmartCloset.model;
 
 import com.example.SmartCloset.model.ClosetEnum.Gender;
 import com.example.SmartCloset.model.ClosetEnum.TPO;
+import com.example.SmartCloset.model.ClosetEnum.Weather;
 import com.mongodb.lang.Nullable;
 import lombok.Data;
 import lombok.NonNull;
@@ -23,6 +24,8 @@ public class Look {
     //private String tpo;
     @NonNull
     private Gender gender;
+    @NonNull
+    private Weather weather;
     @NonNull
     private ArrayList<TPO> tpo;
     @NonNull

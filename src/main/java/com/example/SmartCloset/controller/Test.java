@@ -4,6 +4,7 @@ import com.example.SmartCloset.model.ClosetEnum.Category;
 import com.example.SmartCloset.model.ClosetEnum.ClothesColor;
 import com.example.SmartCloset.model.ClosetEnum.Gender;
 import com.example.SmartCloset.model.ClosetEnum.TPO;
+import com.example.SmartCloset.model.ClosetEnum.Weather;
 import com.example.SmartCloset.model.Cloth;
 import com.example.SmartCloset.model.api.UploadRequest;
 import com.example.SmartCloset.model.User;
@@ -20,6 +21,7 @@ import java.util.Arrays;
 
 @RestController
 @RequestMapping("test")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class Test {
 
     private final LookController lookController;
@@ -57,17 +59,12 @@ public class Test {
 
             // Generate Clothes
             for (Category category : categories) {
-                Cloth cloth = new Cloth(category);
-                cloth.setSubCategory(category.getRandomSubCategory());
-                cloth.setColor(ClothesColor.getRandomColor());
+                Cloth cloth = new Cloth(category, category.getRandomSubCategory(), ClothesColor.getRandomColor());
                 clothes.add(cloth);
             }
 
-            UploadRequest request = new UploadRequest();
-            request.setId(id);
-            request.setTpos(new ArrayList<>(Arrays.asList(TPO.getRandomTPO())));
-            request.setGender(Gender.MAN);
-            request.setClothes(clothes);
+            UploadRequest request = new UploadRequest(id, Gender.MAN, 
+            Weather.getRandomWeather(), new ArrayList<>(Arrays.asList(TPO.getRandomTPO())), clothes);
 
             lookController.upload(request);
         }

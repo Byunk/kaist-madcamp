@@ -1,10 +1,9 @@
 package com.example.SmartCloset.model;
 
+import com.example.SmartCloset.controller.TokenAPI;
 import com.mongodb.lang.Nullable;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NonNull;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
