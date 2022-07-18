@@ -12,6 +12,7 @@ public class SearchRequest {
     private String id;
 
     private Gender gender;
+    private Weather weather;
     private Integer numOutput;
 
     @Nullable

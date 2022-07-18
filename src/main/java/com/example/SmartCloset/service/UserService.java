@@ -15,6 +15,8 @@ public interface UserService {
 
     Long countUser();
 
+    void Edit(SignUpRequest signUpRequest);
+
     String login(LoginRequest loginRequest);
 
     Boolean signUp(SignUpRequest signUpRequest);

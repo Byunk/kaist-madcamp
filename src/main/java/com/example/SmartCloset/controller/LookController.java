@@ -53,7 +53,7 @@ public class LookController {
         if (user == null) {
             return;
         }
-        Look newlook = new Look(request.getGender(), request.getTpos(), request.getClothes());
+        Look newlook = new Look(request.getGender(), request.getWeather(), request.getTpos(), request.getClothes());
 
         // Upload Look Collection
         Look look = lookService.saveOrUpdate(newlook);

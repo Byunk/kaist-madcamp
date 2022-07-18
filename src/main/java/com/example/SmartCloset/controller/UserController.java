@@ -46,5 +46,10 @@ public class UserController {
     public Boolean isLiked(@RequestBody LikeRequest likeRequest) {
         return userService.isLike(likeRequest);
     }
+/*
+    @PostMapping("edit")
+    public void edit(@RequestBody SignUpRequest signUpRequest) {
+        return userService.saveOrUpdate(user)
+    }*/
 
 }

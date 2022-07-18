@@ -7,6 +7,7 @@ import com.example.SmartCloset.model.api.SignUpRequest;
 import com.example.SmartCloset.repository.ClothRepository;
 import com.example.SmartCloset.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -137,6 +138,11 @@ public class UserServiceImpl implements UserService {
             System.out.println("로그인 실패");
             return null;
         }
+    }
+
+    @Override
+    public void Edit(SignUpRequest signUpRequest) {
+       //User uesr = userRepository.findById(id)
     }
 
     @Override

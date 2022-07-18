@@ -3,21 +3,22 @@ package com.example.SmartCloset.service;
 import com.example.SmartCloset.model.ClosetEnum.Category;
 import com.example.SmartCloset.model.ClosetEnum.ClothesColor;
 import com.example.SmartCloset.model.ClosetEnum.TPO;
+import com.example.SmartCloset.model.ClosetEnum.Weather;
 import com.example.SmartCloset.model.api.SearchClothRequest;
 import com.example.SmartCloset.model.api.SearchRequest;
 import com.example.SmartCloset.model.Cloth;
 import com.example.SmartCloset.model.Inclination;
 import com.example.SmartCloset.model.Look;
 import com.example.SmartCloset.model.User;
-import com.example.SmartCloset.repository.ClothRepository;
 import com.example.SmartCloset.repository.LookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -48,7 +49,8 @@ public class LookServiceImpl implements LookService{
                 if (request.getClothRequests() != null) {
                     // if User Select Clothes, filtering with Constraints
                     Stream<Look> filteredLooks = lookRepository.findAll().stream();
-    
+                    filteredLooks.filter(h -> h.getWeather().equals(Weather.getCurrentWeather()));
+
                     for (int j = 0; j < request.getClothRequests().size(); j++) {
                         SearchClothRequest clothRequest = request.getClothRequests().get(j);
                         Category category = clothRequest.getCategory();
@@ -62,12 +64,13 @@ public class LookServiceImpl implements LookService{
                     result.add(randomPickLook(filteredLooks.toList()));
                 } else {
                     // if User don't select Clothes, filtering with only TPOs
-                    result.add(randomPickLook(getLooksByTPOs(request.getTpos())));
+                    
+                    result.add(randomPickLook(getLooksByTPOs(request.getTpos()).stream().filter(h -> h.getWeather().equals(Weather.getCurrentWeather())).toList()));
                 }
             } else {
                 // if not, filtering with Inclination
                 User user = userService.getUserById(request.getId());
-                ArrayList<Look> likeLooks = getLooksById(user.getLikedLook());
+                ArrayList<Look> likeLooks = (ArrayList<Look>) getLooksById(user.getLikedLook()).stream().filter(h -> h.getWeather().equals(Weather.getCurrentWeather())).toList();
                 inclination.setTpoDistribution(getTPODistribution(likeLooks));
                 result.add(getLookByInclination(inclination));
             }
@@ -133,7 +136,7 @@ public class LookServiceImpl implements LookService{
         // TODO: 2022/07/16 Randomly Pick Color Logic
         return looksWithTPO.get((int) random * looksWithTPO.size());
     }
-    
+
     @Override
     public Look getLookById(String id) {
         return lookRepository.findById(id).orElse(null);
