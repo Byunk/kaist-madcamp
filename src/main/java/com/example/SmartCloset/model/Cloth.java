@@ -20,4 +20,10 @@ public class Cloth {
     private String subCategory;
     @Nullable
     private ClothesColor color;
+
+    public Cloth(Category category, String subCategory, ClothesColor color) {
+        this.category = category;
+        this.subCategory = subCategory;
+        this.color = color;
+    }
 }

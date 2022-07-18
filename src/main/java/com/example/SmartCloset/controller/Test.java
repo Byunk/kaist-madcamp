@@ -20,6 +20,7 @@ import java.util.Arrays;
 
 @RestController
 @RequestMapping("test")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class Test {
 
     private final LookController lookController;
@@ -57,9 +58,7 @@ public class Test {
 
             // Generate Clothes
             for (Category category : categories) {
-                Cloth cloth = new Cloth(category);
-                cloth.setSubCategory(category.getRandomSubCategory());
-                cloth.setColor(ClothesColor.getRandomColor());
+                Cloth cloth = new Cloth(category, category.getRandomSubCategory(), ClothesColor.getRandomColor());
                 clothes.add(cloth);
             }
 

@@ -18,13 +18,4 @@ public class SearchRequest {
     private ArrayList<TPO> tpos;
 
     private ArrayList<SearchClothRequest> clothRequests;
-    
-    @Data
-    public class SearchClothRequest {
-        private Category category;
-        @Nullable
-        private String subCategory;
-        @Nullable
-        private ClothesColor color;
-    }
 }

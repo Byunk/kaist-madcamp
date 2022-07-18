@@ -3,8 +3,8 @@ package com.example.SmartCloset.service;
 import com.example.SmartCloset.model.ClosetEnum.Category;
 import com.example.SmartCloset.model.ClosetEnum.ClothesColor;
 import com.example.SmartCloset.model.ClosetEnum.TPO;
+import com.example.SmartCloset.model.api.SearchClothRequest;
 import com.example.SmartCloset.model.api.SearchRequest;
-import com.example.SmartCloset.model.api.SearchRequest.SearchClothRequest;
 import com.example.SmartCloset.model.Cloth;
 import com.example.SmartCloset.model.Inclination;
 import com.example.SmartCloset.model.Look;
@@ -55,6 +55,9 @@ public class LookServiceImpl implements LookService{
                         String subCategory = clothRequest.getSubCategory();
                         ClothesColor color = clothRequest.getColor();
                         filteredLooks = filteredLooks.filter(h -> hasClothes(h, category, subCategory, color));
+                    }
+                    if (filteredLooks.toList().isEmpty()) {
+                        return null;
                     }
                     result.add(randomPickLook(filteredLooks.toList()));
                 } else {
