@@ -17,6 +17,6 @@ public class SearchRequest {
 
     @Nullable
     private ArrayList<TPO> tpos;
-
+    @Nullable
     private ArrayList<SearchClothRequest> clothRequests;
 }

@@ -18,6 +18,8 @@ public interface UserService {
 
     Long countUser();
 
+    User findUserWithLookId(String id);
+
     void Edit(SignUpRequest signUpRequest);
 
     String login(LoginRequest loginRequest);
@@ -29,5 +31,7 @@ public interface UserService {
     User saveOrUpdate(User user);
 
     void delete(String id);
+
+    void deleteAll(String id);
 
 }

@@ -17,7 +17,10 @@ public enum ClothesColor {
     WHITE("흰색"),
     BLACK("검은색"),
     NAVY("남색"),
-    CREAM("크림색");
+    CREAM("크림색"),
+    BEIZE("베이지"),
+    BROWN("브라운"),
+    ;
 
     private String color;
     ClothesColor(String color) { this.color = color; }

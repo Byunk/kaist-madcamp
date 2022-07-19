@@ -62,12 +62,12 @@ public class UserController {
     public Boolean isLiked(@RequestBody LikeRequest likeRequest) {
         return userService.isLike(likeRequest);
     }
-/*
-    @GetMapping(value = "like/images", produces = MeidaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> fetchImages(@RequestParam String id) {
-        ArrayList<byte[]> result = new ArrayList<>();
-        List<String> urls = userService.likeImageUrls(id);
-        
+
+    @GetMapping(value = "like/images")//, produces = MeidaType.IMAGE_JPEG_VALUE)
+    public List<String> fetchImages(@RequestParam String id) {
+        //ArrayList<byte[]> result = new ArrayList<>();
+        return userService.likeImageUrls(id);
+        /*
         String curWorkingDir = System.getProperty("user.dir");
         for (String url: urls) {
             String path = curWorkingDir + "/src/main/resources/static/save_image/";
@@ -76,8 +76,8 @@ public class UserController {
             imageStream.close();
             result.add(imageByteArray);
         }
-        return new ResponseEntity<ArrayList<byte[]>(result, HttpStatus.OK);
-    }*/
+        return new ResponseEntity<ArrayList<byte[]>(result, HttpStatus.OK);*/
+    }
 
 
 /*

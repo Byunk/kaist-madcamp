@@ -1,14 +1,20 @@
 package com.example.SmartCloset.service;
 
 import com.example.SmartCloset.model.api.LikeRequest;
+import com.example.SmartCloset.model.Look;
 import com.example.SmartCloset.model.User;
 import com.example.SmartCloset.model.api.LoginRequest;
 import com.example.SmartCloset.model.api.SignUpRequest;
 import com.example.SmartCloset.model.api.exception.UserNotFoundException;
 import com.example.SmartCloset.model.api.exception.ErrorCode;
 import com.example.SmartCloset.model.api.exception.IdDuplicatedException;
+import com.example.SmartCloset.model.api.exception.InvalidInputException;
 import com.example.SmartCloset.model.api.exception.PasswordInvalidException;
+import com.example.SmartCloset.repository.LookRepository;
 import com.example.SmartCloset.repository.UserRepository;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -16,14 +22,17 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private LookRepository lookRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, LookRepository lookRepository) {
         this.userRepository = userRepository;
+        this.lookRepository = lookRepository;
     }
 
     @Override
@@ -58,9 +67,15 @@ public class UserServiceImpl implements UserService {
             }*/
             case LOOK -> {
                 targetId = likeRequest.getLookId();
-                ArrayList<String> likedLooks = user.getLikedUser() == null ? new ArrayList() : user.getLikedLook();
+                ArrayList<String> likedLooks = user.getLikedLook();
                 if (likedLooks == null) {
-                    throw new EmptyResultDataAccessException("Empty Result Data Access",  0);
+                    likedLooks = new ArrayList<>();
+                }
+
+                // Valid Check
+                Look look = lookRepository.getLookById(targetId);
+                if (look == null) {
+                    throw new InvalidInputException("No Look in DB", ErrorCode.INVALID_INPUT);
                 }
 
                 if (likedLooks.contains(targetId)) {
@@ -184,12 +199,47 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<String> likeImageUrls(String id) {
+        ArrayList<String> result = new ArrayList<>();
         User user = userRepository.findById(id).orElse(null);
         if (user == null) {
             throw new UserNotFoundException("User Not Found", ErrorCode.USER_NOT_FOUND);
         }
 
-        return (List<String>) user.getLikedLook();
+        List<String> lookIds = (List<String>) user.getLikedLook();
+        log.error(lookIds.toString());
+
+        for (String lookId: lookIds) {
+            Look look = lookRepository.getLookById(lookId);
+            if (look == null) {
+                throw new InvalidInputException("Look Not Found with " + lookId, ErrorCode.INVALID_INPUT);
+            }
+            result.add(look.getImgUrl());
+        }
+        return result;
+    }
+
+    @Override
+    public User findUserWithLookId(String id) {
+        List<User> users = userRepository.findAll();
+        for (User user: users) {
+            if (user.getUploadLook().contains(id)) {
+                return user;
+            }
+        }
+        throw new InvalidInputException("Invalid look Id", ErrorCode.INVALID_INPUT);
+    }
+
+    @Override
+    public void deleteAll(String id) {
+        User user = getUserById(id);
+        ArrayList<String> lookIds = user.getUploadLook();
+        
+        for (String lookId: lookIds) {
+            lookRepository.deleteById(lookId);
+            lookIds.remove(lookId);
+        }
+        user.setUploadLook(new ArrayList<>());
+        saveOrUpdate(user);
     }
 
 }
