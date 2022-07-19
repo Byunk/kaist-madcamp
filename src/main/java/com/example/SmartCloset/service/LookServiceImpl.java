@@ -168,7 +168,15 @@ public class LookServiceImpl implements LookService{
 
     @Override
     public void delete(String id) {
-        lookRepository.deleteById(id);
+        lookRepository.deleteLookById(id);
+        User user = userService.findUserWithLookId(id);
+        ArrayList<String> uploadLooks = user.getUploadLook();
+        if (uploadLooks == null) {
+            throw new InvalidInputException("Null UploadLooks", ErrorCode.EMPTY_DATA);
+        }
+        uploadLooks.remove(id);
+        user.setUploadLook(uploadLooks);
+        userService.saveOrUpdate(user);
     }
 
     @Override

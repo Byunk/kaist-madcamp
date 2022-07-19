@@ -56,7 +56,7 @@ public class LookController {
         lookService.delete(id);
     }
 
-    @PutMapping("edit/id")
+    @PutMapping("edit")
     public Look editLookById(@RequestBody EditRequest request) {
         User user = userService.getUserById(request.getId());
         if (user == null) {

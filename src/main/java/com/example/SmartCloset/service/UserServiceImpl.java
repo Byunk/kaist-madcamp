@@ -218,5 +218,16 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    @Override
+    public User findUserWithLookId(String id) {
+        List<User> users = userRepository.findAll();
+        for (User user: users) {
+            if (user.getUploadLook().contains(id)) {
+                return user;
+            }
+        }
+        throw new InvalidInputException("Invalid look Id", ErrorCode.INVALID_INPUT);
+    }
+
 }
 
