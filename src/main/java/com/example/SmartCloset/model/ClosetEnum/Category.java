@@ -8,8 +8,8 @@ import java.util.Random;
 public enum Category {
     OUTER("아우터", Arrays.asList("HOOD", "COAT", "JACKET")),
     TOP("상의", Arrays.asList("TSHIRT", "SHIRT", "SWEAT", "NEAT")),
-    BOTTOM("하의", Arrays.asList("DENIM", "SHORT", "JOGER")),
-    SHOES("신발", Arrays.asList("SHOES", "SANDLE", "CONVERSE", "HIGHTOP")),
+    BOTTOM("하의", Arrays.asList("DENIM", "SHORT", "JOGER", "SLACKS")),
+    SHOES("신발", Arrays.asList("SHOES", "SANDLE", "CONVERSE", "HIGHTOP", "SNEAKERS")),
     EMPTY("없음", Collections.EMPTY_LIST);
 
     private String category;

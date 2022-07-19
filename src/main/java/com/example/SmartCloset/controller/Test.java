@@ -77,5 +77,10 @@ public class Test {
         return "Test Success!";
     }
 
+    @GetMapping("deleteAll")
+    public void deleteAll(@RequestParam String id) {
+        userService.deleteAll(id);
+    }
+
 }
 

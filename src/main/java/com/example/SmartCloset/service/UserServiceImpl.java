@@ -229,5 +229,18 @@ public class UserServiceImpl implements UserService {
         throw new InvalidInputException("Invalid look Id", ErrorCode.INVALID_INPUT);
     }
 
+    @Override
+    public void deleteAll(String id) {
+        User user = getUserById(id);
+        ArrayList<String> lookIds = user.getUploadLook();
+        
+        for (String lookId: lookIds) {
+            lookRepository.deleteById(lookId);
+            lookIds.remove(lookId);
+        }
+        user.setUploadLook(new ArrayList<>());
+        saveOrUpdate(user);
+    }
+
 }
 

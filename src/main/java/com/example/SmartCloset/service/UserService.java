@@ -32,4 +32,6 @@ public interface UserService {
 
     void delete(String id);
 
+    void deleteAll(String id);
+
 }
