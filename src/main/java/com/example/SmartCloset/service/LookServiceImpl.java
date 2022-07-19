@@ -71,8 +71,12 @@ public class LookServiceImpl implements LookService{
             } else {
                 // if not, filtering with Inclination
                 User user = userService.getUserById(request.getId());
-                ArrayList<Look> likeLooks = (ArrayList<Look>) getLooksById(user.getLikedLook()).stream().filter(h -> h.getWeather().equals(Weather.getCurrentWeather())).toList();
-                inclination.setTpoDistribution(getTPODistribution(likeLooks));
+                if (user.getLikedLook() == null) {
+                    result.add(randomPickLook(getAll()));
+                } else {
+                    ArrayList<Look> likeLooks = (ArrayList<Look>) getLooksById(user.getLikedLook()).stream().filter(h -> h.getWeather().equals(Weather.getCurrentWeather())).toList();
+                    inclination.setTpoDistribution(getTPODistribution(likeLooks));
+                }
                 result.add(getLookByInclination(inclination));
             }
         }
