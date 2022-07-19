@@ -12,11 +12,10 @@ import com.example.SmartCloset.model.Look;
 import com.example.SmartCloset.model.User;
 import com.example.SmartCloset.repository.LookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -59,7 +58,7 @@ public class LookServiceImpl implements LookService{
                         filteredLooks = filteredLooks.filter(h -> hasClothes(h, category, subCategory, color));
                     }
                     if (filteredLooks.toList().isEmpty()) {
-                        return null;
+                        throw new EmptyResultDataAccessException("Empty Data Access", 0);
                     }
                     result.add(randomPickLook(filteredLooks.toList()));
                 } else {
@@ -81,7 +80,7 @@ public class LookServiceImpl implements LookService{
     private HashMap<TPO, Float> getTPODistribution(ArrayList<Look> likeLooks) {
         HashMap<TPO, Float> result = new HashMap<>();
         if (likeLooks == null) {
-            return null;
+            throw new EmptyResultDataAccessException("Empty Data Access", 0);
         }
         Integer num = likeLooks.size();
 
@@ -147,7 +146,7 @@ public class LookServiceImpl implements LookService{
         ArrayList<Look> result = new ArrayList<Look>();
 
         if (ids == null) {
-            return null;
+            throw new EmptyResultDataAccessException("Empty Data Access", 0);
         }
         for (String id : ids) {
             result.add(lookRepository.getLookById(id));

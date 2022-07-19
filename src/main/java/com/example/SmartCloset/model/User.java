@@ -1,12 +1,12 @@
 package com.example.SmartCloset.model;
 
-import com.example.SmartCloset.controller.TokenAPI;
 import com.mongodb.lang.Nullable;
 import lombok.Data;
 import lombok.NonNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.ArrayList;
 
 
@@ -32,4 +32,5 @@ public class User {
     private ArrayList<String> likedLook;
     @Nullable
     private ArrayList<String> likedUser;
+
 }

@@ -8,7 +8,6 @@ import com.example.SmartCloset.model.ClosetEnum.Weather;
 import com.example.SmartCloset.model.Cloth;
 import com.example.SmartCloset.model.api.UploadRequest;
 import com.example.SmartCloset.model.User;
-import com.example.SmartCloset.service.ClothService;
 import com.example.SmartCloset.service.LookService;
 import com.example.SmartCloset.service.UserService;
 import org.slf4j.Logger;
@@ -27,15 +26,13 @@ public class Test {
     private final LookController lookController;
     private final UserService userService;
     private final LookService lookService;
-    private final ClothService clothService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public Test(LookController lookController, UserService userService, LookService lookService, ClothService clothService) {
+    public Test(LookController lookController, UserService userService, LookService lookService) {
         this.lookController = lookController;
         this.userService = userService;
         this.lookService = lookService;
-        this.clothService = clothService;
     }
 
     @GetMapping("create/user")
