@@ -6,12 +6,15 @@ import com.example.SmartCloset.model.api.LoginRequest;
 import com.example.SmartCloset.model.api.SignUpRequest;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface UserService {
 
     Boolean toggleLike(LikeRequest likeRequest);
 
     Boolean isLike(LikeRequest likeRequest);
+
+    List<String> likeImageUrls(String id);
 
     Long countUser();
 

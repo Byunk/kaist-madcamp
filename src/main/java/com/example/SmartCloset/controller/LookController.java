@@ -1,9 +1,13 @@
 package com.example.SmartCloset.controller;
 
 import com.example.SmartCloset.model.*;
+import com.example.SmartCloset.model.api.EditRequest;
 import com.example.SmartCloset.model.api.FileDto;
 import com.example.SmartCloset.model.api.SearchRequest;
 import com.example.SmartCloset.model.api.UploadRequest;
+import com.example.SmartCloset.model.api.exception.ErrorCode;
+import com.example.SmartCloset.model.api.exception.InvalidInputException;
+import com.example.SmartCloset.model.api.exception.UserNotFoundException;
 import com.example.SmartCloset.service.LookService;
 import com.example.SmartCloset.service.UserService;
 
@@ -25,6 +29,8 @@ import java.io.File;
 import java.io.*;
 import java.util.UUID;
 
+import javax.servlet.UnavailableException;
+
 @RestController
 @RequestMapping("look")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -45,6 +51,32 @@ public class LookController {
         return lookService.getLookById(id);
     }
 
+    @PutMapping("id")
+    public void deleteLookById(@RequestParam String id) {
+        lookService.delete(id);
+    }
+
+    @PutMapping("edit/id")
+    public Look editLookById(@RequestBody EditRequest request) {
+        User user = userService.getUserById(request.getId());
+        if (user == null) {
+            throw new UserNotFoundException("User Not Found", ErrorCode.USER_NOT_FOUND);
+        }
+        
+        Look look = lookService.getLookById(request.getLookId());
+        if (look == null) {
+            throw new InvalidInputException("Invalid Input Exception", ErrorCode.INVALID_INPUT);
+        }
+        if (request.getImgUrl() != null) {
+            look.setImgUrl(request.getImgUrl());
+        }
+        look.setGender(request.getGender());
+        look.setWeather(request.getWeather());
+        look.setTpo(request.getTpos());
+        look.setClothes(request.getClothes());
+        return lookService.saveOrUpdate(look);
+    }
+
     // Search
     @PostMapping("search")
     public ArrayList<Look> search(@RequestBody SearchRequest request) {
@@ -56,7 +88,7 @@ public class LookController {
     public void upload(@RequestBody UploadRequest request) {
         User user = userService.getUserById(request.getId());
         if (user == null) {
-            return;
+            throw new UserNotFoundException("User Not Found", ErrorCode.USER_NOT_FOUND);
         }
         Look newlook = new Look(request.getGender(), request.getWeather(), request.getTpos(), request.getClothes());
         newlook.setImgUrl(request.getImgUrl());

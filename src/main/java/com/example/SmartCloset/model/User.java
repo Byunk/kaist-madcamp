@@ -24,7 +24,7 @@ public class User {
     @NonNull
     private String pw;
     @NonNull
-    private String name;
+    private String username;
 
     @Nullable
     private ArrayList<String> uploadLook;

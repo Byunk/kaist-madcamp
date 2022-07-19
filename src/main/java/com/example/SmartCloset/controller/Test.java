@@ -8,7 +8,6 @@ import com.example.SmartCloset.model.ClosetEnum.Weather;
 import com.example.SmartCloset.model.Cloth;
 import com.example.SmartCloset.model.api.UploadRequest;
 import com.example.SmartCloset.model.User;
-import com.example.SmartCloset.service.ClothService;
 import com.example.SmartCloset.service.LookService;
 import com.example.SmartCloset.service.UserService;
 import org.slf4j.Logger;

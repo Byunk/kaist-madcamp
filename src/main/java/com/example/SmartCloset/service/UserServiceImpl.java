@@ -14,6 +14,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -179,6 +180,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(String id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public List<String> likeImageUrls(String id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            throw new UserNotFoundException("User Not Found", ErrorCode.USER_NOT_FOUND);
+        }
+
+        return (List<String>) user.getLikedLook();
     }
 
 }

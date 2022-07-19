@@ -10,9 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(EmailDuplicateException.class)
-    public ResponseEntity<ErrorResponse> handleEmailDuplicateException(EmailDuplicateException ex){
-        log.error("handleEmailDuplicateException",ex);
+    @ExceptionHandler(InvalidInputException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidInputException(InvalidInputException ex){
+        log.error("handleInvalidInputException",ex);
         ErrorResponse response = new ErrorResponse(ex.getErrorCode());
         return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
     }
