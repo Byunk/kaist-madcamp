@@ -6,6 +6,8 @@ import com.example.SmartCloset.model.ClosetEnum.TPO;
 import com.example.SmartCloset.model.ClosetEnum.Weather;
 import com.example.SmartCloset.model.api.SearchClothRequest;
 import com.example.SmartCloset.model.api.SearchRequest;
+import com.example.SmartCloset.model.api.exception.ErrorCode;
+import com.example.SmartCloset.model.api.exception.InvalidInputException;
 import com.example.SmartCloset.model.Cloth;
 import com.example.SmartCloset.model.Inclination;
 import com.example.SmartCloset.model.Look;
@@ -138,7 +140,11 @@ public class LookServiceImpl implements LookService{
 
     @Override
     public Look getLookById(String id) {
-        return lookRepository.findById(id).orElse(null);
+        Look look = lookRepository.getLookById(id);
+        if (look == null) {
+            throw new InvalidInputException("No Look with input id", ErrorCode.INVALID_INPUT);
+        }
+        return look;
     }
 
     @Override

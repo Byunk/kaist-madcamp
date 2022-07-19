@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface LookRepository extends MongoRepository<Look, String> {
 
-    @Query("{id: ?0}")
+    @Query("{lookId: ?0}")
     Look getLookById(String id);
 
     @Query("{tpo: ?0}")

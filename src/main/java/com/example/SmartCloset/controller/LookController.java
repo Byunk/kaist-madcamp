@@ -100,6 +100,7 @@ public class LookController {
             user.getUploadLook().add(look.getLookId());
         } else {
             ArrayList<String> uploadLook = new ArrayList<>();
+            uploadLook.add(look.getLookId());
             user.setUploadLook(uploadLook);
         }
         
@@ -108,8 +109,8 @@ public class LookController {
 
     @PostMapping("uploadImg")
     // 업로드하는 파일들을 MultipartFile 형태의 파라미터로 전달된다.
-    public String uploadImg(@RequestPart(value="file", required = false) MultipartFile file)
-                                                throws IllegalStateException, IOException {
+    public String uploadImg(@RequestPart(value="file", required = false) MultipartFile file) throws IllegalStateException, IOException {
+
         String curWorkingDir = System.getProperty("user.dir");
         String path = curWorkingDir + "/src/main/resources/static/save_image";
         String returnpath = "";
