@@ -25,14 +25,35 @@ export class ContainerServiceDefault implements ContainerService {
     console.log('build success');
   }
 
-  runContainer(imageName: string, timeout: number) {
+  runContainer(imageName: string, timeout: number): string {
     let dockerCommand = 'docker';
     let dockerArgs: string[] = ['run', '-dit', imageName];
 
     let result = spawnSync(dockerCommand, dockerArgs);
     console.log(result.stdout.toString());
-    console.log(result.stderr.toString());
+    //console.log(result.stderr.toString());
     console.log('run success');
+    return result.stdout.toString();
+  }
+
+  stopContainer(containerName: string) {
+    let command: string = 'docker';
+    let args: string[] = ['stop', containerName];
+
+    let result = spawnSync(command, args);
+    console.log(result.stdout.toString());
+    console.log(result.stderr.toString());
+    console.log('stop success');
+  }
+
+  execCommand(containerName: string, command: string[]): string {
+    let dockerCommand: string = 'docker';
+    let args: string[] = ['exec', containerName].concat(command);
+
+    let result = spawnSync(dockerCommand, args);
+    console.log(result.stdout.toString());
+    console.log(result.stderr.toString());
+    return result.stdout.toString();
   }
 
   getRunningContainer() {
