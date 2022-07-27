@@ -1,0 +1,5 @@
+FROM python:openssh
+
+WORKDIR /usr/src/app
+
+ENTRYPOINT service ssh start

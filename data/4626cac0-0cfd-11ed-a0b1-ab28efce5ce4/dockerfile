@@ -1,0 +1,5 @@
+FROM python:openssh
+
+WORKDIR /usr/src/app
+
+COPY . .
