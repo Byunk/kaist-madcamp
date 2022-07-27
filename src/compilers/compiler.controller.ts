@@ -19,6 +19,8 @@ import { Execution } from 'src/compilers/executes/Execution';
 import { JavaExecution } from 'src/compilers/executes/JavaExecution';
 import { PythonExecution } from 'src/compilers/executes/PythonExecution';
 import { CompilerServiceDefault } from './compiler.service.default';
+import { NodeExecution } from './executes/NodeExecution';
+import { RubyExecution } from './executes/RubyExecution';
 
 @Controller('compiler')
 export class CompilerController {
@@ -44,6 +46,11 @@ export class CompilerController {
       case 'c':
         exec = new CExecution(req);
         break;
+      case 'node':
+        exec = new NodeExecution(req);
+        break;
+      case 'ruby':
+        exec = new RubyExecution(req);
       default:
         throw 'Invalid Language Error';
     }
