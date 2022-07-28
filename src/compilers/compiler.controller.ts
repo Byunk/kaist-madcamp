@@ -1,3 +1,4 @@
+import { DisconnectRequestDto } from './dto/disconnect.request.dto';
 import {
   Bind,
   Body,
@@ -5,6 +6,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
@@ -64,5 +66,12 @@ export class CompilerController {
       throw 'Invalid Commit Request!';
     }
     this.containerService.commitContainer(req.containerId, req.imageId, req.tagId);
+  }
+
+  @Put('disconnect')
+  async disconnect(@Body() req: DisconnectRequestDto) {
+    this.containerService.commitContainer(req.containerId, req.imageId, req.tagId);
+    this.containerService.stopContainer(req.containerId);
+    this.containerService.deleteContainer(req.containerId);
   }
 }
