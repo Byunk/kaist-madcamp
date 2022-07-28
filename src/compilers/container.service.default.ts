@@ -39,12 +39,12 @@ export class ContainerServiceDefault implements ContainerService {
       'run',
       '-dit',
       '-p',
-      '80:22',
+      '443:22',
       '--name',
       containerName,
       '-w',
       '/usr/src/app',
-      imageName + ':' + tagName,
+      tagName == null ? imageName : imageName + ':' + tagName,
     ];
 
     let result = spawnSync(dockerCommand, dockerArgs);
@@ -53,7 +53,9 @@ export class ContainerServiceDefault implements ContainerService {
       console.log('run success!');
     } else {
       console.log('container name err:' + result.stderr.toString());
-      throw 'Container run failed';
+      //throw 'Container run failed';
+      console.log("Container Run Failed");
+
     }
 
     let execResult = spawnSync('docker', [
@@ -80,8 +82,8 @@ export class ContainerServiceDefault implements ContainerService {
     console.log('cp success!');
   }
 
-  commitContainer(containerName: string, imageName: string): string {
-    let tagId = v1().toString();
+  commitContainer(containerName: string, imageName: string, tagName: string): string {
+    let tagId = tagName == null ? v1().toString() : tagName;
     let dockerCommand = 'docker';
     let dockerArgs: string[] = [
       'commit',
@@ -91,6 +93,8 @@ export class ContainerServiceDefault implements ContainerService {
 
     spawnSync(dockerCommand, dockerArgs);
     console.log('commit success' + imageName + ':' + tagId);
+    
+    // Update
 
     return tagId;
   }
