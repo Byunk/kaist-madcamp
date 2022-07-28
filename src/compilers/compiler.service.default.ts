@@ -129,11 +129,11 @@ export class CompilerServiceDefault implements CompilerService {
       );
       console.log('Run container success!');
 
-      const tag: Tag = new Tag();
-      tag.id = tagName;
-      console.log('imageName : ' + imageName);
-      tag.dockerImage = await this.imagesService.find(imageName);
-      await this.tagsService.saveTag(tag);
+      //const tag: Tag = new Tag();
+      //tag.id = tagName;
+      //console.log('imageName : ' + imageName);
+      //tag.dockerImage = await this.imagesService.find(imageName);
+      //await this.tagsService.saveTag(tag);
     } catch (error) {
       throw error;
     }
