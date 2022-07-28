@@ -8,6 +8,7 @@ import { ImagesService } from '../images/images.service';
 import { DockerImage } from 'src/images/entities/dockerimage.entity';
 import { Tag } from 'src/images/entities/tag.entity';
 import { TagsService } from 'src/images/tags.service';
+import axios from 'axios';
 
 @Injectable()
 export class CompilerServiceDefault implements CompilerService {
@@ -31,6 +32,7 @@ export class CompilerServiceDefault implements CompilerService {
       execution.imageId == null ||
       this.imagesService.find(execution.imageId) == null
     ) {
+      console.log("Randomly Generate imageID & Tag ID")
       execution.imageId = v1().toString();
       execution.tagId = 'latest';
       console.log(
@@ -40,18 +42,44 @@ export class CompilerServiceDefault implements CompilerService {
     }
 
     // Run code
-    if (
-      execution.tagId == null ||
-      (await this.imagesService.containsTag(execution.imageId, execution.tagId))
-    ) {
-      execution.tagId = v1().toString();
-    }
+    // if (
+    //   execution.tagId == null ||(await this.tagsService.containsByImage(execution.imageId, execution.tagId))
+    // ) {
+    //   execution.tagId = v1().toString();
+    // }
 
     await this.runCode(
       execution.imageId,
       execution.tagId,
       execution.containerId,
     );
+
+    const instance = axios.create({
+      // baseURL: process.env.VUE_APP_API_URL,
+      baseURL: 'http://192.249.18.218:80',
+    });
+    if (execution.answerId == null) {
+      console.log("quetion!!")
+      instance.put("/question/setdocker", {
+        imageId: execution.imageId,
+        tagId: execution.tagId,
+        language: execution.getLanguage(),
+        questionId: execution.questionId,
+        answerId: execution.answerId,
+      });
+    } else {
+      console.log("answer!!")
+      instance.put("/answer/setdocker", {
+        imageId: execution.imageId,
+        tagId: execution.tagId,
+        language: execution.getLanguage(),
+        questionId: execution.questionId,
+        answerId: execution.answerId,
+      })
+    }
+    // const question = await fetchQuestion(this.$route.params.questionId);
+    
+
     /////////
   }
 
@@ -103,9 +131,7 @@ export class CompilerServiceDefault implements CompilerService {
 
       const tag: Tag = new Tag();
       tag.id = tagName;
-      console.log('imageName');
-      console.log(imageName);
-      console.log(typeof imageName);
+      console.log('imageName : ' + imageName);
       tag.dockerImage = await this.imagesService.find(imageName);
       await this.tagsService.saveTag(tag);
     } catch (error) {

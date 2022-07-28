@@ -2,6 +2,7 @@ import {
   Bind,
   Body,
   Controller,
+  Get,
   Param,
   Post,
   UploadedFiles,
@@ -14,6 +15,7 @@ import {
 } from '@nestjs/platform-express';
 import { AppModule } from 'src/app.module';
 import { CompileRequestDto } from 'src/compilers/dto/compile.request.dto';
+import { CommitRequestDto } from 'src/compilers/dto/commit.request.dto';
 import { CExecution } from 'src/compilers/executes/CExecution';
 import { Execution } from 'src/compilers/executes/Execution';
 import { JavaExecution } from 'src/compilers/executes/JavaExecution';
@@ -21,21 +23,18 @@ import { PythonExecution } from 'src/compilers/executes/PythonExecution';
 import { CompilerServiceDefault } from './compiler.service.default';
 import { NodeExecution } from './executes/NodeExecution';
 import { RubyExecution } from './executes/RubyExecution';
+import { ContainerServiceDefault } from './container.service.default';
 
 @Controller('compiler')
 export class CompilerController {
-  constructor(private compilerService: CompilerServiceDefault) {
+  constructor(private compilerService: CompilerServiceDefault, private containerService: ContainerServiceDefault) {
     this.compilerService = compilerService;
+    this.containerService = containerService;
   }
 
   @Post('compile')
   async compile(@Body() req: CompileRequestDto) {
     var exec: Execution;
-
-    const app = await NestFactory.create<NestExpressApplication>(AppModule);
-    app.enableCors();
-    await app.listen(3000);
-
     switch (req.language) {
       case 'python':
         exec = new PythonExecution(req);
@@ -59,9 +58,11 @@ export class CompilerController {
     return;
   }
 
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  uploadFile(file) {
-    console.log(file);
+  @Post('commit')
+  async commit(@Body() req: CommitRequestDto) {
+    if (req.containerId == null || req.imageId == null) {
+      throw 'Invalid Commit Request!';
+    }
+    this.containerService.commitContainer(req.containerId, req.imageId, req.tagId);
   }
 }

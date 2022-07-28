@@ -8,7 +8,7 @@ export interface ContainerService {
     timeOut: number,
   ); //Process Output
 
-  commitContainer(containerName: string, imageName: string): string;
+  commitContainer(containerName: string, imageName: string, tagName: string): string;
 
   stopContainer(containerName: string);
 

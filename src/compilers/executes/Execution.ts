@@ -19,12 +19,17 @@ export abstract class Execution {
   imageId: string;
   tagId: string;
   containerId: string;
+  questionId: string;
+  answerId: string;
   path: string;
 
   constructor(req: CompileRequestDto) {
     this.imageId = req.imageId;
     this.tagId = req.tagId;
     this.containerId = v1().toString();
+    this.questionId = req.questionId;
+    this.answerId = req.answerId;
+
 
     this.path = 'data' + '/' + this.imageId;
   }
