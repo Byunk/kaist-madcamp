@@ -29,7 +29,10 @@ import { ContainerServiceDefault } from './container.service.default';
 
 @Controller('compiler')
 export class CompilerController {
-  constructor(private compilerService: CompilerServiceDefault, private containerService: ContainerServiceDefault) {
+  constructor(
+    private compilerService: CompilerServiceDefault,
+    private containerService: ContainerServiceDefault,
+  ) {
     this.compilerService = compilerService;
     this.containerService = containerService;
   }
@@ -60,18 +63,26 @@ export class CompilerController {
     return;
   }
 
+  @Get()
+  async getInfo() {}
+
   @Post('commit')
   async commit(@Body() req: CommitRequestDto) {
     if (req.containerId == null || req.imageId == null) {
       throw 'Invalid Commit Request!';
     }
-    this.containerService.commitContainer(req.containerId, req.imageId, req.tagId);
+    this.containerService.commitContainer(req);
   }
 
   @Put('disconnect')
   async disconnect(@Body() req: DisconnectRequestDto) {
-    this.containerService.commitContainer(req.containerId, req.imageId, req.tagId);
+    this.containerService.commitContainer(req);
     this.containerService.stopContainer(req.containerId);
     this.containerService.deleteContainer(req.containerId);
+  }
+
+  @Get('runningContainer')
+  async getRunningContainer() {
+    return this.containerService.getRunningContainer();
   }
 }

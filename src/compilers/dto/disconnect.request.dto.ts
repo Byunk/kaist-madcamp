@@ -1,6 +1,8 @@
 export class DisconnectRequestDto {
-    containerId: string;
-    imageId: string;
-    tagId: string;
-  }
-  
+  containerId: string;
+  imageId: string;
+  tagId: string;
+  questionId: string;
+  answerId: string;
+  language: string;
+}

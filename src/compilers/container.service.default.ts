@@ -1,8 +1,10 @@
+import { CommitRequestDto } from 'src/compilers/dto/commit.request.dto';
 import { Injectable } from '@nestjs/common';
 import { ContainerService } from './container.service';
 import { exec, execSync, spawn, spawnSync } from 'child_process';
 import { existsSync, mkdirSync, openSync } from 'fs';
 import { v1 } from 'uuid';
+import axios from 'axios';
 
 @Injectable()
 export class ContainerServiceDefault implements ContainerService {
@@ -39,7 +41,7 @@ export class ContainerServiceDefault implements ContainerService {
       'run',
       '-dit',
       '-p',
-      '443:22',
+      '5280:22',
       '--name',
       containerName,
       '-w',
@@ -54,8 +56,7 @@ export class ContainerServiceDefault implements ContainerService {
     } else {
       console.log('container name err:' + result.stderr.toString());
       //throw 'Container run failed';
-      console.log("Container Run Failed");
-
+      console.log('Container Run Failed');
     }
 
     let execResult = spawnSync('docker', [
@@ -82,21 +83,51 @@ export class ContainerServiceDefault implements ContainerService {
     console.log('cp success!');
   }
 
-  commitContainer(containerName: string, imageName: string, tagName: string): string {
-    let tagId = tagName == null ? v1().toString() : tagName;
+  commitContainer(req: CommitRequestDto): string {
+    if (req.answerId != null) {
+      req.tagId = req.tagId == 'latest' ? v1().toString() : req.tagId;
+    } else {
+      req.tagId = null;
+    }
+
     let dockerCommand = 'docker';
     let dockerArgs: string[] = [
       'commit',
-      containerName,
-      imageName + ':' + tagId,
+      req.containerId,
+      req.answerId != null ? req.imageId + ':' + req.tagId : req.imageId,
     ];
 
     spawnSync(dockerCommand, dockerArgs);
-    console.log('commit success' + imageName + ':' + tagId);
-    
-    // Update
+    console.log('commit success: ' + req.imageId + ':' + req.tagId);
 
-    return tagId;
+    // Update
+    const instance = axios.create({
+      // baseURL: process.env.VUE_APP_API_URL,
+      baseURL: 'http://192.249.18.218:80',
+    });
+    if (req.answerId == null) {
+      console.log('quetion!!');
+      instance.put('/user/question/setdocker', {
+        imageId: req.imageId,
+        tagId: req.tagId,
+        containerId: req.containerId,
+        language: req.language,
+        questionId: req.questionId,
+        answerId: req.answerId,
+      });
+    } else {
+      console.log('answer!!');
+      instance.put('/user/answer/setdocker', {
+        imageId: req.imageId,
+        tagId: req.tagId,
+        containerId: req.containerId,
+        language: req.language,
+        questionId: req.questionId,
+        answerId: req.answerId,
+      });
+    }
+
+    return req.tagId;
   }
 
   stopContainer(containerName: string) {

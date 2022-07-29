@@ -1,3 +1,4 @@
+import { CommitRequestDto } from 'src/compilers/dto/commit.request.dto';
 export interface ContainerService {
   buildImage(folder: string, imageName: string);
 
@@ -8,7 +9,7 @@ export interface ContainerService {
     timeOut: number,
   ); //Process Output
 
-  commitContainer(containerName: string, imageName: string, tagName: string): string;
+  commitContainer(req: CommitRequestDto): string;
 
   stopContainer(containerName: string);
 

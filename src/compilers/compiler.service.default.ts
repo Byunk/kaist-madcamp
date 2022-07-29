@@ -32,7 +32,7 @@ export class CompilerServiceDefault implements CompilerService {
       execution.imageId == null ||
       this.imagesService.find(execution.imageId) == null
     ) {
-      console.log("Randomly Generate imageID & Tag ID")
+      console.log('Randomly Generate imageID & Tag ID');
       execution.imageId = v1().toString();
       execution.tagId = 'latest';
       console.log(
@@ -40,7 +40,6 @@ export class CompilerServiceDefault implements CompilerService {
       );
       await this.builderImage(execution);
     }
-
     // Run code
     // if (
     //   execution.tagId == null ||(await this.tagsService.containsByImage(execution.imageId, execution.tagId))
@@ -59,26 +58,27 @@ export class CompilerServiceDefault implements CompilerService {
       baseURL: 'http://192.249.18.218:80',
     });
     if (execution.answerId == null) {
-      console.log("quetion!!")
-      instance.put("/question/setdocker", {
+      console.log('quetion!!');
+      instance.put('/user/question/setdocker', {
         imageId: execution.imageId,
         tagId: execution.tagId,
+        containerId: execution.containerId,
         language: execution.getLanguage(),
         questionId: execution.questionId,
         answerId: execution.answerId,
       });
     } else {
-      console.log("answer!!")
-      instance.put("/answer/setdocker", {
+      console.log('answer!!');
+      instance.put('/user/answer/setdocker', {
         imageId: execution.imageId,
         tagId: execution.tagId,
+        containerId: execution.containerId,
         language: execution.getLanguage(),
         questionId: execution.questionId,
         answerId: execution.answerId,
-      })
+      });
     }
     // const question = await fetchQuestion(this.$route.params.questionId);
-    
 
     /////////
   }

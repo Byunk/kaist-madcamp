@@ -30,7 +30,6 @@ export abstract class Execution {
     this.questionId = req.questionId;
     this.answerId = req.answerId;
 
-
     this.path = 'data' + '/' + this.imageId;
   }
 
