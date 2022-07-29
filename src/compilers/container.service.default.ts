@@ -36,6 +36,8 @@ export class ContainerServiceDefault implements ContainerService {
     containerName: string,
     timeout: number,
   ) {
+    console.log('image :' + imageName);
+    console.log('tag : ' + tagName);
     let dockerCommand = 'docker';
     let dockerArgs: string[] = [
       'run',
@@ -84,10 +86,15 @@ export class ContainerServiceDefault implements ContainerService {
   }
 
   commitContainer(req: CommitRequestDto): string {
-    if (req.answerId != null) {
-      req.tagId = req.tagId == 'latest' ? v1().toString() : req.tagId;
+    // if (req.answerId != null) {
+    //   req.tagId = 'latest';
+    // } else {
+    //   req.tagId = req.tagId == 'null' ? v1().toString() : req.tagId;
+    // }
+    if (req.answerId == null) {
+      req.tagId = 'latest';
     } else {
-      req.tagId = null;
+      req.tagId = req.tagId == 'latest' || 'null' ? v1().toString() : req.tagId;
     }
 
     let dockerCommand = 'docker';
