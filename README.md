@@ -26,11 +26,71 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+Web IDE backend for Docker written by TypeScript.
+
+It automatically creates docker image, containers, and runs containers with starting open-ssh.
+
+## Requirements
+
+[Docker] (https://www.docker.com)
+
+[MySql] (https://www.mysql.com)
+
 ## Installation
 
 ```bash
 $ npm install
 ```
+
+# Docker Installation
+
+Ex. Initial Setting for Python.
+
+1. PUll Python Image
+
+'''
+$ docker pull python
+'''
+
+2. Run Python Container
+
+'''
+$ docker run -dit python
+'''
+
+3. Copy container id & connect to its bash
+
+'''
+$ docker exec -it ContainerID /bin/bash
+'''
+
+4. Update apt-get & install vim and openssh-server
+
+'''
+$ apt-get update
+
+$ apt-get install vim openssh-server
+'''
+
+5. Permit Root Login
+
+'''
+$ vim /etc/ssh/sshd_config
+'''
+
+Change PermitRootLogin config to yes
+
+6. Change Root Password (optional, but you should match it with IDE's server config)
+
+'''
+$ passwd root
+'''
+
+7. Get back to local terminal and commit docker container
+
+'''
+docker commit containerID python:openssh
+'''
 
 ## Running the app
 
@@ -64,9 +124,7 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Author - [Kyungho Byoun] (https://github.com/Byunk) : clearman001@kaist.ac.kr
 
 ## License
 
