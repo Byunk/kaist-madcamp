@@ -69,7 +69,7 @@ $ apt-get install vim openssh-server
 
 $ vim /etc/ssh/sshd_config
 
-Change PermitRootLogin config to yes
+#Change PermitRootLogin config to yes
 
 #6. Change Root Password (optional, but you should match it with IDE's server config)
 
