@@ -32,9 +32,9 @@ It automatically creates docker image, containers, and runs containers with star
 
 ## Requirements
 
-[Docker] (https://www.docker.com)
+[Docker](https://www.docker.com)
 
-[MySql] (https://www.mysql.com)
+[MySql](https://www.mysql.com)
 
 ## Installation
 
@@ -42,7 +42,7 @@ It automatically creates docker image, containers, and runs containers with star
 $ npm install
 ```
 
-# Docker Installation
+### Docker Installation
 
 Ex. Initial Setting for Python.
 
@@ -112,7 +112,7 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 ## Stay in touch
 
-- Author - [Kyungho Byoun] (https://github.com/Byunk) : clearman001@kaist.ac.kr
+- Author - [Kyungho Byoun](https://github.com/Byunk) : clearman001@kaist.ac.kr
 
 ## License
 
