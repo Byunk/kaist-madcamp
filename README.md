@@ -46,49 +46,37 @@ $ npm install
 
 Ex. Initial Setting for Python.
 
-1. PUll Python Image
+'''bash
+#1. PUll Python Image
 
-'''
 $ docker pull python
-'''
 
-2. Run Python Container
+#2. Run Python Container
 
-'''
 $ docker run -dit python
-'''
 
-3. Copy container id & connect to its bash
+#3. Copy container id & connect to its bash
 
-'''
 $ docker exec -it ContainerID /bin/bash
-'''
 
-4. Update apt-get & install vim and openssh-server
+#4. Update apt-get & install vim and openssh-server
 
-'''
 $ apt-get update
 
 $ apt-get install vim openssh-server
-'''
 
-5. Permit Root Login
+#5. Permit Root Login
 
-'''
 $ vim /etc/ssh/sshd_config
-'''
 
 Change PermitRootLogin config to yes
 
-6. Change Root Password (optional, but you should match it with IDE's server config)
+#6. Change Root Password (optional, but you should match it with IDE's server config)
 
-'''
 $ passwd root
-'''
 
-7. Get back to local terminal and commit docker container
+#7. Get back to local terminal and commit docker container
 
-'''
 docker commit containerID python:openssh
 '''
 
