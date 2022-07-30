@@ -46,7 +46,7 @@ $ npm install
 
 Ex. Initial Setting for Python.
 
-'''bash
+```bash
 #1. PUll Python Image
 
 $ docker pull python
@@ -78,7 +78,7 @@ $ passwd root
 #7. Get back to local terminal and commit docker container
 
 docker commit containerID python:openssh
-'''
+```
 
 ## Running the app
 
