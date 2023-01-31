@@ -1,0 +1,255 @@
+<script src="./editor.js"></script>
+<script>
+  var insert_position;
+
+  window.addEventListener(
+    "load",
+    function () {
+      var data = "";
+      var editors = {};
+
+      let imageId;
+      let containerId;
+      let tagID;
+      let language;
+      let questionId;
+      let answerId;
+
+      var terminalContainer = document.getElementById("terminal-container");
+      var term = new Terminal({ cursorBlink: true });
+      term.open(terminalContainer);
+      term.fit();
+
+      socket = io.connect();
+
+      axios({
+        method: "get",
+        url: "http://192.249.18.218:80/user/getdocker",
+      }).then(function (res) {
+        console.log("connect to web page server!!");
+        // console.log(res);
+        console.log(res.data);
+        imageId = res.data.imageId;
+        containerId = res.data.containerId;
+        tagId = res.data.tagId;
+        language = res.data.language;
+        questionId = res.data.questionId;
+        answerId = res.data.answerId;
+        console.log(imageId);
+        console.log(containerId);
+        console.log(tagId);
+        console.log(language);
+        console.log(questionId);
+        console.log(answerId);
+      });
+
+      $(".save-btn").click(function () {
+        var dir;
+        var value;
+        console.log("click!");
+        const tab = $(".tab-wrap").find("li");
+        for (var t in tab) {
+          if ($(this).hasClass("active")) {
+            dir = $(this).attr("value");
+          }
+        }
+        dir = $(".active").attr("value");
+        //console.log($(".active").attr("value"));
+        let div_textarea = $(".div_textarea").not(".style");
+        console.log(div_textarea);
+        let textarea = document.querySelector(
+          ".div_textarea:not(.style) .CodeMirror"
+        );
+        value = textarea.CodeMirror.getValue();
+
+        // 정상
+        //console.log("dir="+dir+"value"+value);
+
+        socket.emit("save", dir, value);
+
+        const instance = axios.create({
+          // baseURL: process.env.VUE_APP_API_URL,
+          baseURL: "http://143.248.196.31:80/",
+        });
+        console.log("commit!!");
+        instance.post("compiler/commit", {
+          imageId: imageId,
+          containerId: containerId,
+          tagId: tagId,
+          language: language,
+          questionId: questionId,
+          answerId: answerId,
+        });
+      });
+
+      $(".exit-btn").click(function () {
+        const instance = axios.create({
+          baseURL: "http://143.248.196.31:80/",
+        });
+        console.log("disconnect!!");
+        instance.put("compiler/disconnect", {
+          imageId: imageId,
+          containerId: containerId,
+          tagId: tagId,
+          language: language,
+          questionId: questionId,
+          answerId: answerId,
+        });
+        //window.close();
+      });
+
+      // const instance = axios.create({
+      //   // baseURL: process.env.VUE_APP_API_URL,
+      //   baseURL: "http://192.249.18.218:80/",
+      // });
+
+      // const res = instance.get("user/getdocker");
+
+      // imageId = res.imageId;
+      // containerId = res.containerId;
+      // tagId = res.tagId;
+      // language = res.language;
+      // questionId = res.questionId;
+      // answerId = res.answerId;
+      // console.log("connect to web page server!!");
+      // console.log(res.data);
+      // console.log(imageId);
+      // console.log(containerId);
+      // console.log(tagId);
+      // console.log(language);
+      // console.log(questionId);
+      // console.log(answerId);
+
+      // ls 결과를 받는 것
+      socket.on("ls_result", function (arg) {
+        if (arg.length != 0) {
+          for (var i = 0; i < arg.length; i++) {
+            if (arg[i][0] == "\x1B") {
+              insert_position.append(
+                '<div class = "content dir" value = \'' +
+                  arg[i][1] +
+                  '/\' style="width: calc(100% - 10px); flex-grow: 1;"><i class="fa-solid fa-folder-closed" style="color: #E6DC5E;"></i><span style="color: #fafafa;" class =\'text\'>' +
+                  arg[i][1] +
+                  "</span></div>"
+              );
+            } else if (arg[i][0] == "-") {
+              insert_position.append(
+                '<div class = "content file" value = \'' +
+                  arg[i][1] +
+                  '/\' style="width: calc(100% - 10px); flex-grow: 1;"><i style="color: #fafafa;" class="fa-solid fa-file"></i><span style="color: #fafafa;" class =\'text\'>' +
+                  arg[i][1] +
+                  "</span></div>"
+              );
+            }
+          }
+          //console.log(arg);
+        }
+      });
+      socket.on("file_start", function () {
+        data = "";
+      });
+      socket.on("file", function (chunk) {
+        //data = "";
+        data += chunk;
+        console.log("data=" + data);
+      });
+      socket.on("file_end", function (filename, dir) {
+        var idx;
+        $(document).ready(function () {
+          $(".div_textarea").hide();
+          var $tab = $(".tab-wrap");
+          var $editor = $(".editor-wrap");
+          idx = $tab.find("li").length + 1;
+          //# Tabs limits = 20
+          if ($tab.find("li").length < 20) {
+            $tab.append(
+              "<li style = 'float: left;display: inline-block;' class = 'tab li' value='" +
+                dir +
+                "'>" +
+                filename +
+                "<a class='tab a'>X</a></li>"
+            );
+            $editor.append(
+              '<div class = "div_textarea" style = "height: 100%;"><textarea style = "height: 100%;" id="editor' +
+                idx +
+                '"' +
+                " >editor" +
+                idx +
+                "</textarea></div>"
+            );
+            editors[idx] = createEditor(idx, data);
+            $tab.find("li").removeClass("active");
+            $tab
+              .find("li")
+              .eq(idx - 1)
+              .addClass("active");
+            $editor.find(".editor").css("display", "none");
+            $editor
+              .find(".editor")
+              .eq(idx - 1)
+              .css("display", "block");
+
+            if ($tab.find("li").length > 10) {
+              $tab.find("li").css("wdith", 1520 / idx - 2 + "px");
+            }
+          }
+          /*
+          $tab.on("click", "li", function () {
+          });
+          */
+          /*
+          $tab.one("click", "a", function () {
+          });
+          */
+        });
+      });
+
+      socket.on("connect", function () {
+        term.write("\r\n*** Connected to backend***\r\n");
+
+        // Browser -> Backend
+        term.on("data", function (data) {
+          socket.emit("data", data);
+        });
+
+        // Backend -> Browser
+        socket.on("data", function (data) {
+          term.write(data);
+        });
+
+        socket.on("disconnect", function () {
+          term.write("\r\n*** Disconnected from backend***\r\n");
+        });
+      });
+    },
+    false
+  );
+
+  $(document).bind("keyup keydown", function (e) {
+    if (e.ctrlKey && e.which == 83) {
+      var dir;
+      var value;
+      const tab = $(".tab-wrap").find("li");
+      for (var t in tab) {
+        if ($(this).hasClass("active")) {
+          dir = $(this).attr("value");
+        }
+      }
+      dir = $(".active").attr("value");
+      //console.log($(".active").attr("value"));
+      let div_textarea = $(".div_textarea").not(".style");
+      console.log(div_textarea);
+      let textarea = document.querySelector(
+        ".div_textarea:not(.style) .CodeMirror"
+      );
+      value = textarea.CodeMirror.getValue();
+      console.log(value);
+      // todo
+      // dir이 잘 들어가는지 확인하기(\n이 없는지)
+      console.log("저장 시 디렉토리" + dir);
+
+      socket.emit("save", dir, value);
+      return false;
+    }
+  });
+</script>

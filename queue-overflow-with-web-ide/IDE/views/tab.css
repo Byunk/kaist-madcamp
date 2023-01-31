@@ -1,0 +1,26 @@
+ul {
+  position: relative;
+  width: 300px;
+  height: 100px;
+}
+li {
+  height: 30px;
+  float: left;
+  width: 150px;
+  z-index: 9;
+  position: relative;
+  text-align: center;
+  background: #525259;
+  color: #F0EA81;
+}
+dd {
+  position: absolute;
+  padding-top: 30px;
+  background-color: #f3f3f3;
+  width: 300px;
+  height: 100px;
+  margin: 0;
+}
+dd.hidden {
+  display: none;
+}
