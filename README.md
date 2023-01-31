@@ -26,12 +26,14 @@ Backend Server for clothes recommendation app
 
 Java, SpringBoot
 
-## [online-web-ide-backend](/online-web-ide-backend)
+## [queue-overflow-with-web-ide](/queue-overflow-with-web-ide)
 
-Backend Server for online web compiler service
+Queue-overflow with Online web compiler service
 
 ### Stack
 
-Java, SpringBoot
+frontend: Vue.js, vanlila javascript & HTML
 
-Docker
+backend: JS, Nodejs
+
+web-ide backend: Java, SpringBoot + Docker
