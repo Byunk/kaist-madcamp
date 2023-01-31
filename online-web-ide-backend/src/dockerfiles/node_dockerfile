@@ -1,3 +1,0 @@
-FROM node:openssh
-
-WORKDIR /usr/src/myapp

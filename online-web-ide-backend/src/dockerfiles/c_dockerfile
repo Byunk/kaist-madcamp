@@ -1,3 +1,0 @@
-FROM gcc:openssh
-
-WORKDIR /usr/src/myapp
