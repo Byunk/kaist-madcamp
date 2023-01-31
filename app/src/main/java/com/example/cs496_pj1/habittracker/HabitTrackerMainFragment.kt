@@ -1,6 +1,6 @@
 package com.example.cs496_pj1.habittracker
 
-import android.app.Activity.RESULT_OK
+import android.app.Activity.*
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -82,6 +82,42 @@ class HabitTrackerMainFragment : Fragment() {
                     }
                     val newAdapter = HabitTrackerMainAdapter(habitArray, date)
                     binding.rvHabitList.adapter = newAdapter
+                }
+                //delete
+            } else if (result.resultCode == RESULT_CANCELED) {
+                val todo = result.data?.getStringExtra("todo") ?: ""
+                habitArray.removeAll {
+                    it.todo == todo
+                }
+                val newAdapter = HabitTrackerMainAdapter(habitArray, date)
+                binding.rvHabitList.adapter = newAdapter
+                binding.editButton.isChecked = false
+                //edit
+            } else if (result.resultCode == RESULT_FIRST_USER) {
+                val todo = result.data?.getStringExtra("todo") ?: ""
+                val start = result.data?.getStringExtra("start") ?: ""
+                val end = result.data?.getStringExtra("end") ?: ""
+
+                if (todo != "" && start != "") {
+                    if (end != "") {
+                        val startDate = dateString2Date(start)
+                        val endDate = dateString2Date(end)
+                        if (!endDate.before(startDate)) {
+                            habitArray.removeAll {
+                                it.todo == todo
+                            }
+                            habitArray.add(Habit(todo, startDate, endDate))
+                        }
+                    } else {
+                        val startDate = dateString2Date(start)
+                        habitArray.removeAll {
+                            it.todo == todo
+                        }
+                        habitArray.add(Habit(todo, startDate, null))
+                    }
+                    val newAdapter = HabitTrackerMainAdapter(habitArray, date)
+                    binding.rvHabitList.adapter = newAdapter
+                    binding.editButton.isChecked = false
                 }
             }
         }

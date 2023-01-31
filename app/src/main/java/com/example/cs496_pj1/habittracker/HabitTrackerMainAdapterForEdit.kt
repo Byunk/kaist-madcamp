@@ -51,7 +51,7 @@ class HabitTrackerMainAdapterForEdit(val habitArray: ArrayList<Habit>, val date:
             }
 
             itemView.setOnClickListener {
-                val intent = Intent(context, HabitTrackerAddActivity::class.java).apply {
+                val intent = Intent(context, HabitTrackerEditActivity::class.java).apply {
                     putExtra("todo", item.todo)
                     putExtra("start", item.start.time)
                     putExtra("end", item.end?.time)
