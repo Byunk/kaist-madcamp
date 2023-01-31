@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: "SmartClosetDB"
+      auto-index-creation: true
+
+server:
+  port: 80
